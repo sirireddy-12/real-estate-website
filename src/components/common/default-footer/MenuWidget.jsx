@@ -26,10 +26,10 @@ const MenuWidget = () => {
     {
       title: "Discover",
       links: [
-        { label: "Miami", href: "#" },
-        { label: "Los Angeles", href: "#" },
-        { label: "Chicago", href: "#" },
-        { label: "New York", href: "#" },
+        { label: "Melbourne", href: "#" },
+        { label: "Richmond", href: "#" },
+        { label: "Southbank", href: "#" },
+        { label: "Docklands", href: "#" },
       ],
     },
   ];

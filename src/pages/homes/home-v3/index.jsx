@@ -114,7 +114,7 @@ const Home_V3 = () => {
           >
             <div className="col-lg-9">
               <div className="main-title2">
-                <h2 className="title">Properties by Cities</h2>
+                <h2>Featured Melbourne Suburbs</h2>
                 <p className="paragraph">
                   Aliquam lacinia diam quis lacus euismod
                 </p>

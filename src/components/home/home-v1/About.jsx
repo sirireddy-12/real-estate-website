@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   const featureList = [
-    "Find excellent deals",
-    "Friendly host & Fast support",
-    "List your own property",
+    "Apartments for Sale",
+    "Houses for Rent",
+    "Property Listings Updated Daily"
   ];
   return (
     <>
@@ -19,8 +19,7 @@ const About = () => {
               Let’s find the right selling option for you
             </h2>
             <p className="text mb25 fz15">
-              As the complexity of buildings to increase, the field of
-              architecture
+              Browse apartments, houses and rental properties across Melbourne.
             </p>
             <div className="list-style1 mb50">
               <ul>
@@ -32,8 +31,8 @@ const About = () => {
                 ))}
               </ul>
             </div>
-            <Link to="/grid-gull-3-col" className="ud-btn btn-white2">
-              Learn More<i className="fal fa-arrow-right-long"></i>
+            <Link to="/grid-full-1-col" className="ud-btn btn-white2">
+                   View Properties
             </Link>
           </div>
         </div>
@@ -45,7 +44,7 @@ const About = () => {
               <img
                
                 className="img-1"
-                src="/images/about/about-1.jpg"
+                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41013.jpg"
                 alt="about"
               />
             </div>
@@ -53,15 +52,15 @@ const About = () => {
               <img
                
                 className="img-1"
-                src="/images/about/about-2.jpg"
+                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41022.jpg"
                 alt="about"
               />
             </div>
-            <div className="img-box-3">
+            {/* <div className="img-box-3">
               <img
                
                 className="img-1 bounce-y"
-                src="/images/about/about-1.png"
+                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41086.jpg"
                 alt="about"
               />
             </div>
@@ -72,7 +71,7 @@ const About = () => {
                 src="/images/about/element-1.png"
                 alt="about"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

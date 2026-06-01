@@ -30,7 +30,7 @@ export default function PopulerProperty() {
                   Discover Popular Properties
                 </h2>
                 <p className="paragraph text-white">
-                  Aliquam lacinia diam quis lacus euismod
+                  Browse properties across Melbourne and surrounding suburbs
                 </p>
               </div>
             </div>

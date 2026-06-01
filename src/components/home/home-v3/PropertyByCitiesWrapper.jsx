@@ -29,7 +29,7 @@ export default function PropertyByCitiesWrapper() {
           <div className="main-title2">
             <h2 className="title">Discover Popular Properties</h2>
             <p className="paragraph">
-              Aliquam lacinia diam quis lacus euismod
+              Browse properties across Melbourne and surrounding suburbs
             </p>
           </div>
         </div>
