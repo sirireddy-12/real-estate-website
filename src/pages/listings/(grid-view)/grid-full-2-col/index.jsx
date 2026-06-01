@@ -33,7 +33,7 @@ const GridFull2Col = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title">New York Homes for Sale</h2>
+                <h2>Melbourne Properties</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Rent</a>

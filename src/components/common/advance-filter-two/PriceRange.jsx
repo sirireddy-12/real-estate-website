@@ -9,7 +9,7 @@ const PriceRange = ({filterFunctions}) => {
   // price range handler
   const handleOnChange = (value) => {
     setPrice({ value });
-    filterFunctions?.handlepriceRange([value.min,value.max])
+    filterFunctions?.handlepriceRange?.([value.min, value.max]);
   };
 
   return (
@@ -20,7 +20,10 @@ const PriceRange = ({filterFunctions}) => {
           maxValue={100000}
           minValue={0}
 
-          value={{min:filterFunctions?.priceRange[0],max:filterFunctions?.priceRange[1]}}
+          value={{
+                min: filterFunctions?.priceRange?.[0] ?? 0,
+                max: filterFunctions?.priceRange?.[1] ?? 100000,
+             }}
           onChange={(value) => handleOnChange(value)}
 
           id="slider"

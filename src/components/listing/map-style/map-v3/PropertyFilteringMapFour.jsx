@@ -286,7 +286,7 @@ export default function PropertyFilteringMapFour() {
           <div className="row" data-aos="fade-up" data-aos-duration="200">
             <div className="col-xl-5">
               <div className="half_map_area_content mt30">
-                <h4 className="mb-1">New York Homes for Sale</h4>
+                <h2>Melbourne Properties</h2>
 
                 <div className="row align-items-center mb10">
                   <TopFilterBar  pageContentTrac={pageContentTrac}  colstyle ={colstyle} setColstyle={setColstyle}  setCurrentSortingOption={setCurrentSortingOption} />

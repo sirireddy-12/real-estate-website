@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-const PopularListings = ({data = listings }) => {
+const PopularListings = () => {
   return (
     <>
       <Swiper
@@ -27,19 +27,19 @@ const PopularListings = ({data = listings }) => {
           },
         }}
       >
-        {data.slice(0, 8).map((listing) => (
-          <SwiperSlide key={listing.id}>
+        {listings.slice(0, 8).map((listing) => (
+          <SwiperSlide key={listing.ID}>
             <div className="item">
               <div className="listing-style1">
                 <div className="list-thumb">
                   <img
          
                     className="w-100 h-100 cover"
-                    src={listing.image}
+                    src={listing.MainPhotoURL}
                     alt="listings"
                   />
                   <div className="sale-sticker-wrap">
-                    {listing.featured && (
+                    {listing.Category === "Rent" && (
                       <div className="list-tag fz12">
                         <span className="flaticon-electricity me-2" />
                         FEATURED
@@ -48,28 +48,25 @@ const PopularListings = ({data = listings }) => {
                   </div>
 
                   <div className="list-price">
-                    {listing.price} / <span>mo</span>
+                    {listing.PriceLabel}
                   </div>
                 </div>
                 <div className="list-content">
                   <h6 className="list-title">
-                    <Link to={`/single-v2/${listing.id}`}>{listing.title}</Link>
+                    <Link to={`/single-v2/${listing.ID}`}>{listing.Title}</Link>
                   </h6>
-                  <p className="list-text">{listing.location}</p>
+                  {/* <p className="list-text">{listing.FullAddress}</p> */}
                   <div className="list-meta d-flex align-items-center">
                     <a href="#">
-                      <span className="flaticon-bed" /> {listing.bed} bed
+                      <span className="flaticon-bed" /> {listing.Bedrooms} bed
                     </a>
                     <a href="#">
-                      <span className="flaticon-shower" /> {listing.bath} bath
-                    </a>
-                    <a href="#">
-                      <span className="flaticon-expand" /> {listing.sqft} sqft
+                      <span className="flaticon-shower" /> {listing.Bathrooms} bath
                     </a>
                   </div>
                   <hr className="mt-2 mb-2" />
                   <div className="list-meta2 d-flex justify-content-between align-items-center">
-                    <span className="for-what">For Rent</span>
+                    <span className="for-what">{listing.Category}</span>
                     <div className="icons d-flex align-items-center">
                       <a href="#">
                         <span className="flaticon-fullscreen" />

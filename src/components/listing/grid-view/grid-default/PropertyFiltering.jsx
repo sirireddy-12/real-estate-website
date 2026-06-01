@@ -153,25 +153,27 @@ export default function PropertyFiltering() {
       refItems.filter((el) => el.bath >= bathroms),
     ];
     filteredArrays = [
-      ...filteredArrays,
-      refItems.filter(
-        (el) =>
-          el.city
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.location
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.title
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.features
-            .join(" ")
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase())
-      ),
-    ];
+  ...filteredArrays,
+  refItems.filter(
+    (el) =>
+      (el.city || "")
+        .toLowerCase()
+        .includes((searchQuery || "").toLowerCase()) ||
 
+      (el.location || "")
+        .toLowerCase()
+        .includes((searchQuery || "").toLowerCase()) ||
+
+      (el.title || "")
+        .toLowerCase()
+        .includes((searchQuery || "").toLowerCase()) ||
+
+      (el.features || [])
+        .join(" ")
+        .toLowerCase()
+        .includes((searchQuery || "").toLowerCase())
+  ),
+];
     filteredArrays = [
       ...filteredArrays,
       !categories.length
@@ -189,14 +191,8 @@ export default function PropertyFiltering() {
     }
 
     if (priceRange.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          Number(elm.price.split("$")[1].split(",").join("")) >=
-            priceRange[0] &&
-          Number(elm.price.split("$")[1].split(",").join("")) <= priceRange[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
+  filteredArrays = [...filteredArrays, refItems];
+}
 
     if (squirefeet.length > 0 && squirefeet[1]) {
       console.log(squirefeet);
@@ -215,9 +211,7 @@ export default function PropertyFiltering() {
       filteredArrays = [...filteredArrays, filtered];
     }
 
-    const commonItems = refItems.filter((item) =>
-      filteredArrays.every((array) => array.includes(item))
-    );
+    const commonItems = refItems;
 
     setFilteredData(commonItems);
   }, [

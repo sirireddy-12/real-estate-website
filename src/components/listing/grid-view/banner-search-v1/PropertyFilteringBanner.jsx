@@ -147,13 +147,13 @@ export default function PropertyFilteringBanner() {
     useEffect(() => {
       
         const refItems = listings.filter((elm) => {
-            if (listingStatus == "All") {
+           if (listingStatus == "All") {
               return true;
-            } else if (listingStatus == "Buy") {
-              return !elm.forRent;
-            } else if (listingStatus == "Rent") {
-              return elm.forRent;
-            }
+           } else if (listingStatus == "Buy") {
+              return elm.Category === "Sale";
+           } else if (listingStatus == "Rent") {
+              return elm.Category === "Rent";
+           }
           });
       
           let filteredArrays = [];
@@ -166,9 +166,11 @@ export default function PropertyFilteringBanner() {
             );
             filteredArrays = [...filteredArrays, filtered];
           }
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bed >=bedrooms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bath >=bathroms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.city.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()) ||  el.location.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()) ||  el.title.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())  ||  el.features.join(' ').toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()))) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bedrooms >=bedrooms)) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bathrooms >=bathroms)) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el) =>el.FullAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||el.State?.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+];
          
     
           filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : refItems.filter((elm)=>categories.every(elem=>elm.features.includes(elem))) ];
@@ -284,7 +286,7 @@ export default function PropertyFilteringBanner() {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2 className="title">New York Homes for Sale</h2>
+                <h2>Melbourne Properties</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
                   <a href="#">For Rent</a>

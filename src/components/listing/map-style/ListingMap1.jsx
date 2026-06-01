@@ -198,9 +198,9 @@ export default function ListingMap1() {
     googleMapsApiKey: "AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM",
   });
   const center = useMemo(
-    () => ({ lat: 27.411201277163975, lng: -96.12394824867293 }),
-    []
-  );
+  () => ({ lat: -37.819368, lng: 144.957679 }),
+  []
+);
 
   // add long & lat
   const locationHandler = (location) => {
@@ -227,10 +227,10 @@ export default function ListingMap1() {
             {(clusterer) =>
               listings.slice(0, 6).map((marker) => (
                 <Marker
-                  key={marker.id}
+                  key={marker.ID}
                   position={{
-                    lat: marker.lat,
-                    lng: marker.long,
+                      lat: Number(marker.Latitude),
+                      lng: Number(marker.Longitude),
                   }}
                   clusterer={clusterer}
                   onClick={() => locationHandler(marker)}
@@ -241,8 +241,8 @@ export default function ListingMap1() {
           {getLocation !== null && (
             <InfoWindow
               position={{
-                lat: getLocation.lat,
-                lng: getLocation.long,
+                lat: Number(getLocation.Latitude),
+                lng: Number(getLocation.Longitude),
               }}
               onCloseClick={closeCardHandler}
             >
@@ -252,11 +252,11 @@ export default function ListingMap1() {
                     <img
                       
                       className="w-100 h-100 cover"
-                      src={getLocation.image}
+                      src={getLocation.MainPhotoURL}
                       alt="listings"
                     />
                     <div className="sale-sticker-wrap">
-                      {!getLocation.forRent && (
+                      {getLocation.Category === "Rent" && (
                         <div className="list-tag fz12">
                           <span className="flaticon-electricity me-2" />
                           FEATURED
@@ -265,32 +265,32 @@ export default function ListingMap1() {
                     </div>
 
                     <div className="list-price">
-                      {getLocation.price} / <span>mo</span>
+                      {getLocation.PriceLabel}
                     </div>
                   </div>
                   <div className="list-content">
                     <h6 className="list-title">
-                      <Link to={`/single-v1/${getLocation.id}`}>
-                        {getLocation.title}
+                      <Link to={`/single-v1/${getLocation.ID}`}>
+                        {getLocation.Title}
                       </Link>
                     </h6>
-                    <p className="list-text">{getLocation.location}</p>
+                    <p className="list-text">{getLocation.FullAddress}</p>
                     <div className="list-meta d-flex align-items-center">
                       <a href="#">
-                        <span className="flaticon-bed" /> {getLocation.bed} bed
+                        <span className="flaticon-bed" /> {getLocation.Bedrooms} bed
                       </a>
                       <a href="#">
-                        <span className="flaticon-shower" /> {getLocation.bath}{" "}
+                        <span className="flaticon-shower" /> {getLocation.Bathrooms}{" "}
                         bath
                       </a>
                       <a href="#">
-                        <span className="flaticon-expand" /> {getLocation.sqft}{" "}
-                        sqft
+                        <span className="flaticon-expand" /> {getLocation.Suburb}{" "}
+                        Suburb
                       </a>
                     </div>
                     <hr className="mt-2 mb-2" />
                     <div className="list-meta2 d-flex justify-content-between align-items-center">
-                      <span className="for-what">For Rent</span>
+                      <span className="for-what">{getLocation.Category}</span>
                       <div className="icons d-flex align-items-center">
                         <a href="#">
                           <span className="flaticon-fullscreen" />

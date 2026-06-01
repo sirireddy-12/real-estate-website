@@ -5,6 +5,7 @@ import React, { useState } from "react";
 const HeroContent = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("buy");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -45,11 +46,13 @@ const HeroContent = () => {
                       <div className="box-search">
                         <span className="icon flaticon-home-1" />
                         <input
-                          className="form-control bgc-f7 bdrs12"
-                          type="text"
-                          name="search"
-                          placeholder={`Enter an address, neighborhood, city, or ZIP code for ${tab.label}`}
-                        />
+                            className="form-control bgc-f7 bdrs12"
+                            type="text"
+                            name="search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder={`Enter an address, neighborhood, city, or ZIP code for ${tab.label}`}
+                          />
                       </div>
                     </form>
                   </div>
@@ -68,7 +71,11 @@ const HeroContent = () => {
                     </button>
                     <button
                       className="advance-search-icon ud-btn btn-thm ms-4"
-                      onClick={() => navigate("/map-v1")}
+                      onClick={() =>
+                         navigate("/map-v1", {
+                         state: { searchQuery }
+                          })
+                        }
                       type="button"
                     >
                       <span className="flaticon-search" />

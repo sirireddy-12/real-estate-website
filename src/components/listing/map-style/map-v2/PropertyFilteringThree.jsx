@@ -292,7 +292,7 @@ export default function PropertyFilteringThree() {
                 </div>
                 {/* End .col-12 */}
 
-                <h4 className="mb-1">New York Homes for Sale</h4>
+                <h2>Melbourne Properties</h2>
 
                 <div className="row align-items-center mb10">
                   <TopFilterBar   pageContentTrac={pageContentTrac}    colstyle ={colstyle} setColstyle={setColstyle}  setCurrentSortingOption ={setCurrentSortingOption } />

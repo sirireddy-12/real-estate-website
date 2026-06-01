@@ -12,8 +12,10 @@ import FeaturedListings from "./FeatuerdListings";
 
 import AdvanceFilterModal from "@/components/common/advance-filter-two";
 import PaginationTwo from "../../PaginationTwo";
+import { useLocation } from "react-router-dom";
 import ListingMap1 from "../ListingMap1";
 export default function PropertyFilteringTwo() {
+  const locationState = useLocation();
     const [filteredData, setFilteredData] = useState([]);
 
     const [currentSortingOption, setCurrentSortingOption] = useState('Newest')
@@ -66,8 +68,10 @@ export default function PropertyFilteringTwo() {
 
 
     }
-    const [searchQuery, setSearchQuery] = useState('')
-
+    const [searchQuery, setSearchQuery] = useState(
+  locationState.state?.searchQuery || ""
+);
+console.log("SEARCH QUERY =", searchQuery);
     const handlelistingStatus =(elm)=>{
       setListingStatus(pre => pre == elm ? 'All':elm)
 
@@ -139,7 +143,7 @@ export default function PropertyFilteringTwo() {
     yearBuild,
     categories,
     setPropertyTypes,
-    setSearchQuery
+    // setSearchQuery
   }
 
 
@@ -148,12 +152,12 @@ export default function PropertyFilteringTwo() {
       
         const refItems = listings.filter((elm) => {
             if (listingStatus == "All") {
-              return true;
-            } else if (listingStatus == "Buy") {
-              return !elm.forRent;
-            } else if (listingStatus == "Rent") {
-              return elm.forRent;
-            }
+  return true;
+} else if (listingStatus == "Buy") {
+  return elm.Category === "Sale";
+} else if (listingStatus == "Rent") {
+  return elm.Category === "Rent";
+}
           });
       
           let filteredArrays = [];
@@ -162,32 +166,25 @@ export default function PropertyFilteringTwo() {
       
           if (propertyTypes.length > 0) {
             const filtered = refItems.filter((elm) =>
-            propertyTypes.includes(elm.propertyType)
+            propertyTypes.includes(elm.Category)
             );
             filteredArrays = [...filteredArrays, filtered];
           }
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bed >=bedrooms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bath >=bathroms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.city.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()) ||  el.location.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()) ||  el.title.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())  ||  el.features.join(' ').toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()))) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bedrooms >=bedrooms)) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bathrooms >=bathroms)) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.FullAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.State?.toLowerCase().includes(searchQuery.toLowerCase()))) ];
          
     
-          filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : refItems.filter((elm)=>categories.every(elem=>elm.features.includes(elem))) ];
+          filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : [...refItems] ]];
   
           if (location != 'All Cities') {
            
             
-            filteredArrays = [...filteredArrays,refItems.filter((el=>el.city == location)) ];
+            filteredArrays = [...filteredArrays,refItems.filter((el=>el.Suburb == location)) ];
           }
-         
-         
           if (priceRange.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                Number(elm.price.split('$')[1].split(',').join('')) >= priceRange[0] &&
-                Number(elm.price.split('$')[1].split(',').join('')) <= priceRange[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
+  filteredArrays = [...filteredArrays, [...refItems]];
+}
           if (squirefeet.length > 0 && squirefeet[1]) {
             const filtered = refItems.filter(
               (elm) =>
@@ -197,13 +194,8 @@ export default function PropertyFilteringTwo() {
             filteredArrays = [...filteredArrays, filtered];
           }
           if (yearBuild.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                elm.yearBuilding >= yearBuild[0] &&
-                 elm.yearBuilding <= yearBuild[1]
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
+  filteredArrays = [...filteredArrays, [...refItems]];
+}
           
 
  
@@ -235,23 +227,17 @@ export default function PropertyFilteringTwo() {
     useEffect(() => {
       setPageNumber(1)
       if (currentSortingOption == 'Newest') {
-        const sorted = [...filteredData].sort((a,b)=>a.yearBuilding - b.yearBuilding)
+        const sorted = [...filteredData]
         setSortedFilteredData(sorted)
        
         
       } 
       else if (currentSortingOption.trim() == 'Price Low') {
-        const sorted = [...filteredData].sort((a,b)=>a.price.split('$')[1].split(',').join('') - b.price.split('$')[1].split(',').join(''))
-        setSortedFilteredData(sorted)
-
-        
-      } 
+   setSortedFilteredData(filteredData)
+}
       else if (currentSortingOption.trim() == 'Price High') {
-        const sorted = [...filteredData].sort((a,b)=>b.price.split('$')[1].split(',').join('') - a.price.split('$')[1].split(',').join(''))
-        setSortedFilteredData(sorted)
-
-        
-      } 
+   setSortedFilteredData(filteredData)
+}
     
       else {
         setSortedFilteredData(filteredData)
@@ -293,7 +279,7 @@ export default function PropertyFilteringTwo() {
                 </div>
                 {/* End .col-12 */}
 
-                <h4 className="mb-1">New York Homes for Sale</h4>
+                <h4 className="mb-1">Properties</h4>
 
                 <div className="row align-items-center mb10">
                   <TopFilterBar  pageContentTrac={pageContentTrac}  colstyle ={colstyle} setColstyle={setColstyle}  setCurrentSortingOption={setCurrentSortingOption}/>

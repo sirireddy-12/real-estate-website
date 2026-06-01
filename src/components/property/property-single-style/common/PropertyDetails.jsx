@@ -1,53 +1,54 @@
+import listings from "@/data/listings";
 import React from "react";
 
-const PropertyDetails = () => {
-  const columns = [
-    [
-      {
-        label: "Property ID",
-        value: "RT48",
-      },
-      {
-        label: "Price",
-        value: "$252,000",
-      },
-      {
-        label: "Property Size",
-        value: "1500 Sq Ft",
-      },
-      {
-        label: "Bathrooms",
-        value: "3",
-      },
-      {
-        label: "Bedrooms",
-        value: "2",
-      },
-    ],
-    [
-      {
-        label: "Garage",
-        value: "2",
-      },
-      {
-        label: "Garage Size",
-        value: "200 SqFt",
-      },
-      {
-        label: "Year Built",
-        value: "2022",
-      },
-      {
-        label: "Property Type",
-        value: "Apartment",
-      },
-      {
-        label: "Property Status",
-        value: "For Sale",
-      },
-    ],
-  ];
-
+const PropertyDetails = ({ id }) => {
+  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
+ const columns = [
+  [
+    {
+      label: "Property ID",
+      value: data.ID,
+    },
+    {
+      label: "Price",
+      value: data.PriceLabel,
+    },
+    {
+      label: "Bedrooms",
+      value: data.Bedrooms,
+    },
+    {
+      label: "Bathrooms",
+      value: data.Bathrooms,
+    },
+    {
+      label: "Parking",
+      value: data.Parking,
+    },
+  ],
+  [
+    {
+      label: "Category",
+      value: data.Category,
+    },
+    {
+      label: "Suburb",
+      value: data.Suburb,
+    },
+    {
+      label: "State",
+      value: data.State,
+    },
+    {
+      label: "Agent",
+      value: data.AgentName,
+    },
+    {
+      label: "Agency",
+      value: data.AgencyName,
+    },
+  ],
+];
   return (
     <div className="row">
       {columns.map((column, columnIndex) => (

@@ -3,42 +3,41 @@ import React from "react";
 
 
 const OverView = ({id}) => {
-  const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
-  const overviewData = [
-    {
-      icon: "flaticon-bed",
-      label: "Bedroom",
-      value: data.bed,
-    },
-    {
-      icon: "flaticon-shower",
-      label: "Bath",
-      value: data.bath,
-    },
-    {
-      icon: "flaticon-event",
-      label: "Year Built",
-      value: data.yearBuilding,
-    },
-    {
-      icon: "flaticon-garage",
-      label: "Garage",
-      value: "2",
-      xs: true,
-    },
-    {
-      icon: "flaticon-expand",
-      label: "Sqft",
-      value: data.sqft,
-      xs: true,
-    },
-    {
-      icon: "flaticon-home-1",
-      label: "Property Type",
-      value: data.propertyType,
-    },
-  ];
-  
+  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
+
+const overviewData = [
+  {
+    icon: "flaticon-bed",
+    label: "Bedrooms",
+    value: data.Bedrooms,
+  },
+  {
+    icon: "flaticon-shower",
+    label: "Bathrooms",
+    value: data.Bathrooms,
+  },
+  {
+    icon: "flaticon-garage",
+    label: "Parking",
+    value: data.Parking,
+    xs: true,
+  },
+  {
+    icon: "flaticon-home-1",
+    label: "Category",
+    value: data.Category,
+  },
+  {
+    icon: "flaticon-location",
+    label: "Suburb",
+    value: data.Suburb,
+  },
+  {
+    icon: "flaticon-map",
+    label: "State",
+    value: data.State,
+  },
+];
  
   return (
     <>

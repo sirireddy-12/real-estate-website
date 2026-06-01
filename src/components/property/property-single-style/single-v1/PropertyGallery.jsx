@@ -22,9 +22,8 @@ const images = [
     alt: "5.jpg",
   },
 ];
-
 const PropertyGallery = ({id}) => {
-  const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
+  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
   return (
     <>
       <Gallery>
@@ -32,15 +31,14 @@ const PropertyGallery = ({id}) => {
           <div className="sp-img-content mb15-md">
             <div className="popup-img preview-img-1 sp-img">
               <Item
-                original={'/images/listings/listing-single-1.jpg'}
-                thumbnail={'/images/listings/listing-single-1.jpg'}
+                original={data.MainPhotoURL}
+                thumbnail={data.MainPhotoURL}
                 width={610}
                 height={510}
               >
                 {({ ref, open }) => (
                   <img
-                    src={'/images/listings/listing-single-1.jpg'}
-                   
+                    src={data.MainPhotoURL}                   
                     ref={ref}
                     onClick={open}
                     alt="image"

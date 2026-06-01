@@ -38,9 +38,9 @@ const Home_V1 = () => {
     
       <section className="home-banner-style1 p0">
         <div className="home-style1">
-          <div className="container">
+          <div className="container-fluid p-0">
             <div className="row">
-              <div className="col-xl-11 mx-auto">
+              <div className="col-12 p-0">
                 <Hero />
               </div>
             </div>

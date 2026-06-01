@@ -3,13 +3,17 @@ import React, { useState } from "react";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 
-const PriceRange = () => {
+const PriceRange = ({ filterFunctions }) => {
   const [price, setPrice] = useState({ value: { min: 20, max: 70987 } });
 
   // price range handler
-  const handleOnChange = (value) => {
-    setPrice({ value });
-  };
+ const handleOnChange = (value) => {
+  setPrice({ value });
+
+  if (filterFunctions?.setPriceRange) {
+    filterFunctions.setPriceRange([value.min, value.max]);
+  }
+};
 
   return (
     <>
