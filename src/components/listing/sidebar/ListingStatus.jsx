@@ -21,7 +21,7 @@ const ListingStatus = ({filterFunctions}) => {
           <input
             className="form-check-input"
             type="radio"
-            checked={filterFunctions?.listingStatus == option.label}
+            checked={filterFunctions?.listingStatus === option.label}
             
             onChange={()=>filterFunctions.handlelistingStatus(option.label)}
            

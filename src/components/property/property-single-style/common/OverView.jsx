@@ -19,7 +19,7 @@ const overviewData = [
   {
     icon: "flaticon-garage",
     label: "Parking",
-    value: data.Parking,
+    value: data.Parking || "N/A",
     xs: true,
   },
   {
@@ -30,7 +30,7 @@ const overviewData = [
   {
     icon: "flaticon-location",
     label: "Suburb",
-    value: data.Suburb,
+    value: data.Suburb || "N/A",
   },
   {
     icon: "flaticon-map",

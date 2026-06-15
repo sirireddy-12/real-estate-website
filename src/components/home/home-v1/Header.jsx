@@ -88,19 +88,7 @@ const Header = () => {
                     data-bs-target="#SidebarPanel"
                     aria-controls="SidebarPanelLabel"
                   >
-                    <img
-                    
-                      className="img-1"
-                      src="/images/icon/nav-icon-white.svg"
-                      alt="humberger menu"
-                    />
-
-                    <img
-               
-                      className="img-2"
-                      src="/images/icon/nav-icon-dark.svg"
-                      alt="humberger menu"
-                    />
+                    <i className="fas fa-bars"></i>
                   </a>
                 </div>
               </div>

@@ -72,11 +72,9 @@ export default function PropertyFilteringTwo() {
   locationState.state?.searchQuery || ""
 );
 console.log("SEARCH QUERY =", searchQuery);
-    const handlelistingStatus =(elm)=>{
-      setListingStatus(pre => pre == elm ? 'All':elm)
-
-
-    }
+   const handlelistingStatus = (elm) => {
+  setListingStatus(elm);
+};
 
     
     
@@ -154,7 +152,7 @@ console.log("SEARCH QUERY =", searchQuery);
             if (listingStatus == "All") {
   return true;
 } else if (listingStatus == "Buy") {
-  return elm.Category === "Sale";
+  return elm.Category === "Buy";
 } else if (listingStatus == "Rent") {
   return elm.Category === "Rent";
 }
@@ -172,7 +170,7 @@ console.log("SEARCH QUERY =", searchQuery);
           }
           filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bedrooms >=bedrooms)) ];
           filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bathrooms >=bathroms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.FullAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.State?.toLowerCase().includes(searchQuery.toLowerCase()))) ];
+          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Address?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.State?.toLowerCase().includes(searchQuery.toLowerCase()))) ];
          
     
           filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : [...refItems] ]];

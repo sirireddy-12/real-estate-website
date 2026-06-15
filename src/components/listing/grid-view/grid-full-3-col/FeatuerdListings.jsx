@@ -11,7 +11,7 @@ const FeaturedListings = ({ data, colstyle }) => {
           className={` ${
             colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
           }  `}
-          key={listing.id}
+          key={listing.ID}
         >
           <div
             className={
@@ -25,7 +25,7 @@ const FeaturedListings = ({ data, colstyle }) => {
               
                 className="w-100  cover"
                 style={{ height: "230px" }}
-                src={listing.image}
+                src={listing.MainPhotoURL}
                 alt="listings"
               />
               <div className="sale-sticker-wrap">
@@ -38,28 +38,35 @@ const FeaturedListings = ({ data, colstyle }) => {
               </div>
 
               <div className="list-price">
-                {listing.price} / <span>mo</span>
+                {listing.PriceLabel}
               </div>
             </div>
             <div className="list-content">
               <h6 className="list-title">
-                <Link to={`/single-v6/${listing.id}`}>{listing.title}</Link>
+                <Link
+                  to={`/single-v6/${listing.ID}`}
+                  style={{ color: "red", fontSize: "20px" }}
+                >
+  CLICK ME
+</Link>
               </h6>
-              <p className="list-text">{listing.location}</p>
+              <p className="list-text">{listing.FullAddress || listing.Address}</p>
               <div className="list-meta d-flex align-items-center">
                 <a href="#">
-                  <span className="flaticon-bed" /> {listing.bed} bed
+                  <span className="flaticon-bed" /> {listing.Bedrooms} bed
                 </a>
                 <a href="#">
-                  <span className="flaticon-shower" /> {listing.bath} bath
+                  <span className="flaticon-shower" /> {listing.Bathrooms} bath
                 </a>
                 <a href="#">
-                  <span className="flaticon-expand" /> {listing.sqft} sqft
+                  <span className="flaticon-expand" /> {listing.Parking} park
                 </a>
               </div>
               <hr className="mt-2 mb-2" />
               <div className="list-meta2 d-flex justify-content-between align-items-center">
-                <span className="for-what">For Rent</span>
+                <span className="for-what">
+                   {listing.Category}
+                </span>
                 <div className="icons d-flex align-items-center">
                   <a href="#">
                     <span className="flaticon-fullscreen" />

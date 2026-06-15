@@ -31,9 +31,13 @@ const FeaturedListings = ({data,colstyle}) => {
             </div>
             <div className="list-content">
               <h6 className="list-title">
-                <Link to={`/single-v5/${listing.ID}`}>{listing.Title}</Link>
+                  <Link to={`/single-v6/${listing.ID}`}>
+                  {listing.Address}
+                  </Link>
               </h6>
-              <p className="list-text">{listing.FullAddress}</p>
+             <p className="list-text">
+               {listing.State}
+              </p>
               <div className="list-meta d-flex align-items-center">
                 <a href="#">
                   <span className="flaticon-bed" /> {listing.Bedrooms} bed

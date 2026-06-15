@@ -21,31 +21,31 @@ const PropertyDetails = ({ id }) => {
       label: "Bathrooms",
       value: data.Bathrooms,
     },
-    {
-      label: "Parking",
-      value: data.Parking,
-    },
+    // {
+    //   label: "Parking",
+    //   value: data.Parking,
+    // },
   ],
   [
     {
       label: "Category",
       value: data.Category,
     },
-    {
-      label: "Suburb",
-      value: data.Suburb,
-    },
+    // {
+    //   label: "Suburb",
+    //   value: data.Suburb,
+    // },
     {
       label: "State",
       value: data.State,
     },
-    {
-      label: "Agent",
-      value: data.AgentName,
-    },
+    // {
+    //   label: "Agent",
+    //   value: data.Agent,
+    // },
     {
       label: "Agency",
-      value: data.AgencyName,
+      value: data.Agency,
     },
   ],
 ];
@@ -66,7 +66,7 @@ const PropertyDetails = ({ id }) => {
                 </p>
               </div>
               <div className="pd-list">
-                <p className="text mb10">{detail.value}</p>
+                <p className="text mb10 text-end">{detail.value}</p>
               </div>
             </div>
           ))}

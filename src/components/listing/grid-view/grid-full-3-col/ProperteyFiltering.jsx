@@ -162,9 +162,13 @@ export default function ProperteyFiltering() {
             );
             filteredArrays = [...filteredArrays, filtered];
           }
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bed >=bedrooms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.bath >=bathroms)) ];
-         
+          filteredArrays = [...filteredArrays,
+             refItems.filter((el) => Number(el.Bedrooms || 0) >= bedrooms)
+         ];
+
+         filteredArrays = [...filteredArrays,
+         refItems.filter((el) => Number(el.Bathrooms || 0) >= bathroms)
+         ];
     
           filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : refItems.filter((elm)=>categories.every(elem=>elm.features.includes(elem))) ];
   
@@ -175,14 +179,16 @@ export default function ProperteyFiltering() {
           }
          
          
-          if (priceRange.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                Number(elm.price.split('$')[1].split(',').join('')) >= priceRange[0] &&
-                Number(elm.price.split('$')[1].split(',').join('')) <= priceRange[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
+         if (priceRange.length > 0) {
+            const filtered = refItems.filter((elm) => {
+              const price = Number(
+              (elm.PriceLabel || "").replace(/[^0-9]/g, "")
+           );
+              return price >= priceRange[0] && price <= priceRange[1];
+            });
+
+  filteredArrays = [...filteredArrays, filtered];
+}
           if (squirefeet.length > 0 && squirefeet[1]) {
             const filtered = refItems.filter(
               (elm) =>
@@ -235,13 +241,19 @@ export default function ProperteyFiltering() {
         
       } 
       else if (currentSortingOption.trim() == 'Price Low') {
-        const sorted = [...filteredData].sort((a,b)=>a.price.split('$')[1].split(',').join('') - b.price.split('$')[1].split(',').join(''))
+       const sorted = [...filteredData].sort((a, b) =>
+    Number((a.PriceLabel || "").replace(/[^0-9]/g, "")) -
+    Number((b.PriceLabel || "").replace(/[^0-9]/g, ""))
+)
         setSortedFilteredData(sorted)
 
         
       } 
       else if (currentSortingOption.trim() == 'Price High') {
-        const sorted = [...filteredData].sort((a,b)=>b.price.split('$')[1].split(',').join('') - a.price.split('$')[1].split(',').join(''))
+        const sorted = [...filteredData].sort((a, b) =>
+    Number((b.PriceLabel || "").replace(/[^0-9]/g, "")) -
+    Number((a.PriceLabel || "").replace(/[^0-9]/g, ""))
+)
         setSortedFilteredData(sorted)
 
         

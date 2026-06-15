@@ -7,17 +7,12 @@ import "photoswipe/dist/photoswipe.css";
 import listings from "@/data/listings";
 import Map from "./Map";
 
-const images = [
-  "/images/listings/listing-single-6-1.jpg",
-  "/images/listings/listing-single-6-2.jpg",
-  "/images/listings/listing-single-6-3.jpg",
-  "/images/listings/listing-single-6-4.jpg",
-];
+
 
 const PropertyGallery = ({ id }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
-
+  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
+  const images = [data?.MainPhotoURL];
   return (
     <>
       <div className="row">

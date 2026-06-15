@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const GalleryBox = () => {
-  const imageUrls = ["/images/listings/listing-single-slide4.jpg"];
+  const imageUrls = ["/images/listings/listing-single-slide1.jpg"];
 
   return (
     <>

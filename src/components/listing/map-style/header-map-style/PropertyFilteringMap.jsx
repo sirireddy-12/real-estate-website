@@ -152,9 +152,9 @@ export default function PropertyFilteringMap() {
             if (listingStatus == "All") {
               return true;
             } else if (listingStatus == "Buy") {
-              return !elm.forRent;
+             return elm.Category === "Buy";
             } else if (listingStatus == "Rent") {
-              return elm.forRent;
+              return elm.Category === "Rent";
             }
           });
       
