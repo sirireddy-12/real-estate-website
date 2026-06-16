@@ -1,6 +1,7 @@
 
 
 import listings from "@/data/listings";
+const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
 import React, { useState, useEffect } from "react";
 import TopFilterBar from "./TopFilterBar";
 import FeaturedListings from "./FeatuerdListings";
@@ -130,96 +131,33 @@ export default function PropertyFilteringCol() {
   };
 
   useEffect(() => {
-    const refItems = listings.filter((elm) => {
-      if (listingStatus == "All") {
-        return true;
-      } else if (listingStatus == "Buy") {
-        return !elm.forRent;
-      } else if (listingStatus == "Rent") {
-        return elm.forRent;
-      }
-    });
-
-    let filteredArrays = [];
-
-    if (propertyTypes.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        propertyTypes.includes(elm.propertyType)
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bed >= bedrooms),
-    ];
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
-    ];
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter(
-        (el) =>
-          el.city
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.location
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.title
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.features
-            .join(" ")
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase())
-      ),
-    ];
-
-    filteredArrays = [
-      ...filteredArrays,
-      !categories.length
-        ? [...refItems]
-        : refItems.filter((elm) =>
-            categories.every((elem) => elm.features.includes(elem))
-          ),
-    ];
-
-    if (location != "All Cities") {
-      filteredArrays = [
-        ...filteredArrays,
-        refItems.filter((el) => el.city == location),
-      ];
-    }
-
-    if (priceRange.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          Number(elm.price.split("$")[1].split(",").join("")) >=
-            priceRange[0] &&
-          Number(elm.price.split("$")[1].split(",").join("")) <= priceRange[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (squirefeet.length > 0 && squirefeet[1]) {
-      const filtered = refItems.filter(
-        (elm) => elm.sqft >= squirefeet[0] && elm.sqft <= squirefeet[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    if (yearBuild.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.yearBuilding >= yearBuild[0] && elm.yearBuilding <= yearBuild[1]
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    const commonItems = refItems.filter((item) =>
-      filteredArrays.every((array) => array.includes(item))
+    let result = indexedListings.filter((elm) =>
+      listingStatus === "All" ? true : elm.Category === listingStatus
     );
-
-    setFilteredData(commonItems);
+    if (propertyTypes.length > 0)
+      result = result.filter((elm) => propertyTypes.includes(elm.PropertyType));
+    if (bedrooms > 0)
+      result = result.filter((el) => Number(el.Bedrooms) >= bedrooms);
+    if (bathroms > 0)
+      result = result.filter((el) => Number(el.Bathrooms) >= bathroms);
+    if (location !== "All Cities")
+      result = result.filter(
+        (el) =>
+          (el.Suburb || "").toLowerCase().includes(location.toLowerCase()) ||
+          (el.Address || "").toLowerCase().includes(location.toLowerCase())
+      );
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (el) =>
+          (el.Address || "").toLowerCase().includes(q) ||
+          (el.Suburb || "").toLowerCase().includes(q) ||
+          (el.State || "").toLowerCase().includes(q) ||
+          (el.Agency || "").toLowerCase().includes(q) ||
+          (el.PropertyType || "").toLowerCase().includes(q)
+      );
+    }
+    setFilteredData(result);
   }, [
     listingStatus,
     propertyTypes,
@@ -235,27 +173,18 @@ export default function PropertyFilteringCol() {
 
   useEffect(() => {
     setPageNumber(1);
-    if (currentSortingOption == "Newest") {
-      const sorted = [...filteredData].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price Low") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price High") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
+    if (currentSortingOption.trim() === "Price Low") {
+      setSortedFilteredData([...filteredData].sort((a, b) =>
+        Number((a.PriceLabel || "").replace(/[^0-9]/g, "")) -
+        Number((b.PriceLabel || "").replace(/[^0-9]/g, ""))
+      ));
+    } else if (currentSortingOption.trim() === "Price High") {
+      setSortedFilteredData([...filteredData].sort((a, b) =>
+        Number((b.PriceLabel || "").replace(/[^0-9]/g, "")) -
+        Number((a.PriceLabel || "").replace(/[^0-9]/g, ""))
+      ));
     } else {
-      setSortedFilteredData(filteredData);
+      setSortedFilteredData([...filteredData]);
     }
   }, [filteredData, currentSortingOption]);
   return (
@@ -297,10 +226,10 @@ export default function PropertyFilteringCol() {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2>Melbourne Properties</h2>
+                <h2>Property Listings</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
-                  <a href="#">For Rent</a>
+                  <a href="#">Listings</a>
                 </div>
               </div>
             </div>

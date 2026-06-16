@@ -1,12 +1,17 @@
-
 import { Link } from "react-router-dom";
+import listings from "@/data/listings";
 
 const About = () => {
   const featureList = [
     "Apartments for Sale",
     "Houses for Rent",
-    "Property Listings Updated Daily"
+    "Property Listings Updated Daily",
   ];
+  const img1 = listings.find((l) => l.MainPhotoURL)?.MainPhotoURL ?? "";
+  const img2 =
+    listings.find((l) => l.MainPhotoURL && l.MainPhotoURL !== img1)
+      ?.MainPhotoURL ?? img1;
+
   return (
     <>
       <div className="row">
@@ -16,7 +21,7 @@ const About = () => {
             data-aos="fade-left"
           >
             <h2 className="title mb30">
-              Let’s find the right selling option for you
+              Let's find the right selling option for you
             </h2>
             <p className="text mb25 fz15">
               Browse apartments, houses and rental properties across Melbourne.
@@ -32,46 +37,19 @@ const About = () => {
               </ul>
             </div>
             <Link to="/grid-full-1-col" className="ud-btn btn-white2">
-                   View Properties
+              View Properties
             </Link>
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-lg-9 col-xl-8 col-xxl-7 offset-xxl-1">
           <div className="position-relative mb35 mb0-sm" data-aos="fade-right">
             <div className="img-box-1 list-inline-item me-0">
-              <img
-               
-                className="img-1"
-                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41013.jpg"
-                alt="about"
-              />
+              <img className="img-1" src={img1} alt="about" />
             </div>
             <div className="img-box-2 list-inline-item me-0">
-              <img
-               
-                className="img-1"
-                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41022.jpg"
-                alt="about"
-              />
+              <img className="img-1" src={img2} alt="about" />
             </div>
-            {/* <div className="img-box-3">
-              <img
-               
-                className="img-1 bounce-y"
-                src="https://open-home-media-au.s3.ap-southeast-2.amazonaws.com/photos/000/041/41086.jpg"
-                alt="about"
-              />
-            </div>
-            <div className="img-box-4">
-              <img
-               
-                className="img-1 spin-right"
-                src="/images/about/element-1.png"
-                alt="about"
-              />
-            </div> */}
           </div>
         </div>
       </div>

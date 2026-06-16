@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`header-nav nav-homepage-style main-menu  ${
+        className={`header-nav nav-homepage-style light-header main-menu ${
           navbar ? "sticky slideInDown animated" : ""
         }`}
       >
@@ -74,13 +74,6 @@ const Header = () => {
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
                   </a>
-                  <Link
-                    className="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
-                    to="/dashboard-add-property"
-                  >
-                    Add Property
-                    <i className="fal fa-arrow-right-long" />
-                  </Link>
                   <a
                     className="sidemenu-btn filter-btn-right"
                     href="#"

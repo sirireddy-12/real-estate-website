@@ -145,124 +145,54 @@ export default function PropertyFilteringBanner() {
 
 
     useEffect(() => {
-      
-        const refItems = listings.filter((elm) => {
-           if (listingStatus == "All") {
-              return true;
-           } else if (listingStatus == "Buy") {
-              return elm.Category === "Sale";
-           } else if (listingStatus == "Rent") {
-              return elm.Category === "Rent";
-           }
-          });
-      
-          let filteredArrays = [];
-
-
-      
-          if (propertyTypes.length > 0) {
-            const filtered = refItems.filter((elm) =>
-            propertyTypes.includes(elm.propertyType)
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bedrooms >=bedrooms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bathrooms >=bathroms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el) =>el.FullAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||el.State?.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-];
-         
-    
-          filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : refItems.filter((elm)=>categories.every(elem=>elm.features.includes(elem))) ];
-  
-          if (location != 'All Cities') {
-           
-            
-            filteredArrays = [...filteredArrays,refItems.filter((el=>el.city == location)) ];
-          }
-         
-         
-          if (priceRange.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                Number(elm.price.split('$')[1].split(',').join('')) >= priceRange[0] &&
-                Number(elm.price.split('$')[1].split(',').join('')) <= priceRange[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          if (squirefeet.length > 0 && squirefeet[1]) {
-            const filtered = refItems.filter(
-              (elm) =>
-              elm.sqft >= squirefeet[0] &&
-             elm.sqft <= squirefeet[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          if (yearBuild.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                elm.yearBuilding >= yearBuild[0] &&
-                 elm.yearBuilding <= yearBuild[1]
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          
-
- 
-         
-      
-          const commonItems = refItems.filter((item) =>
-            filteredArrays.every((array) => array.includes(item))
-          );
-
-         
-          setFilteredData(commonItems);
-         
-          
-      
+      let result = listings.filter((elm) =>
+        listingStatus === "All" ? true : elm.Category === listingStatus
+      );
+      if (propertyTypes.length > 0)
+        result = result.filter((elm) => propertyTypes.includes(elm.PropertyType));
+      if (bedrooms > 0)
+        result = result.filter((el) => Number(el.Bedrooms || 0) >= bedrooms);
+      if (bathroms > 0)
+        result = result.filter((el) => Number(el.Bathrooms || 0) >= bathroms);
+      if (location !== "All Cities")
+        result = result.filter(
+          (el) =>
+            (el.Address || "").toLowerCase().includes(location.toLowerCase()) ||
+            (el.Suburb || "").toLowerCase().includes(location.toLowerCase())
+        );
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        result = result.filter(
+          (el) =>
+            (el.Address || "").toLowerCase().includes(q) ||
+            (el.Suburb || "").toLowerCase().includes(q) ||
+            (el.State || "").toLowerCase().includes(q) ||
+            (el.Agency || "").toLowerCase().includes(q) ||
+            (el.PropertyType || "").toLowerCase().includes(q)
+        );
+      }
+      setFilteredData(result);
     }, [
-        listingStatus,
-        propertyTypes,
-        priceRange,
-        bedrooms,
-        bathroms,
-        location,
-        squirefeet,
-        yearBuild,
-        categories,
-        searchQuery
-
+        listingStatus, propertyTypes, priceRange,
+        bedrooms, bathroms, location, squirefeet, yearBuild, categories, searchQuery
     ])
 
     useEffect(() => {
-      setPageNumber(1)
-      if (currentSortingOption == 'Newest') {
-        const sorted = [...filteredData].sort((a,b)=>a.yearBuilding - b.yearBuilding)
-        setSortedFilteredData(sorted)
-       
-        
-      } 
-      else if (currentSortingOption.trim() == 'Price Low') {
-        const sorted = [...filteredData].sort((a,b)=>a.price.split('$')[1].split(',').join('') - b.price.split('$')[1].split(',').join(''))
-        setSortedFilteredData(sorted)
-
-        
-      } 
-      else if (currentSortingOption.trim() == 'Price High') {
-        const sorted = [...filteredData].sort((a,b)=>b.price.split('$')[1].split(',').join('') - a.price.split('$')[1].split(',').join(''))
-        setSortedFilteredData(sorted)
-
-        
-      } 
-    
-      else {
-        setSortedFilteredData(filteredData)
-    
-        
+      setPageNumber(1);
+      if (currentSortingOption === "Price Low") {
+        setSortedFilteredData([...filteredData].sort((a, b) =>
+          Number((a.PriceLabel || "").replace(/[^0-9]/g, "")) -
+          Number((b.PriceLabel || "").replace(/[^0-9]/g, ""))
+        ));
+      } else if (currentSortingOption === "Price High") {
+        setSortedFilteredData([...filteredData].sort((a, b) =>
+          Number((b.PriceLabel || "").replace(/[^0-9]/g, "")) -
+          Number((a.PriceLabel || "").replace(/[^0-9]/g, ""))
+        ));
+      } else {
+        setSortedFilteredData([...filteredData]);
       }
-
-      
-    }, [filteredData,currentSortingOption,])
+    }, [filteredData, currentSortingOption])
   return (
     <>
          {/* Home Banner Style V1 */}

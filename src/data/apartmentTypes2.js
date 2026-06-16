@@ -1,53 +1,22 @@
-const appertments = [
-  {
-    title: "House",
-    imageSrc: "/images/listings/as-1.jpg",
-    properties: 22,
-  },
-  {
-    title: "Apartments",
-    imageSrc: "/images/listings/as-2.jpg",
-    properties: 22,
-  },
-  {
-    title: "Office",
-    imageSrc: "/images/listings/as-3.jpg",
-    properties: 22,
-  },
-  {
-    title: "Villa",
-    imageSrc: "/images/listings/as-4.jpg",
-    properties: 22,
-  },
-  {
-    title: "House",
-    imageSrc: "/images/listings/as-5.jpg",
-    properties: 22,
-  },
-  {
-    title: "Apartments",
-    imageSrc: "/images/listings/as-2.jpg",
-    properties: 22,
-  },
-  {
-    title: "Office",
-    imageSrc: "/images/listings/as-3.jpg",
-    properties: 22,
-  },
-  {
-    title: "Villa",
-    imageSrc: "/images/listings/as-4.jpg",
-    properties: 22,
-  },
-  {
-    title: "Townhome",
-    imageSrc: "/images/listings/as-5.jpg",
-    properties: 22,
-  },
-  {
-    title: "Townhome",
-    imageSrc: "/images/listings/as-5.jpg",
-    properties: 22,
-  },
+import listings from "./listings";
+
+const typeMeta = [
+  { key: "House", imageSrc: "/images/listings/as-1.jpg" },
+  { key: "Apartment", imageSrc: "/images/listings/as-2.jpg" },
+  { key: "Townhouse", imageSrc: "/images/listings/as-3.jpg" },
+  { key: "Villa", imageSrc: "/images/listings/as-4.jpg" },
+  { key: "Unit", imageSrc: "/images/listings/as-5.jpg" },
+  { key: "Acreage", imageSrc: "/images/listings/as-2.jpg" },
+  { key: "Residential land", imageSrc: "/images/listings/as-3.jpg" },
+  { key: "Townhouse", imageSrc: "/images/listings/as-4.jpg" },
+  { key: "Duplex/semi-detached", imageSrc: "/images/listings/as-5.jpg" },
+  { key: "Lifestyle", imageSrc: "/images/listings/as-5.jpg" },
 ];
-export default appertments
+
+const appertments = typeMeta.map((t) => ({
+  title: t.key,
+  imageSrc: t.imageSrc,
+  properties: listings.filter((l) => l.PropertyType === t.key).length,
+}));
+
+export default appertments;

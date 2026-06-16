@@ -4,8 +4,11 @@ import React, { useState } from "react";
 const HeroContent = ({filterFunctions}) => {
   const [activeTab, setActiveTab] = useState("buy");
 
+  const tabToCategory = { buy: "Buy", rent: "Rent", sold: "Sold" };
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    filterFunctions?.handlelistingStatus(tabToCategory[tab]);
   };
 
   const tabs = [
@@ -46,8 +49,8 @@ const HeroContent = ({filterFunctions}) => {
                           className="form-control bgc-f7 bdrs12"
                           type="text"
                           name="search"
-                          onChange={(e)=>filterFunctions && filterFunctions.setSearchQuery(e.target.value)}
-                          placeholder={`Enter an address, neighborhood, city, or ZIP code for ${tab.label}`}
+                          onChange={(e) => filterFunctions?.setSearchQuery(e.target.value)}
+                          placeholder={`Search by address, suburb or postcode`}
                         />
                       </div>
                     </form>

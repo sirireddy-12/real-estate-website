@@ -2,7 +2,8 @@ import listings from "@/data/listings";
 import React from "react";
 
 const PropertyDetails = ({ id }) => {
-  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
+  const idx = parseInt(id, 10);
+  const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
  const columns = [
   [
     {

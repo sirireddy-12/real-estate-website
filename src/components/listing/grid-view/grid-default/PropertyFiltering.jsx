@@ -1,6 +1,7 @@
 
 
 import listings from "@/data/listings";
+const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
 import React, { useState, useEffect } from "react";
 import ListingSidebar from "../../sidebar";
 import TopFilterBar from "./TopFilterBar";
@@ -126,94 +127,33 @@ export default function PropertyFiltering() {
   };
 
   useEffect(() => {
-    const refItems = listings.filter((elm) => {
-      if (listingStatus == "All") {
-        return true;
-      } else if (listingStatus == "Buy") {
-        return !elm.forRent;
-      } else if (listingStatus == "Rent") {
-        return elm.forRent;
-      }
-    });
-
-    let filteredArrays = [];
-
-    if (propertyTypes.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        propertyTypes.includes(elm.propertyType)
+    let result = indexedListings.filter((elm) =>
+      listingStatus === "All" ? true : elm.Category === listingStatus
+    );
+    if (propertyTypes.length > 0)
+      result = result.filter((elm) => propertyTypes.includes(elm.PropertyType));
+    if (bedrooms > 0)
+      result = result.filter((el) => Number(el.Bedrooms) >= bedrooms);
+    if (bathroms > 0)
+      result = result.filter((el) => Number(el.Bathrooms) >= bathroms);
+    if (location !== "All Cities")
+      result = result.filter(
+        (el) =>
+          (el.Suburb || "").toLowerCase().includes(location.toLowerCase()) ||
+          (el.Address || "").toLowerCase().includes(location.toLowerCase())
       );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bed >= bedrooms),
-    ];
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
-    ];
-    filteredArrays = [
-  ...filteredArrays,
-  refItems.filter(
-    (el) =>
-      (el.city || "")
-        .toLowerCase()
-        .includes((searchQuery || "").toLowerCase()) ||
-
-      (el.location || "")
-        .toLowerCase()
-        .includes((searchQuery || "").toLowerCase()) ||
-
-      (el.title || "")
-        .toLowerCase()
-        .includes((searchQuery || "").toLowerCase()) ||
-
-      (el.features || [])
-        .join(" ")
-        .toLowerCase()
-        .includes((searchQuery || "").toLowerCase())
-  ),
-];
-    filteredArrays = [
-      ...filteredArrays,
-      !categories.length
-        ? [...refItems]
-        : refItems.filter((elm) =>
-            categories.every((elem) => elm.features.includes(elem))
-          ),
-    ];
-
-    if (location != "All Cities") {
-      filteredArrays = [
-        ...filteredArrays,
-        refItems.filter((el) => el.city == location),
-      ];
-    }
-
-    if (priceRange.length > 0) {
-  filteredArrays = [...filteredArrays, refItems];
-}
-
-    if (squirefeet.length > 0 && squirefeet[1]) {
-      console.log(squirefeet);
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.sqft >= Number(squirefeet[0]) && elm.sqft <= Number(squirefeet[1])
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (el) =>
+          (el.Address || "").toLowerCase().includes(q) ||
+          (el.Suburb || "").toLowerCase().includes(q) ||
+          (el.State || "").toLowerCase().includes(q) ||
+          (el.Agency || "").toLowerCase().includes(q) ||
+          (el.PropertyType || "").toLowerCase().includes(q)
       );
-      filteredArrays = [...filteredArrays, filtered];
     }
-    if (yearBuild.length > 0) {
-      const filtered = refItems.filter(
-        (elm) =>
-          elm.yearBuilding >= Number(yearBuild[0]) &&
-          elm.yearBuilding <= Number(yearBuild[1])
-      );
-      filteredArrays = [...filteredArrays, filtered];
-    }
-
-    const commonItems = refItems;
-
-    setFilteredData(commonItems);
+    setFilteredData(result);
   }, [
     listingStatus,
     propertyTypes,
@@ -229,28 +169,7 @@ export default function PropertyFiltering() {
 
   useEffect(() => {
     setPageNumber(1);
-    if (currentSortingOption == "Newest") {
-      const sorted = [...filteredData].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price Low") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price High") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join("")
-      );
-      setSortedFilteredData(sorted);
-    } else {
-      setSortedFilteredData(filteredData);
-    }
+    setSortedFilteredData([...filteredData]);
   }, [filteredData, currentSortingOption]);
 
   return (

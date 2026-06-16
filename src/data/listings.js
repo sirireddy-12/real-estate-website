@@ -1,4 +1,6 @@
 const listings = [
+  // NOTE: id = array index, used for detail page routing (/single-v6/:id)
+  // Every object below is auto-indexed; do not add explicit ID fields.
   {
     "Address": "4007/633 Little Lonsdale Street, Melbourne",
     "Suburb": "",

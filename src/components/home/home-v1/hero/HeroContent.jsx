@@ -1,5 +1,4 @@
-
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 const HeroContent = () => {
@@ -7,24 +6,28 @@ const HeroContent = () => {
   const [activeTab, setActiveTab] = useState("buy");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
-
   const tabs = [
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
     { id: "sold", label: "Sold" },
   ];
 
+  const tabToCategory = { buy: "Buy", rent: "Rent", sold: "Sold" };
+
+  const handleSearch = () => {
+    navigate("/map-v1", {
+      state: { searchQuery, activeTab: tabToCategory[activeTab] || "Buy" },
+    });
+  };
+
   return (
-    <div className="advance-search-tab mt70 mt30-md mx-auto animate-up-3">
+    <div className="advance-search-tab animate-up-3">
       <ul className="nav nav-tabs p-0 m-0">
         {tabs.map((tab) => (
           <li className="nav-item" key={tab.id}>
             <button
               className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => handleTabClick(tab.id)}
+              onClick={() => setActiveTab(tab.id)}
             >
               {tab.label}
             </button>
@@ -33,31 +36,32 @@ const HeroContent = () => {
       </ul>
 
       <div className="tab-content">
-        {tabs.map((tab) => (
-          <div
-            className={`${activeTab === tab.id ? "active" : ""} tab-pane`}
-            key={tab.id}
-          >
-            <div className="advance-content-style1">
-              <div className="row">
+        <div className="active tab-pane">
+          <div className="advance-content-style1">
+              <div className="row align-items-center">
                 <div className="col-md-8 col-lg-9">
                   <div className="advance-search-field position-relative text-start">
-                    <form className="form-search position-relative">
+                    <form
+                      className="form-search position-relative"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSearch();
+                      }}
+                    >
                       <div className="box-search">
                         <span className="icon flaticon-home-1" />
                         <input
-                            className="form-control bgc-f7 bdrs12"
-                            type="text"
-                            name="search"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder={`Enter an address, neighborhood, city, or ZIP code for ${tab.label}`}
-                          />
+                          className="form-control bgc-f7 bdrs12"
+                          type="text"
+                          name="search"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder={`Search by address, suburb or postcode`}
+                        />
                       </div>
                     </form>
                   </div>
                 </div>
-                {/* End .col-md-8 */}
 
                 <div className="col-md-4 col-lg-3">
                   <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
@@ -67,15 +71,11 @@ const HeroContent = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#advanceSeachModal"
                     >
-                      <span className="flaticon-settings" /> Advanced
+                      <span className="flaticon-settings" /> Filters
                     </button>
                     <button
-                      className="advance-search-icon ud-btn btn-thm ms-4"
-                      onClick={() =>
-                         navigate("/map-v1", {
-                         state: { searchQuery }
-                          })
-                        }
+                      className="advance-search-icon ud-btn btn-thm ms-3"
+                      onClick={handleSearch}
                       type="button"
                     >
                       <span className="flaticon-search" />
@@ -83,9 +83,8 @@ const HeroContent = () => {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

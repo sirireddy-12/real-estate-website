@@ -1,140 +1,81 @@
-
-
 import { Link } from "react-router-dom";
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-
-const propertyData = [
-  {
-    id: 1,
-    title: "Equestrian  Family Home",
-    imageSrc: "/images/listings/list-1.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
-  },
-  {
-    id: 2,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-2.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
-  },
-  {
-    id: 3,
-    title: "Villa on Hollywood Boulevard",
-    imageSrc: "/images/listings/list-3.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Processing",
-  },
-  {
-    id: 4,
-    title: "Equestrian Family Home",
-    imageSrc: "/images/listings/list-4.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
-  },
-  {
-    id: 5,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-5.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
-  },
-];
+import listings from "@/data/listings";
 
 const getStatusStyle = (status) => {
   switch (status) {
-    case "Pending":
-      return "pending-style style1";
-    case "Published":
-      return "pending-style style2";
-    case "Processing":
-      return "pending-style style3";
-    default:
-      return "";
+    case "Buy": return "pending-style style2";
+    case "Rent": return "pending-style style1";
+    case "Sold": return "pending-style style3";
+    default: return "pending-style style2";
   }
 };
 
 const PropertyDataTable = () => {
+  const propertyData = listings.slice(0, 5);
+
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
         <tr>
           <th scope="col">Listing title</th>
-          <th scope="col">Date Published</th>
+          <th scope="col">Agency</th>
           <th scope="col">Status</th>
-          <th scope="col">View</th>
+          <th scope="col">Price</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody className="t-body">
-        {propertyData.map((property) => (
-          <tr key={property.id}>
+        {propertyData.map((property, i) => (
+          <tr key={i}>
             <th scope="row">
               <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                 <div className="list-thumb">
                   <img
-                   
                     className="w-100"
-                    src={property.imageSrc}
-                    alt="property"
+                    src={property.MainPhotoURL}
+                    alt={property.Address}
                   />
                 </div>
                 <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
                   <div className="h6 list-title">
-                    <Link to={`/single-v1/${property.id}`}>{property.title}</Link>
+                    <Link to={`/single-v6/${i}`}>{property.Address}</Link>
                   </div>
-                  <p className="list-text mb-0">{property.location}</p>
-                  <div className="list-price">
-                    <a href="#">{property.price}</a>
-                  </div>
+                  <p className="list-text mb-0">{property.Suburb} {property.State}</p>
+                  {property.PriceLabel && (
+                    <div className="list-price">
+                      <a href="#">{property.PriceLabel}</a>
+                    </div>
+                  )}
                 </div>
               </div>
             </th>
-            <td className="vam">{property.datePublished}</td>
+            <td className="vam">{property.Agency}</td>
             <td className="vam">
-              <span className={getStatusStyle(property.status)}>
-                {property.status}
+              <span className={getStatusStyle(property.Category)}>
+                {property.Category}
               </span>
             </td>
-            <td className="vam">{property.datePublished}</td>
+            <td className="vam">{property.PriceLabel || "Contact Agent"}</td>
             <td className="vam">
               <div className="d-flex">
                 <button
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`edit-${property.id}`}
+                  data-tooltip-id={`edit-${i}`}
                 >
                   <span className="fas fa-pen fa" />
                 </button>
                 <button
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`delete-${property.id}`}
+                  data-tooltip-id={`delete-${i}`}
                 >
                   <span className="flaticon-bin" />
                 </button>
-
-                <ReactTooltip
-                  id={`edit-${property.id}`}
-                  place="top"
-                  content="Edi"
-                />
-                <ReactTooltip
-                  id={`delete-${property.id}`}
-                  place="top"
-                  content="Delete"
-                />
+                <ReactTooltip id={`edit-${i}`} place="top" content="Edit" />
+                <ReactTooltip id={`delete-${i}`} place="top" content="Delete" />
               </div>
             </td>
           </tr>

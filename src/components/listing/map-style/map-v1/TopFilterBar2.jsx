@@ -11,6 +11,19 @@ const TopFilterBar2 = ({filterFunctions}) => {
   return (
     <>
       <li className="list-inline-item position-relative">
+        <div className="search-box-inline mb15">
+          <input
+            type="text"
+            className="form-control bgc-f7 bdrs12"
+            placeholder="Search suburb, address…"
+            style={{ minWidth: 220, height: 42 }}
+            onChange={(e) => filterFunctions?.setSearchQuery?.(e.target.value)}
+          />
+        </div>
+      </li>
+      {/* End li Search */}
+
+      <li className="list-inline-item position-relative">
         <button
           type="button"
           className="open-btn mb15 dropdown-toggle"

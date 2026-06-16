@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const FeaturedListings = ({data,colstyle}) => {
   return (
     <>
-      {data.map((listing) => (
-        <div  className={` ${colstyle ? 'col-sm-12':'col-sm-6'}  `} key={listing.ID}>
+      {data.map((listing, i) => (
+        <div  className={` ${colstyle ? 'col-sm-12':'col-sm-6'}  `} key={i}>
           <div className={colstyle ? "listing-style1 listCustom listing-type" : "listing-style1"}>
             <div className="list-thumb"    >
               <img
@@ -17,11 +17,8 @@ const FeaturedListings = ({data,colstyle}) => {
                 alt="listings"
               />
               <div className="sale-sticker-wrap">
-                {listing.Category === "Rent" && (
-                  <div className="list-tag fz12">
-                    <span className="flaticon-electricity me-2" />
-                    FEATURED
-                  </div>
+                {listing.Category && (
+                  <div className="list-tag fz12">{listing.Category}</div>
                 )}
               </div>
 
@@ -31,7 +28,7 @@ const FeaturedListings = ({data,colstyle}) => {
             </div>
             <div className="list-content">
               <h6 className="list-title">
-                  <Link to={`/single-v6/${listing.ID}`}>
+                  <Link to={`/single-v6/${listing._idx}`}>
                   {listing.Address}
                   </Link>
               </h6>

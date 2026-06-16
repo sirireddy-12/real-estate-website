@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 const FeaturedListings = ({ data, colstyle }) => {
   return (
     <>
-      {data.map((listing) => (
+      {data.map((listing, i) => (
         <div
           className={` ${
             colstyle ? "col-sm-12 col-lg-6" : "col-sm-6 col-lg-4"
           }  `}
-          key={listing.ID}
+          key={i}
         >
           <div
             className={
@@ -22,18 +22,14 @@ const FeaturedListings = ({ data, colstyle }) => {
           >
             <div className="list-thumb">
               <img
-              
                 className="w-100  cover"
                 style={{ height: "230px" }}
                 src={listing.MainPhotoURL}
-                alt="listings"
+                alt={listing.Address}
               />
               <div className="sale-sticker-wrap">
-                {!listing.forRent && (
-                  <div className="list-tag fz12">
-                    <span className="flaticon-electricity me-2" />
-                    FEATURED
-                  </div>
+                {listing.Category && (
+                  <div className="list-tag fz12">{listing.Category}</div>
                 )}
               </div>
 
@@ -43,14 +39,9 @@ const FeaturedListings = ({ data, colstyle }) => {
             </div>
             <div className="list-content">
               <h6 className="list-title">
-                <Link
-                  to={`/single-v6/${listing.ID}`}
-                  style={{ color: "red", fontSize: "20px" }}
-                >
-  CLICK ME
-</Link>
+                <Link to={`/single-v6/${listing._idx ?? i}`}>{listing.Address}</Link>
               </h6>
-              <p className="list-text">{listing.FullAddress || listing.Address}</p>
+              <p className="list-text">{listing.Suburb} {listing.State}</p>
               <div className="list-meta d-flex align-items-center">
                 <a href="#">
                   <span className="flaticon-bed" /> {listing.Bedrooms} bed

@@ -11,8 +11,9 @@ import Map from "./Map";
 
 const PropertyGallery = ({ id }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const data = listings.filter((elm) => elm.ID == id)[0] || listings[0];
-  const images = [data?.MainPhotoURL];
+  const idx = parseInt(id, 10);
+  const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
+  const images = [data?.MainPhotoURL].filter(Boolean);
   return (
     <>
       <div className="row">

@@ -1,12 +1,20 @@
-const appertmentsTypes = [
-  { id: 1, icon: "flaticon-home", title: "Houses", count: 22 },
-  { id: 2, icon: "flaticon-corporation", title: "Apartments", count: 22 },
-  { id: 3, icon: "flaticon-network", title: "Office", count: 22 },
-  { id: 4, icon: "flaticon-garden", title: "Villa", count: 22 },
-  { id: 5, icon: "flaticon-chat", title: "Townhome", count: 22 },
-  { id: 6, icon: "flaticon-window", title: "Bungalow", count: 22 },
-  { id: 7, icon: "flaticon-bird-house", title: "Loft", count: 22 },
+import listings from "./listings";
+
+const typeMeta = [
+  { key: "House", icon: "flaticon-home", title: "Houses" },
+  { key: "Apartment", icon: "flaticon-corporation", title: "Apartments" },
+  { key: "Townhouse", icon: "flaticon-chat", title: "Townhouses" },
+  { key: "Unit", icon: "flaticon-network", title: "Units" },
+  { key: "Villa", icon: "flaticon-garden", title: "Villas" },
+  { key: "Acreage", icon: "flaticon-window", title: "Acreage" },
+  { key: "Residential land", icon: "flaticon-bird-house", title: "Land" },
 ];
 
+const appertmentsTypes = typeMeta.map((t, i) => ({
+  id: i + 1,
+  icon: t.icon,
+  title: t.title,
+  count: listings.filter((l) => l.PropertyType === t.key).length,
+}));
 
-export default appertmentsTypes
+export default appertmentsTypes;

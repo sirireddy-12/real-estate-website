@@ -3208,17 +3208,19 @@ li {
 
 /* Hero Styles All Type Of */
 .home-banner-style1 {
-    background-image: url(/images/home/home-1.jpg);
+    background-color: #f8f8f8;
+    background-image: none;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     width: 100%;
-    min-height: 850px;
+    min-height: 650px;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-top: 120px;
 
     position: relative;
 }
@@ -3248,10 +3250,11 @@ li {
     font-weight: 400;
 }
 .inner-banner-style1 .hero-title {
-    color: #ffffff;
-    font-size: 52px;
+    color: #181a20;
+    font-size: 72px;
+    line-height: 1.1;
     font-family: var(--title-font-family);
-    font-weight: 600;
+    font-weight: 700;
 }
 @media (max-width: 767.98px) {
     .inner-banner-style1 .hero-title {
@@ -3965,7 +3968,7 @@ li {
     font-weight: 400;
 }
 .inner-banner-style8 .hero-title {
-    font-size: 52px;
+    font-size: 68px;
     font-family: var(--title-font-family);
     font-weight: 600;
 }
@@ -7801,7 +7804,7 @@ li.mm-listitem:focus {
 
 /* Nav & Tabs Styles */
 .advance-search-tab {
-    max-width: 970px;
+    max-width: 1100px;
     position: relative;
     z-index: 2;
 }
@@ -10532,4 +10535,22 @@ input:focus-visible {
     .bb1-sm {
         border-bottom: 1px solid #dddddd;
     }
+}
+.header-nav {
+  background: white !important;
+}
+
+.header-nav a {
+  color: #181a20 !important;
+}
+
+.main-menu .navigation li a {
+  color: #181a20 !important;
+}
+header.nav-homepage-style .header-logo.logo1 {
+    display: none !important;
+}
+
+header.nav-homepage-style .header-logo.logo2 {
+    display: block !important;
 }

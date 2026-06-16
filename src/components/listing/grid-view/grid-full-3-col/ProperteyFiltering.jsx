@@ -4,6 +4,7 @@
 
 
 import listings from "@/data/listings";
+const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
 import React, { useState,useEffect } from 'react'
 import ListingSidebar from '../../sidebar'
 import AdvanceFilterModal from '@/components/common/advance-filter-two'
@@ -143,82 +144,24 @@ export default function ProperteyFiltering() {
 
 
     useEffect(() => {
-      
-        const refItems = listings.filter((elm) => {
-            if (listingStatus == "All") {
-              return true;
-            } else if (listingStatus == "Buy") {
-              return !elm.forRent;
-            } else if (listingStatus == "Rent") {
-              return elm.forRent;
-            }
-          });
-      
-          let filteredArrays = [];
-      
-          if (propertyTypes.length > 0) {
-            const filtered = refItems.filter((elm) =>
-            propertyTypes.includes(elm.propertyType)
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          filteredArrays = [...filteredArrays,
-             refItems.filter((el) => Number(el.Bedrooms || 0) >= bedrooms)
-         ];
+        let result = indexedListings.filter((elm) =>
+          listingStatus === "All" ? true : elm.Category === listingStatus
+        );
 
-         filteredArrays = [...filteredArrays,
-         refItems.filter((el) => Number(el.Bathrooms || 0) >= bathroms)
-         ];
-    
-          filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : refItems.filter((elm)=>categories.every(elem=>elm.features.includes(elem))) ];
-  
-          if (location != 'All Cities') {
-           
-            
-            filteredArrays = [...filteredArrays,refItems.filter((el=>el.city == location)) ];
-          }
-         
-         
-         if (priceRange.length > 0) {
-            const filtered = refItems.filter((elm) => {
-              const price = Number(
-              (elm.PriceLabel || "").replace(/[^0-9]/g, "")
-           );
-              return price >= priceRange[0] && price <= priceRange[1];
-            });
+        if (propertyTypes.length > 0)
+          result = result.filter((elm) => propertyTypes.includes(elm.PropertyType));
 
-  filteredArrays = [...filteredArrays, filtered];
-}
-          if (squirefeet.length > 0 && squirefeet[1]) {
-            const filtered = refItems.filter(
-              (elm) =>
-              elm.sqft >= squirefeet[0] &&
-             elm.sqft <= squirefeet[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          if (yearBuild.length > 0) {
-            const filtered = refItems.filter(
-              (elm) =>
-                elm.yearBuilding >= yearBuild[0] &&
-                 elm.yearBuilding <= yearBuild[1]
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          
+        result = result.filter((el) => Number(el.Bedrooms || 0) >= bedrooms);
+        result = result.filter((el) => Number(el.Bathrooms || 0) >= bathroms);
 
- 
-         
-      
-          const commonItems = refItems.filter((item) =>
-            filteredArrays.every((array) => array.includes(item))
+        if (location !== "All Cities")
+          result = result.filter(
+            (el) =>
+              (el.Address || "").toLowerCase().includes(location.toLowerCase()) ||
+              (el.Suburb || "").toLowerCase().includes(location.toLowerCase())
           );
 
-         
-          setFilteredData(commonItems);
-         
-          
-      
+        setFilteredData(result);
     }, [
         listingStatus,
         propertyTypes,

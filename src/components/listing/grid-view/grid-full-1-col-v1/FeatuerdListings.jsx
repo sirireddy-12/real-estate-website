@@ -3,70 +3,50 @@
 
 import { Link } from "react-router-dom";
 
-const FeaturedListings = ({data,colstyle}) => {
+const FeaturedListings = ({ data }) => {
   return (
     <>
-      {data.map((listing) => (
-        <div className="col-md-12" key={listing.id}>
-          <div className="listing-style1">
+      {data.map((listing, i) => (
+        <div className="col-md-12" key={i}>
+          <div className="listing-style1 listCustom listing-type">
             <div className="list-thumb">
               <img
-              
-                style={{height:'472px'}}
-                className="w-100  cover"
-                src={listing.image}
-                alt="listings"
+                style={{ height: "280px" }}
+                className="w-100 cover"
+                src={listing.MainPhotoURL}
+                alt={listing.Address}
               />
               <div className="sale-sticker-wrap">
-                {!listing.forRent && (
-                  <div className="list-tag fz12">
-                    <span className="flaticon-electricity me-2" />
-                    FEATURED
-                  </div>
+                {listing.Category && (
+                  <div className="list-tag fz12">{listing.Category}</div>
                 )}
               </div>
-
-              <div className="list-price">
-                {listing.price} / <span>mo</span>
-              </div>
+              {listing.PriceLabel && (
+                <div className="list-price">{listing.PriceLabel}</div>
+              )}
             </div>
             <div className="list-content">
-              <div className="list-agent">
-                <img
-                 
-                  className="rounded-circle w-full h-full cover"
-                  src="/images/team/agent-single-1.png"
-                  alt="agent"
-                />
-              </div>
               <h6 className="list-title">
-                <Link to={`/single-v2/${listing.id}`}>{listing.title}</Link>
+                <Link to={`/single-v6/${listing._idx ?? i}`}>{listing.Address}</Link>
               </h6>
-              <p className="list-text">{listing.location}</p>
+              <p className="list-text">{listing.Suburb} {listing.State}</p>
               <div className="list-meta d-flex align-items-center">
-                <a href="#">
-                  <span className="flaticon-bed" /> {listing.bed} bed
-                </a>
-                <a href="#">
-                  <span className="flaticon-shower" /> {listing.bath} bath
-                </a>
-                <a href="#">
-                  <span className="flaticon-expand" /> {listing.sqft} sqft
-                </a>
+                {listing.Bedrooms && (
+                  <a href="#"><span className="flaticon-bed" /> {listing.Bedrooms} bed</a>
+                )}
+                {listing.Bathrooms && (
+                  <a href="#"><span className="flaticon-shower" /> {listing.Bathrooms} bath</a>
+                )}
+                {listing.Parking && (
+                  <a href="#"><span className="flaticon-car" /> {listing.Parking} park</a>
+                )}
               </div>
               <hr className="mt-2 mb-2" />
               <div className="list-meta2 d-flex justify-content-between align-items-center">
-                <span className="for-what">For Rent</span>
+                <span className="for-what">{listing.Category}</span>
                 <div className="icons d-flex align-items-center">
-                  <a href="#">
-                    <span className="flaticon-fullscreen" />
-                  </a>
-                  <a href="#">
-                    <span className="flaticon-new-tab" />
-                  </a>
-                  <a href="#">
-                    <span className="flaticon-like" />
-                  </a>
+                  <a href="#"><span className="flaticon-fullscreen" /></a>
+                  <a href="#"><span className="flaticon-like" /></a>
                 </div>
               </div>
             </div>

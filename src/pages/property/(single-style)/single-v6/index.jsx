@@ -36,8 +36,8 @@ const metaInformation = {
 
 const SingleV6 = () => {
   let params = useParams();
-  const data =
-    listings.find((item) => String(item.ID) === String(params.id)) || {};
+  const idx = parseInt(params.id, 10);
+  const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
   return (
     <>
      <MetaData meta={metaInformation} />
@@ -63,7 +63,7 @@ const SingleV6 = () => {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
-                  <OverView />
+                  <OverView id={params.id} />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -75,7 +75,7 @@ const SingleV6 = () => {
 
                 <h4 className="title fz17 mb30 mt50">Property Details</h4>
                 <div className="row">
-                  <PropertyDetails />
+                  <PropertyDetails id={params.id} />
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -223,9 +223,9 @@ const SingleV6 = () => {
           <div className="row mt30 align-items-center justify-content-between">
             <div className="col-auto">
               <div className="main-title">
-                <h2 className="title">Discover Our Featured Listings</h2>
+                <h2 className="title">Similar Properties</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  More listings you might like
                 </p>
               </div>
             </div>
@@ -261,7 +261,7 @@ const SingleV6 = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="property-city-slider">
-                <NearbySimilarProperty />
+                <NearbySimilarProperty currentId={params.id} category={data.Category} />
               </div>
             </div>
           </div>

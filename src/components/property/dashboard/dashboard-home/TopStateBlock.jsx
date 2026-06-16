@@ -1,24 +1,25 @@
 import React from "react";
+import listings from "@/data/listings";
 
 const statisticsData = [
   {
     text: "All Properties",
-    title: "583",
+    title: String(listings.length),
     icon: "flaticon-home",
   },
   {
-    text: "Total Views",
-    title: "192",
+    text: "For Sale",
+    title: String(listings.filter((l) => l.Category === "Buy").length),
     icon: "flaticon-search-chart",
   },
   {
-    text: "Total Visitor Reviews",
-    title: "438",
+    text: "For Rent",
+    title: String(listings.filter((l) => l.Category === "Rent").length),
     icon: "flaticon-review",
   },
   {
-    text: "Total Favorites",
-    title: "67",
+    text: "Sold",
+    title: String(listings.filter((l) => l.Category === "Sold").length),
     icon: "flaticon-like",
   },
 ];

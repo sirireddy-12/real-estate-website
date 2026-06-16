@@ -70,9 +70,9 @@ const Home_V1 = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <h2 className="title">Explore Apartment Types</h2>
+                <h2 className="title">Explore Property Types</h2>
                 <p className="paragraph">
-                  Get some Inspirations from 1800+ skills
+                  Browse houses, apartments, townhouses and more
                 </p>
               </div>
             </div>
@@ -129,9 +129,9 @@ const Home_V1 = () => {
               data-aos-delay="300"
             >
               <div className="main-title text-center">
-                <h2 className="title">See How Realton Can Help</h2>
+                <h2 className="title">See How We Can Help</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Find your next home or investment property with ease
                 </p>
               </div>
             </div>
@@ -153,7 +153,7 @@ const Home_V1 = () => {
               <div className="main-title2">
                 <h2 className="title">Discover Our Featured Listings</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Latest properties available across Australia
                 </p>
               </div>
             </div>
@@ -189,9 +189,9 @@ const Home_V1 = () => {
           >
             <div className="col-lg-9">
               <div className="main-title2">
-                <h2>Featured Melbourne Suburbs</h2>
+                <h2>Properties by City</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Explore listings in Melbourne, Perth, Hobart and more
                 </p>
               </div>
             </div>
@@ -243,9 +243,9 @@ const Home_V1 = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <h2 className="title">People Love Living with Realton</h2>
+                <h2 className="title">What Our Customers Say</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Hear from buyers and renters who found their perfect property
                 </p>
               </div>
             </div>
@@ -300,7 +300,7 @@ const Home_V1 = () => {
               <div className="main-title text-start text-md-center">
                 <h2 className="title">From Our Blog</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Property insights, suburb reviews and buying tips
                 </p>
               </div>
             </div>

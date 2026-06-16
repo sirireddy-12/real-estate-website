@@ -4,10 +4,10 @@ import React from "react";
 
 const ListingStatus = ({filterFunctions}) => {
   const options = [
-    { id: "flexRadioDefault3", label: "All" , defaultChecked: true },
+    { id: "flexRadioDefault3", label: "All", defaultChecked: true },
     { id: "flexRadioDefault1", label: "Buy" },
-    { id: "flexRadioDefault2", label: "Rent", },
-
+    { id: "flexRadioDefault2", label: "Rent" },
+    { id: "flexRadioDefault4", label: "Sold" },
   ];
 
   return (

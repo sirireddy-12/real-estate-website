@@ -23,3 +23,270 @@ body{
 }
 
 
+
+
+/* ===== HOMELY.COM.AU STYLE OVERRIDES ===== */
+
+/* Header */
+header.nav-homepage-style {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e8e8e8 !important;
+  padding: 14px 0 !important;
+}
+header.nav-homepage-style .ace-responsive-menu a,
+header.nav-homepage-style .login-info,
+header.nav-homepage-style .sidemenu-btn {
+  color: #181a20 !important;
+}
+header.nav-homepage-style .header-logo.logo1 {
+  display: block !important;
+}
+header.nav-homepage-style .header-logo.logo2 {
+  display: none !important;
+}
+header.nav-homepage-style.sticky .header-logo.logo1 {
+  display: block !important;
+}
+header.nav-homepage-style.sticky .header-logo.logo2 {
+  display: none !important;
+}
+
+/* Hero Section */
+.home-banner-style1 {
+  background-color: #f5f6f8 !important;
+  padding-top: 90px !important;
+  min-height: auto !important;
+}
+.home-banner-style1 .home-style1 {
+  height: auto !important;
+  min-height: 600px;
+  padding-bottom: 40px;
+}
+.hero-title {
+  color: #181a20;
+  font-size: 52px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+}
+@media (max-width: 991px) {
+  .hero-title {
+    font-size: 34px !important;
+  }
+}
+.hero-text {
+  color: #555 !important;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+.hero-property-img {
+  border-radius: 24px;
+  object-fit: cover;
+  width: 100%;
+  height: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+@media (max-width: 991px) {
+  .hero-property-img {
+    height: 260px;
+    margin-top: 30px;
+  }
+}
+
+/* Search Tab - Homely style */
+.advance-search-tab {
+  max-width: 100% !important;
+  margin-top: 30px !important;
+}
+.advance-search-tab .nav.nav-tabs {
+  background-color: transparent !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  max-width: none !important;
+  justify-content: flex-start !important;
+  gap: 4px;
+  padding: 0 !important;
+}
+.advance-search-tab .nav-item {
+  border-radius: 10px 10px 0 0 !important;
+  overflow: visible !important;
+}
+.advance-search-tab .nav-item:first-child,
+.advance-search-tab .nav-item:last-child {
+  border-radius: 10px 10px 0 0 !important;
+}
+.advance-search-tab .nav-link {
+  background-color: #e0e2e7;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 10px 10px 0 0 !important;
+  color: #555 !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 22px !important;
+  margin-right: 0 !important;
+  transition: background-color 0.2s;
+}
+.advance-search-tab .nav-link.active {
+  background-color: #ffffff !important;
+  color: #181a20 !important;
+  border-bottom-color: transparent !important;
+}
+.advance-search-tab .tab-content {
+  background-color: #ffffff !important;
+  border-radius: 0 16px 16px 16px !important;
+  padding: 20px 24px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08) !important;
+}
+.advance-content-style1 .form-control {
+  background-color: #f5f6f8 !important;
+  border-radius: 10px !important;
+  height: 52px !important;
+  font-size: 14px !important;
+  padding-left: 48px !important;
+}
+.advance-search-field .box-search .icon {
+  bottom: auto !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.advance-search-btn {
+  font-size: 14px;
+  color: #444 !important;
+}
+.advance-search-icon.ud-btn.btn-thm {
+  height: 52px !important;
+  width: 52px !important;
+  line-height: 52px !important;
+  border-radius: 10px !important;
+}
+
+/* Property Cards - Homely style */
+.listing-style1 {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07) !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+.listing-style1:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13) !important;
+  transform: translateY(-4px);
+}
+.listing-style1 .list-thumb {
+  height: 220px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0 !important;
+}
+.listing-style1 .list-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.listing-style1 .list-content {
+  padding: 16px 20px 20px !important;
+}
+.listing-style1 .list-title a {
+  font-size: 15px;
+  font-weight: 600;
+  color: #181a20;
+  line-height: 1.4;
+}
+.listing-style1 .list-title a:hover {
+  color: #eb6753 !important;
+  text-decoration: none !important;
+}
+.listing-style1 .list-text {
+  font-size: 13px !important;
+  color: #888 !important;
+  margin-bottom: 8px !important;
+}
+.listing-style1 .list-price {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+}
+.listing-style1 .list-meta a {
+  font-size: 13px !important;
+  color: #555 !important;
+}
+.listing-style1 .for-what {
+  background-color: rgba(235,103,83,0.08);
+  border-radius: 6px;
+  color: #eb6753 !important;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Popular Properties Section */
+.bgc-dark {
+  background-color: #181a20;
+}
+
+/* No Properties Found */
+.no-properties-msg {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ===== ADDITIONAL PREMIUM IMPROVEMENTS ===== */
+
+/* Section headings */
+.main-title2 h2,
+.main-title h2 {
+  font-size: 30px !important;
+  font-weight: 700 !important;
+  color: #181a20 !important;
+}
+.main-title2 .paragraph,
+.main-title .paragraph {
+  color: #888 !important;
+  font-size: 15px !important;
+}
+
+/* City cards */
+.feature-style1 {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+.feature-style1 .feature-img {
+  height: 200px !important;
+}
+.feature-style1 .feature-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Property type icons */
+.iconbox-style1 {
+  border-radius: 12px !important;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.iconbox-style1:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+  transform: translateY(-3px);
+}
+
+/* Search result inline input */
+.search-box-inline input {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+}
+.search-box-inline input:focus {
+  border-color: #eb6753;
+}
+
+/* Hero stats row */
+.hero-stats-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+  font-size: 14px;
+}

@@ -1,58 +1,36 @@
+import listings from "@/data/listings";
 import React from "react";
 
-const PropertyAddress = () => {
-  const addresses = [
-    {
-      address: "10425 Tabor St",
-      city: "Los Angeles",
-      state: "California",
-      zipCode: "90034",
-      area: "Brookside",
-      country: "United States",
-    },
-    {
-      address: "10 Downing Street",
-      city: "London",
-      state: "Greater London",
-      zipCode: "SW1A 2AA",
-      area: "Westminster",
-      country: "United Kingdom",
-    },
-  ];
+const PropertyAddress = ({ id }) => {
+  const idx = parseInt(id, 10);
+  const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
 
   return (
     <>
-      {addresses.map((address, index) => (
-        <div
-          key={index}
-          className={`col-md-6 col-xl-4 ${index === 1 ? "offset-xl-2" : ""}`}
-        >
-          <div className="d-flex justify-content-between">
-            <div className="pd-list">
-              <p className="fw600 mb10 ff-heading dark-color">Address</p>
-              <p className="fw600 mb10 ff-heading dark-color">City</p>
-              <p className="fw600 mb-0 ff-heading dark-color">State/county</p>
-            </div>
-            <div className="pd-list">
-              <p className="text mb10">{address.address}</p>
-              <p className="text mb10">{address.city}</p>
-              <p className="text mb-0">{address.state}</p>
-            </div>
+      <div className="col-md-6 col-xl-4">
+        <div className="d-flex justify-content-between">
+          <div className="pd-list">
+            <p className="fw600 mb10 ff-heading dark-color">Address</p>
+            <p className="fw600 mb10 ff-heading dark-color">State</p>
+            <p className="fw600 mb-0 ff-heading dark-color">Country</p>
+          </div>
+          <div className="pd-list">
+            <p className="text mb10">{data.Address}</p>
+            <p className="text mb10">{data.State}</p>
+            <p className="text mb-0">Australia</p>
           </div>
         </div>
-      ))}
-      {/* End col */}
+      </div>
 
       <div className="col-md-12">
         <iframe
           className="position-relative bdrs12 mt30 h250"
           loading="lazy"
-          src={`https://maps.google.com/maps?q=${addresses[0].address}&t=m&z=14&output=embed&iwloc=near`}
-          title={addresses[0].address}
-          aria-label={addresses[0].address}
+          src={`https://maps.google.com/maps?q=${encodeURIComponent(data.Address + ", Australia")}&t=m&z=14&output=embed&iwloc=near`}
+          title={data.Address}
+          aria-label={data.Address}
         />
       </div>
-      {/* End col */}
     </>
   );
 };

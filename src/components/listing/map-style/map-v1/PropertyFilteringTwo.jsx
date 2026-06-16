@@ -1,253 +1,133 @@
-
-
-
-
-
-
 import listings from "@/data/listings";
-import React, { useState,useEffect } from 'react'
+// Add stable index to every record once, outside component
+const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
+import React, { useState, useEffect } from "react";
 import TopFilterBar from "./TopFilterBar";
 import TopFilterBar2 from "./TopFilterBar2";
 import FeaturedListings from "./FeatuerdListings";
-
 import AdvanceFilterModal from "@/components/common/advance-filter-two";
 import PaginationTwo from "../../PaginationTwo";
 import { useLocation } from "react-router-dom";
 import ListingMap1 from "../ListingMap1";
+
 export default function PropertyFilteringTwo() {
   const locationState = useLocation();
-    const [filteredData, setFilteredData] = useState([]);
 
-    const [currentSortingOption, setCurrentSortingOption] = useState('Newest')
+  const rawTab = locationState.state?.activeTab || "All";
+  const validCategories = ["Buy", "Rent", "Sold"];
+  const initialTab = validCategories.includes(rawTab)
+    ? rawTab
+    : rawTab.charAt(0).toUpperCase() + rawTab.slice(1).toLowerCase();
+  const resolvedTab = validCategories.includes(initialTab) ? initialTab : "All";
 
-    const [sortedFilteredData, setSortedFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
+  const [sortedFilteredData, setSortedFilteredData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [colstyle, setColstyle] = useState(true);
+  const [pageItems, setPageItems] = useState([]);
+  const [pageContentTrac, setPageContentTrac] = useState([]);
 
+  useEffect(() => {
+    setPageItems(sortedFilteredData.slice((pageNumber - 1) * 4, pageNumber * 4));
+    setPageContentTrac([
+      (pageNumber - 1) * 4 + 1,
+      pageNumber * 4,
+      sortedFilteredData.length,
+    ]);
+  }, [pageNumber, sortedFilteredData]);
 
-        const [pageNumber, setPageNumber] = useState(1)
-    const [colstyle, setColstyle] = useState(true)
-    const [pageItems, setPageItems] = useState([])
-    const [pageContentTrac, setPageContentTrac] = useState([])
-  
-    useEffect(() => {
-      setPageItems(sortedFilteredData
-        .slice((pageNumber - 1) * 4, pageNumber * 4))
-        setPageContentTrac([((pageNumber - 1) * 4) + 1 ,pageNumber * 4,sortedFilteredData.length])
-    }, [pageNumber,sortedFilteredData])
-    
+  const [listingStatus, setListingStatus] = useState(initialTab);
+  const [propertyTypes, setPropertyTypes] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
+  const [bedrooms, setBedrooms] = useState(0);
+  const [bathroms, setBathroms] = useState(0);
+  const [location, setLocation] = useState("All Cities");
+  const [squirefeet, setSquirefeet] = useState([]);
+  const [yearBuild, setyearBuild] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(
+    locationState.state?.searchQuery || ""
+  );
 
+  const resetFilter = () => {
+    setListingStatus("All");
+    setPropertyTypes([]);
+    setPriceRange([0, 100000]);
+    setBedrooms(0);
+    setBathroms(0);
+    setLocation("All Cities");
+    setSquirefeet([]);
+    setyearBuild([0, 2050]);
+    setCategories([]);
+    setCurrentSortingOption("Newest");
+    document.querySelectorAll(".filterInput").forEach((el) => { el.value = null; });
+    document.querySelectorAll(".filterSelect").forEach((el) => { el.value = "All Cities"; });
+  };
 
-    const [listingStatus, setListingStatus] = useState('All')
-    const [propertyTypes, setPropertyTypes] = useState([])
-    const [priceRange, setPriceRange] = useState([0,100000])
-    const [bedrooms, setBedrooms] = useState(0)
-    const [bathroms, setBathroms] = useState(0)
-    const [location, setLocation] = useState('All Cities')
-     const [squirefeet, setSquirefeet] = useState([])
-    const [yearBuild, setyearBuild] = useState([])
-    const [categories, setCategories] = useState([])
+  const handlelistingStatus = (elm) => setListingStatus(elm);
+  const handlepropertyTypes = (elm) => {
+    if (elm === "All") setPropertyTypes([]);
+    else setPropertyTypes((pre) => pre.includes(elm) ? pre.filter((e) => e !== elm) : [...pre, elm]);
+  };
+  const handlepriceRange = (elm) => setPriceRange(elm);
+  const handlebedrooms = (elm) => setBedrooms(elm);
+  const handlebathroms = (elm) => setBathroms(elm);
+  const handlelocation = (elm) => setLocation(elm);
+  const handlesquirefeet = (elm) => setSquirefeet(elm);
+  const handleyearBuild = (elm) => setyearBuild(elm);
+  const handlecategories = (elm) => {
+    if (elm === "All") setCategories([]);
+    else setCategories((pre) => pre.includes(elm) ? pre.filter((e) => e !== elm) : [...pre, elm]);
+  };
 
-    const resetFilter = ()=>{
-      setListingStatus('All')
-      setPropertyTypes([])
-      setPriceRange([0,100000])
-      setBedrooms(0)
-      setBathroms(0)
-      setLocation('All Cities')
-      setSquirefeet([])
-      setyearBuild([0,2050])
-      setCategories([])
-      setCurrentSortingOption('Newest')
-     document.querySelectorAll(".filterInput").forEach(function(element) {
-      element.value = null;
-  });
+  const filterFunctions = {
+    handlelistingStatus, handlepropertyTypes, handlepriceRange,
+    handlebedrooms, handlebathroms, handlelocation,
+    handlesquirefeet, handleyearBuild, handlecategories,
+    priceRange, listingStatus, propertyTypes, resetFilter,
+    bedrooms, bathroms, location, squirefeet, yearBuild, categories,
+    setPropertyTypes, setSearchQuery,
+  };
 
-     document.querySelectorAll(".filterSelect").forEach(function(element) {
-      element.value = 'All Cities';
-  });
-  
-
-
+  useEffect(() => {
+    let result = indexedListings.filter((elm) =>
+      listingStatus === "All" ? true : elm.Category === listingStatus
+    );
+    if (propertyTypes.length > 0)
+      result = result.filter((elm) => propertyTypes.includes(elm.PropertyType));
+    if (bedrooms > 0)
+      result = result.filter((el) => Number(el.Bedrooms) >= bedrooms);
+    if (bathroms > 0)
+      result = result.filter((el) => Number(el.Bathrooms) >= bathroms);
+    if (location !== "All Cities")
+      result = result.filter(
+        (el) =>
+          (el.Suburb || "").toLowerCase().includes(location.toLowerCase()) ||
+          (el.Address || "").toLowerCase().includes(location.toLowerCase())
+      );
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (el) =>
+          (el.Address || "").toLowerCase().includes(q) ||
+          (el.Suburb || "").toLowerCase().includes(q) ||
+          (el.State || "").toLowerCase().includes(q) ||
+          (el.Agency || "").toLowerCase().includes(q) ||
+          (el.PropertyType || "").toLowerCase().includes(q)
+      );
     }
-    const [searchQuery, setSearchQuery] = useState(
-  locationState.state?.searchQuery || ""
-);
-console.log("SEARCH QUERY =", searchQuery);
-   const handlelistingStatus = (elm) => {
-  setListingStatus(elm);
-};
+    setFilteredData(result);
+  }, [listingStatus, propertyTypes, priceRange, bedrooms, bathroms, location, squirefeet, yearBuild, categories, searchQuery]);
 
-    
-    
-    const handlepropertyTypes =(elm)=>{
+  useEffect(() => {
+    setPageNumber(1);
+    setSortedFilteredData([...filteredData]);
+  }, [filteredData, currentSortingOption]);
 
-
-      if (elm == 'All') {
-        setPropertyTypes([])
-        
-      } else {
-        setPropertyTypes(pre=>pre.includes(elm) ? [...pre.filter((el)=>el!=elm)] : [...pre,elm])
-      }
-    
-
-    }
-    const handlepriceRange =(elm)=>{
-      setPriceRange(elm)
-
-    }
-    const handlebedrooms =(elm)=>{
-      setBedrooms(elm)
-    }
-    const handlebathroms =(elm)=>{
-      setBathroms(elm)
-    }
-    const handlelocation =(elm)=>{
-      console.log(elm)
-      setLocation(elm)
-    }
-    const handlesquirefeet =(elm)=>{
-      setSquirefeet(elm)
-    }
-    const handleyearBuild =(elm)=>{
-      setyearBuild(elm)
-    }
-    const handlecategories =(elm)=>{
-      if (elm == 'All') {
-        setCategories([])
-        
-      } else {
-        setCategories(pre=>pre.includes(elm) ? [...pre.filter((el)=>el!=elm)] : [...pre,elm])
-      }
-
-    }
-   const filterFunctions={
-    handlelistingStatus,
-    handlepropertyTypes,
-    handlepriceRange,
-    handlebedrooms,
-    handlebathroms,
-    handlelocation,
-    handlesquirefeet,
-    handleyearBuild,
-        handlecategories,
-    priceRange,
-    listingStatus,
-    propertyTypes,
-    resetFilter,
-   
-    bedrooms,
-    bathroms,
-    location,
-    squirefeet,
-    yearBuild,
-    categories,
-    setPropertyTypes,
-    // setSearchQuery
-  }
-
-
-
-    useEffect(() => {
-      
-        const refItems = listings.filter((elm) => {
-            if (listingStatus == "All") {
-  return true;
-} else if (listingStatus == "Buy") {
-  return elm.Category === "Buy";
-} else if (listingStatus == "Rent") {
-  return elm.Category === "Rent";
-}
-          });
-      
-          let filteredArrays = [];
-
-
-      
-          if (propertyTypes.length > 0) {
-            const filtered = refItems.filter((elm) =>
-            propertyTypes.includes(elm.Category)
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bedrooms >=bedrooms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Bathrooms >=bathroms)) ];
-          filteredArrays = [...filteredArrays,refItems.filter((el=>el.Address?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.Suburb?.toLowerCase().includes(searchQuery.toLowerCase()) ||  el.State?.toLowerCase().includes(searchQuery.toLowerCase()))) ];
-         
-    
-          filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : filteredArrays = [...filteredArrays,!categories.length ? [...refItems] : [...refItems] ]];
-  
-          if (location != 'All Cities') {
-           
-            
-            filteredArrays = [...filteredArrays,refItems.filter((el=>el.Suburb == location)) ];
-          }
-          if (priceRange.length > 0) {
-  filteredArrays = [...filteredArrays, [...refItems]];
-}
-          if (squirefeet.length > 0 && squirefeet[1]) {
-            const filtered = refItems.filter(
-              (elm) =>
-              elm.sqft >= squirefeet[0] &&
-             elm.sqft <= squirefeet[1],
-            );
-            filteredArrays = [...filteredArrays, filtered];
-          }
-          if (yearBuild.length > 0) {
-  filteredArrays = [...filteredArrays, [...refItems]];
-}
-          
-
- 
-         
-      
-          const commonItems = refItems.filter((item) =>
-            filteredArrays.every((array) => array.includes(item))
-          );
-
-         
-          setFilteredData(commonItems);
-         
-          
-      
-    }, [
-        listingStatus,
-        propertyTypes,
-        priceRange,
-        bedrooms,
-        bathroms,
-        location,
-        squirefeet,
-        yearBuild,
-        categories,
-        searchQuery
-
-    ])
-
-    useEffect(() => {
-      setPageNumber(1)
-      if (currentSortingOption == 'Newest') {
-        const sorted = [...filteredData]
-        setSortedFilteredData(sorted)
-       
-        
-      } 
-      else if (currentSortingOption.trim() == 'Price Low') {
-   setSortedFilteredData(filteredData)
-}
-      else if (currentSortingOption.trim() == 'Price High') {
-   setSortedFilteredData(filteredData)
-}
-    
-      else {
-        setSortedFilteredData(filteredData)
-    
-        
-      }
-
-      
-    }, [filteredData,currentSortingOption,])
   return (
     <>
-     <div className="advance-feature-modal">
+      <div className="advance-feature-modal">
         <div
           className="modal fade"
           id="advanceSeachModal"
@@ -258,9 +138,7 @@ console.log("SEARCH QUERY =", searchQuery);
           <AdvanceFilterModal filterFunctions={filterFunctions} />
         </div>
       </div>
-      {/* <!-- Advance Feature Modal End --> */}
 
-      {/* Property Filtering */}
       <section className="p-0 bgc-f7">
         <div className="container-fluid">
           <div className="row" data-aos="fade-up" data-aos-duration="200">
@@ -275,47 +153,40 @@ console.log("SEARCH QUERY =", searchQuery);
                     </div>
                   </div>
                 </div>
-                {/* End .col-12 */}
 
                 <h4 className="mb-1">Properties</h4>
 
                 <div className="row align-items-center mb10">
-                  <TopFilterBar  pageContentTrac={pageContentTrac}  colstyle ={colstyle} setColstyle={setColstyle}  setCurrentSortingOption={setCurrentSortingOption}/>
+                  <TopFilterBar
+                    pageContentTrac={pageContentTrac}
+                    colstyle={colstyle}
+                    setColstyle={setColstyle}
+                    setCurrentSortingOption={setCurrentSortingOption}
+                  />
                 </div>
                 <div className="row">
-                  <FeaturedListings  colstyle ={colstyle}  data={pageItems}/>
+                  <FeaturedListings colstyle={colstyle} data={pageItems} />
                 </div>
-                {/* End .row */}
 
                 <div className="row text-center">
-                <PaginationTwo pageCapacity={4} data={sortedFilteredData} pageNumber={pageNumber} setPageNumber={setPageNumber}/>
-          
+                  <PaginationTwo
+                    pageCapacity={4}
+                    data={sortedFilteredData}
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                  />
                 </div>
-                {/* End .row */}
               </div>
-              {/* End .half_map_area_content */}
             </div>
-            {/* End col-5 */}
 
             <div className="col-xl-7 overflow-hidden position-relative">
               <div className="half_map_area map-canvas half_style">
-                {/* <iframe
-                  style={{ height: "100%" }}
-                  className="home8-map contact-page"
-                  loading="lazy"
-                  src="https://maps.google.com/maps?q=London%20Eye%2C%20London%2C%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near"
-                  title="London Eye, London, United Kingdom"
-                  aria-label="London Eye, London, United Kingdom"
-                /> */}
-                <ListingMap1/>
+                <ListingMap1 />
               </div>
             </div>
-            {/* End col-7 */}
           </div>
-          {/* End TopFilterBar */}
         </div>
-        {/* End .container */}
       </section>
     </>
-  )
+  );
 }
