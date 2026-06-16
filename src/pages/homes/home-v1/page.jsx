@@ -20,7 +20,7 @@ import PopulerProperty from "../../../components/home/home-v1/PopulerProperty";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v1 || Homez - Real Estate ReactJS Template",
+  title: "Homez | Australia's Real Estate Portal",
 };
 
 const Home_V1 = () => {

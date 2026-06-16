@@ -1,21 +1,23 @@
+import { Link } from "react-router-dom";
+
 const MenuItems = () => {
   const menuItems = [
-    { id: 1, title: "Apartments" },
-    { id: 2, title: "Bungalow" },
-    { id: 3, title: "Houses" },
-    { id: 4, title: "Loft" },
-    { id: 5, title: "Office" },
-    { id: 6, title: "Townhome" },
-    { id: 7, title: "Villa" },
+    { id: 1, title: "Houses", href: "/grid-full-4-col" },
+    { id: 2, title: "Apartments", href: "/grid-full-4-col" },
+    { id: 3, title: "Townhouses", href: "/grid-full-4-col" },
+    { id: 4, title: "Units", href: "/grid-full-4-col" },
+    { id: 5, title: "Villas", href: "/grid-full-4-col" },
+    { id: 6, title: "Acreage", href: "/grid-full-4-col" },
+    { id: 7, title: "Land", href: "/grid-full-4-col" },
   ];
 
   return (
     <ul className="navbar-nav">
       {menuItems.map((item) => (
         <li className="nav-item" key={item.id}>
-          <a className="nav-link" href="#" role="button">
+          <Link className="nav-link" to={item.href}>
             {item.title}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

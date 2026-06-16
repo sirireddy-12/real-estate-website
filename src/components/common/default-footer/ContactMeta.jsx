@@ -4,13 +4,13 @@ const ContactMeta = () => {
   const contactInfoList = [
     {
       title: "Total Free Customer Care",
-      phone: "+(0) 123 050 945 02",
-      phoneLink: "tel:+012305094502", // Changed phoneLink to tel: URI
+      phone: "1300 000 000",
+      phoneLink: "tel:+611300000000",
     },
     {
       title: "Need Live Support?",
-      mail: "hi@homez.com",
-      mailLink: "mailto:hi@homez.com", // Changed mailLink to direct email address
+      mail: "info@homez.com.au",
+      mailLink: "mailto:info@homez.com.au",
     },
   ];
 

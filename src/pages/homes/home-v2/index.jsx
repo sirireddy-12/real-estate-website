@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v2 || Homez - Real Estate ReactJS Template",
+  title: "Homez | Australia's Real Estate Portal",
 };
 
 const Home_V2 = () => {
@@ -69,7 +69,7 @@ const Home_V2 = () => {
               <div className="main-title2">
                 <h2 className="title">Discover Our Featured Listings</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Latest properties available across Australia
                 </p>
               </div>
             </div>
@@ -107,7 +107,7 @@ const Home_V2 = () => {
               >
                 <h2 className="title">Explore Cities</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Browse listings by location across Australia
                 </p>
               </div>
             </div>
@@ -161,9 +161,9 @@ const Home_V2 = () => {
                 data-wow-delay="300ms"
               >
                 <div className="main-title text-center">
-                  <h2 className="title">See How Realton Can Help</h2>
+                  <h2 className="title">See How We Can Help</h2>
                   <p className="paragraph">
-                    Aliquam lacinia diam quis lacus euismod
+                    Find your next home or investment property with ease
                   </p>
                 </div>
               </div>
@@ -197,9 +197,9 @@ const Home_V2 = () => {
                 data-aos-delay="100"
               >
                 <div className="main-title text-center">
-                  <h2>Testimonials</h2>
+                  <h2>What Our Customers Say</h2>
                   <p className="paragraph">
-                    10,000+ unique online course list designs
+                    Hear from buyers and renters who found their perfect property
                   </p>
                 </div>
               </div>
@@ -230,9 +230,9 @@ const Home_V2 = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <h2 className="title">Our Exclusive Agetns</h2>
+                <h2 className="title">Our Exclusive Agents</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Meet the team helping Australians find their perfect property
                 </p>
               </div>
             </div>

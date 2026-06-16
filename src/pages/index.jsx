@@ -5,7 +5,7 @@ import Wrapper from "./layout-wrapper/wrapper";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v1 || Homez - Real Estate ReactJS Template",
+  title: "Homez | Australia's Real Estate Portal",
 };
 
 export default function Mainpage() {

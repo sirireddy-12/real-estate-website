@@ -38,7 +38,7 @@ const Hero = () => {
           {/* Right: property image */}
           <div className="col-lg-6">
             <img
-              src="/images/home/home-1.jpg"
+              src="https://i2.au.reastatic.net/800x600/69baf2e3b4c35c895cde0ea371d461ead152b0f1f4114f5d8eba4ef3ce774266/image.jpg"
               alt="Featured Property"
               className="hero-property-img animate-up-3"
             />

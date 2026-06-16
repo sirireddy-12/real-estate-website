@@ -20,7 +20,7 @@ import PropertyListing from "@/components/home/home-v7/PropertyListing";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v7 || Homez - Real Estate ReactJS Template",
+  title: "Homez | Australia's Real Estate Portal",
 };
 
 const Home_V7 = () => {
@@ -91,7 +91,7 @@ const Home_V7 = () => {
               >
                 <h2 className="title">Featured Homes</h2>
                 <p className="paragraph">
-                  Get some Inspirations from 800+ Properties
+                  Discover top properties available across Australia
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ const Home_V7 = () => {
               <div className="main-title2 text-center">
                 <h2 className="title">Explore Cities</h2>
                 <p className="paragraph">
-                  Get some Inspirations from 1800+ skills
+                  Browse listings by location across Australia
                 </p>
               </div>
             </div>
@@ -188,13 +188,12 @@ const Home_V7 = () => {
                   <br className="d-none d-lg-block" /> Estate Experience
                 </h2>
                 <p className="cta-text fz15 mb25">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed{" "}
-                  <br className="d-none d-lg-block" /> do eiusmod tempor
-                  incididunt.
+                  Our team brings decades of local market knowledge to help you
+                  buy, sell or rent with confidence.
                 </p>
-                <a to="/contact" className="ud-btn btn-dark bdrs0">
+                <Link to="/contact" className="ud-btn btn-dark bdrs0">
                   Get Started <i className="fal fa-arrow-right-long" />
-                </a>
+                </Link>
               </div>
             </div>
             <div
@@ -220,7 +219,7 @@ const Home_V7 = () => {
                   Discover Popular Properties
                 </h2>
                 <p className="paragraph text-white">
-                  Aliquam lacinia diam quis lacus euismod
+                  Browse properties across Australia
                 </p>
               </div>
             </div>
@@ -251,7 +250,7 @@ const Home_V7 = () => {
               <div className="main-title text-center">
                 <h2 className="title">Testimonials From Our Customers</h2>
                 <p className="paragraph">
-                  Lorem ipsum dolor sit amet elit, sed do eiusmod tempor
+                  Hear from buyers and renters who found their perfect home
                 </p>
               </div>
             </div>
@@ -280,9 +279,9 @@ const Home_V7 = () => {
               data-wow-delay="300ms"
             >
               <div className="main-title text-center">
-                <h2 className="title">See How Realton Can Help</h2>
+                <h2 className="title">See How We Can Help</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Find your next home or investment property with ease
                 </p>
               </div>
             </div>
@@ -308,7 +307,7 @@ const Home_V7 = () => {
               <div className="main-title mb40">
                 <h2 className="title">Real Estate Inquiry Form</h2>
                 <p className="paragraph fz15">
-                  As the complexity of buildings to increase
+                  Have a question? Our team is here to help
                 </p>
               </div>
               <div className="inquiry-form mb30-md">

@@ -17,7 +17,7 @@ import Footer from "@/components/home/home-v4/footer";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Home v4 || Homez - Real Estate ReactJS Template",
+  title: "Homez | Australia's Real Estate Portal",
 };
 
 const Home_V4 = () => {
@@ -57,9 +57,9 @@ const Home_V4 = () => {
           >
             <div className="col-lg-9">
               <div className="main-title2">
-                <h2>Featured Melbourne Suburbs</h2>
+                <h2>Featured Suburbs</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Explore listings in Melbourne, Perth, Hobart and more
                 </p>
               </div>
             </div>
@@ -151,7 +151,7 @@ const Home_V4 = () => {
               >
                 <h2 className="title">Explore Apartment Types</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Browse houses, apartments, townhouses and more
                 </p>
               </div>
             </div>
@@ -211,9 +211,9 @@ const Home_V4 = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <h2 className="title">People Love Living with Realton</h2>
+                <h2 className="title">People Love Finding Homes with Homez</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Hear from buyers and renters who found their perfect property
                 </p>
               </div>
             </div>
@@ -291,7 +291,7 @@ const Home_V4 = () => {
               <div className="main-title text-start text-md-center">
                 <h2 className="title">From Our Blog</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  Property insights, suburb reviews and buying tips
                 </p>
               </div>
             </div>

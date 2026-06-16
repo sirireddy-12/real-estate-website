@@ -18,7 +18,7 @@ const Footer = () => {
                 <img
                  
                   className="mb40"
-                  src="/images/header-logo.svg"
+                  src="/images/header-logo2.svg"
                   alt=""
                 />
               </Link>

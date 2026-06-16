@@ -36,7 +36,7 @@ const About = () => {
                 ))}
               </ul>
             </div>
-            <Link to="/grid-full-1-col" className="ud-btn btn-white2">
+            <Link to="/grid-full-1-col-v1" className="ud-btn btn-white2">
               View Properties
             </Link>
           </div>

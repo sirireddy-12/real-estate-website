@@ -41,14 +41,12 @@ const Header = () => {
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">
                       <img
-                       
-                        src="/images/header-logo.svg"
+                        src="/images/header-logo2.svg"
                         alt="Header Logo"
                       />
                     </Link>
                     <Link className="header-logo logo2" to="/">
                       <img
-                      
                         src="/images/header-logo2.svg"
                         alt="Header Logo"
                       />
@@ -74,6 +72,13 @@ const Header = () => {
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
                   </a>
+                  <Link
+                    className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
+                    to="/dashboard-add-property"
+                  >
+                    Add Property
+                    <i className="fal fa-arrow-right-long" />
+                  </Link>
                   <a
                     className="sidemenu-btn filter-btn-right"
                     href="#"
@@ -81,7 +86,16 @@ const Header = () => {
                     data-bs-target="#SidebarPanel"
                     aria-controls="SidebarPanelLabel"
                   >
-                    <i className="fas fa-bars"></i>
+                    <img
+                      className="img-1"
+                      src="/images/dark-nav-icon.svg"
+                      alt="menu"
+                    />
+                    <img
+                      className="img-2"
+                      src="/images/dark-nav-icon.svg"
+                      alt="menu"
+                    />
                   </a>
                 </div>
               </div>

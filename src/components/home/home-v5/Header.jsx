@@ -40,8 +40,7 @@ const Header = () => {
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">
                       <img
-                      
-                        src="/images/header-logo.svg"
+                        src="/images/header-logo2.svg"
                         alt="Header Logo"
                       />
                     </Link>

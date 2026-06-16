@@ -40,8 +40,7 @@ const Header = () => {
                   <div className="logos mr40">
                     <Link className="header-logo logo1" to="/">
                       <img
-                        
-                        src="/images/header-logo.svg"
+                        src="/images/header-logo2.svg"
                         alt="Header Logo"
                       />
                     </Link>
@@ -65,10 +64,10 @@ const Header = () => {
                 <div className="d-flex align-items-center">
                   <a
                     className="login-info d-flex align-items-center me-3"
-                    href="tel:29110987654"
+                    href="tel:+611300000000"
                   >
                     <i className="far fa-phone fz16 me-2"></i>
-                    <span className="d-none d-xl-block">2 911 098 7654</span>
+                    <span className="d-none d-xl-block">1300 000 000</span>
                   </a>
                   <a
                     href="#"

@@ -3,7 +3,7 @@ const mobileMenus = [
   {
     label: "Home",
     subMenu: [
-      { path: "/home-v1", label: "Home v1" },
+      { path: "/", label: "Home v1" },
       { path: "/home-v2", label: "Home v2" },
       { path: "/home-v3", label: "Home v3" },
       { path: "/home-v4", label: "Home v4" },
@@ -34,7 +34,7 @@ const mobileMenus = [
             path: "/grid-full-1-col-v2",
           },
           { label: "Banner Search v1", path: "/banner-search-v1" },
-          { title: "Banner Search v2", path: "/banner-search-v2" },
+          { label: "Banner Search v2", path: "/banner-search-v2" },
         ],
       },
       {
@@ -118,12 +118,11 @@ const mobileMenus = [
     subMenu: [
       { path: "/about", label: "About" },
       { path: "/contact", label: "Contact" },
-      { path: "/compare", label: "Compate" },
+      { path: "/compare", label: "Compare" },
       { path: "/pricing", label: "Pricing" },
       { path: "/faq", label: "Faq" },
       { path: "/login", label: "Login" },
       { path: "/register", label: "Register" },
-      { path: "/404", label: "404" },
       { path: "/invoice", label: "Invoice" },
     ],
   },

@@ -44,8 +44,7 @@ const Header = () => {
               <div className="col-auto">
                 <Link className="header-logo" to="/">
                   <img
-                   
-                    src="/images/header-logo3.svg"
+                    src="/images/header-logo2.svg"
                     alt="Header Logo"
                   />
                 </Link>

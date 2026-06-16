@@ -1,35 +1,35 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MenuWidget = () => {
   const menuSections = [
     {
       title: "Popular Search",
       links: [
-        { label: "Apartment for Rent", href: "#" },
-        { label: "Apartment Low to Hide", href: "#" },
-        { label: "Offices for Buy", href: "#" },
-        { label: "Offices for Rent", href: "#" },
+        { label: "Apartments for Sale", href: "/grid-full-4-col" },
+        { label: "Houses for Sale", href: "/grid-full-4-col" },
+        { label: "Properties for Rent", href: "/grid-full-4-col" },
+        { label: "Sold Properties", href: "/grid-full-4-col" },
       ],
     },
     {
       title: "Quick Links",
       links: [
-        { label: "Terms of Use", href: "#" },
-        { label: "Privacy Policy", href: "#" },
-        { label: "Pricing Plans", href: "#" },
-        { label: "Our Services", href: "#" },
-        { label: "Contact Support", href: "#" },
-        { label: "Careers", href: "#" },
-        { label: "FAQs", href: "#" },
+        { label: "About Us", href: "/about" },
+        { label: "Contact Us", href: "/contact" },
+        { label: "Pricing Plans", href: "/pricing" },
+        { label: "FAQs", href: "/faq" },
+        { label: "Login", href: "/login" },
+        { label: "Register", href: "/register" },
       ],
     },
     {
       title: "Discover",
       links: [
-        { label: "Melbourne", href: "#" },
-        { label: "Richmond", href: "#" },
-        { label: "Southbank", href: "#" },
-        { label: "Docklands", href: "#" },
+        { label: "Melbourne", href: "/grid-full-4-col" },
+        { label: "Perth", href: "/grid-full-4-col" },
+        { label: "Hobart", href: "/grid-full-4-col" },
+        { label: "Brisbane", href: "/grid-full-4-col" },
       ],
     },
   ];
@@ -43,7 +43,7 @@ const MenuWidget = () => {
             <ul className="ps-0">
               {section.links.map((link, linkIndex) => (
                 <li key={linkIndex}>
-                  <a href={link.href}>{link.label}</a>
+                  <Link to={link.href}>{link.label}</Link>
                 </li>
               ))}
             </ul>
