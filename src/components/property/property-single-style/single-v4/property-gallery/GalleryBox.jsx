@@ -1,5 +1,5 @@
 
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";

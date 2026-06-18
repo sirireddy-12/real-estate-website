@@ -437,6 +437,15 @@ header.nav-homepage-style.light-header .ace-responsive-menu a {
     background-color: #181a20;
     color: #ffffff;
 }
+.no-properties-msg {
+    color: #717171;
+    font-family: var(--title-font-family);
+    font-size: 15px;
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+}
+
 .hero_9 {
     @media (max-width: 1199.98px) {
         .item {

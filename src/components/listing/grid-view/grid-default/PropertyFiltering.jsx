@@ -1,7 +1,7 @@
 
 
-import listings from "@/data/listings";
-const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
+import listings from "@/utilis/listingHelpers";
+const indexedListings = listings;
 import React, { useState, useEffect } from "react";
 import ListingSidebar from "../../sidebar";
 import TopFilterBar from "./TopFilterBar";

@@ -1,62 +1,67 @@
-
-
-
 import { Link } from "react-router-dom";
 
-const FeaturedListings = ({data,colstyle}) => {
+const FeaturedListings = ({ data, colstyle }) => {
   return (
     <>
-      {data.map((listing) => (
-        <div  className={` ${colstyle ? 'col-sm-12':'col-sm-6'}  `} key={listing.id}>
-          <div className={colstyle ? "listing-style7 listCustom listing-type" : "listing-style7"}>
-            <div className="list-thumb"  >
-              <img
-              
-                style={{height:'228px'}}
-                className="w-100  cover"
-                src={listing.image}
-                alt="listings"
-              />
+      {data.map((listing, i) => (
+        <div className={`${colstyle ? "col-sm-12" : "col-sm-6"}`} key={listing._idx ?? i}>
+          <div className={colstyle ? "listing-style1 listCustom listing-type" : "listing-style1"}>
+            <div className="list-thumb">
+              {listing.MainPhotoURL ? (
+                <img
+                  style={{ height: "228px", objectFit: "cover" }}
+                  className="w-100 cover"
+                  src={listing.MainPhotoURL}
+                  alt={listing.Address || "Property"}
+                />
+              ) : (
+                <div
+                  className="w-100 bgc-f7 d-flex align-items-center justify-content-center"
+                  style={{ height: "228px" }}
+                >
+                  <span className="flaticon-home-1 fz40 text-muted" />
+                </div>
+              )}
               <div className="sale-sticker-wrap">
-                {listing.forRent && (
-                  <div className="list-tag rounded-0 fz12">
-                    <span className="flaticon-electricity" />
-                    FEATURED
-                  </div>
+                {listing.Category && (
+                  <div className="list-tag fz12">{listing.Category}</div>
                 )}
-                <div className="list-tag2 rounded-0 fz12">FOR SALE</div>
               </div>
-              <div className="list-meta">
-                <a href="#" className="mr5">
-                  <span className="flaticon-fullscreen" />
-                </a>
-                <a href="#" className="mr5">
-                  <span className="flaticon-new-tab" />
-                </a>
-                <a href="#">
-                  <span className="flaticon-like" />
-                </a>
-              </div>
+              {listing.PriceLabel && (
+                <div className="list-price">{listing.PriceLabel}</div>
+              )}
             </div>
             <div className="list-content">
               <h6 className="list-title">
-                <Link  to={`/single-v5/${listing.id}`}>{listing.title}</Link>
+                <Link to={`/single-v6/${listing._idx ?? i}`}>
+                  {listing.Address || "Property"}
+                </Link>
               </h6>
-
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="list-price">
-                  {listing.price} / <span>mo</span>
-                </div>
-                <div className="list-meta2 d-flex align-items-center">
-                  <a href="#" className="mr10">
-                    <span className="flaticon-bed mr5" /> {listing.bed}
-                  </a>
-                  <a href="#" className="mr10">
-                    <span className="flaticon-shower mr5" /> {listing.bath}
-                  </a>
-                  <a href="#">
-                    <span className="flaticon-expand" /> {listing.sqft}
-                  </a>
+              <p className="list-text mb-1">
+                {[listing.Suburb, listing.State].filter(Boolean).join(", ")}
+              </p>
+              {listing.PropertyType && (
+                <p className="fz12 text-muted mb-1">{listing.PropertyType}</p>
+              )}
+              <div className="list-meta d-flex align-items-center flex-wrap gap-2">
+                {listing.Bedrooms && (
+                  <span><span className="flaticon-bed pe-1" />{listing.Bedrooms} bed</span>
+                )}
+                {listing.Bathrooms && (
+                  <span><span className="flaticon-shower pe-1" />{listing.Bathrooms} bath</span>
+                )}
+                {listing.Parking && (
+                  <span><span className="flaticon-car pe-1" />{listing.Parking} park</span>
+                )}
+              </div>
+              <hr className="mt-2 mb-2" />
+              <div className="list-meta2 d-flex justify-content-between align-items-center">
+                <span className="for-what fz12">{listing.Agency || listing.Category || ""}</span>
+                <div className="icons d-flex align-items-center gap-1">
+                  <Link to={`/single-v6/${listing._idx ?? i}`}>
+                    <span className="flaticon-fullscreen" />
+                  </Link>
+                  <a href="#"><span className="flaticon-like" /></a>
                 </div>
               </div>
             </div>

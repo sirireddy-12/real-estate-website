@@ -1,4 +1,4 @@
-import products from "@/data/listings";
+import products from "@/utilis/listingHelpers";
 import { Link } from "react-router-dom";
 
 const ProductSingle = () => {

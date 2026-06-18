@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
 import "photoswipe/dist/photoswipe.css";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 import Map from "./Map";
 
 

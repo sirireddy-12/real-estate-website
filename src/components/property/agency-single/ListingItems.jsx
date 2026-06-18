@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react'
 import ListingItems from '../ListingItems'
-import listings from '@/data/listings'
+import listings from '@/utilis/listingHelpers'
 import { Link } from 'react-router-dom'
 
 export default function ListingItemsContainer() {

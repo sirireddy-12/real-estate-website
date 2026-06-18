@@ -1,111 +1,83 @@
-
-
-import MainMenu from "@/components/common/MainMenu";
-import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
-
-
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const navLinks = [
+  { label: "Buy", href: "/grid-full-3-col" },
+  { label: "Rent", href: "/grid-full-2-col" },
+  { label: "Sold", href: "/grid-full-4-col" },
+  { label: "Agent Finder", href: "/agents" },
+  { label: "Suburb Reviews", href: "/about" },
+  { label: "Questions", href: "/faq" },
+  { label: "Blog", href: "/blog-list-v1" },
+];
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
-
-  const changeBackground = () => {
-    if (window.scrollY >= 10) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    window.addEventListener("scroll", changeBackground);
-    return () => {
-      window.removeEventListener("scroll", changeBackground);
-    };
+    const onChange = () => setNavbar(window.scrollY >= 10);
+    window.addEventListener("scroll", onChange);
+    return () => window.removeEventListener("scroll", onChange);
   }, []);
 
   return (
     <>
-      <header
-        className={`header-nav nav-homepage-style light-header main-menu ${
-          navbar ? "sticky slideInDown animated" : ""
-        }`}
-      >
-        <nav className="posr">
-          <div className="container posr menu_bdrt1">
-            <div className="row align-items-center justify-content-between">
-              <div className="col-auto">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="logos mr40">
-                    <Link className="header-logo logo1" to="/">
-                      <img
-                        src="/images/header-logo2.svg"
-                        alt="Header Logo"
-                      />
-                    </Link>
-                    <Link className="header-logo logo2" to="/">
-                      <img
-                        src="/images/header-logo2.svg"
-                        alt="Header Logo"
-                      />
-                    </Link>
-                  </div>
-                  {/* End Logo */}
+      <header className={`homely-header${navbar ? " sticky slideInDown animated" : ""}`}>
+        <div className="container">
+          <div className="homely-header-inner">
+            {/* Logo */}
+            <Link className="homely-logo" to="/">
+              <img src="/images/header-logo2.svg" alt="Homely" />
+            </Link>
 
-                  <MainMenu />
-                  {/* End Main Menu */}
-                </div>
-              </div>
-              {/* End .col-auto */}
+            {/* Nav links */}
+            <nav className="homely-nav d-none d-lg-flex">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`homely-nav-link${pathname === item.href ? " active" : ""}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
 
-              <div className="col-auto">
-                <div className="d-flex align-items-center">
-                  <a
-                    href="#"
-                    className="login-info d-flex align-items-center"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginSignupModal"
-                    role="button"
-                  >
-                    <i className="far fa-user-circle fz16 me-2" />{" "}
-                    <span className="d-none d-xl-block">Login / Register</span>
-                  </a>
-                  <Link
-                    className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
-                    to="/dashboard-add-property"
-                  >
-                    Add Property
-                    <i className="fal fa-arrow-right-long" />
-                  </Link>
-                  <a
-                    className="sidemenu-btn filter-btn-right"
-                    href="#"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#SidebarPanel"
-                    aria-controls="SidebarPanelLabel"
-                  >
-                    <img
-                      className="img-1"
-                      src="/images/dark-nav-icon.svg"
-                      alt="menu"
-                    />
-                    <img
-                      className="img-2"
-                      src="/images/dark-nav-icon.svg"
-                      alt="menu"
-                    />
-                  </a>
-                </div>
-              </div>
-              {/* End .col-auto */}
+            {/* Right actions */}
+            <div className="homely-header-actions">
+              <span className="d-none d-xl-flex align-items-center gap-3">
+                <Link to="/dashboard-home" className="homely-nav-link">
+                  Collections
+                </Link>
+                <Link to="/dashboard-my-favourites" className="homely-nav-link">
+                  My Alerts
+                </Link>
+              </span>
+              <a
+                href="#"
+                className="homely-signup-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#loginSignupModal"
+                role="button"
+              >
+                Sign up
+              </a>
+              <a
+                href="#"
+                className="homely-user-icon"
+                data-bs-toggle="modal"
+                data-bs-target="#loginSignupModal"
+                role="button"
+                aria-label="Account"
+              >
+                <i className="far fa-user-circle fz22" />
+              </a>
             </div>
-            {/* End .row */}
           </div>
-        </nav>
+        </div>
       </header>
-      {/* End Header */}
 
       {/* Signup Modal */}
       <div className="signup-modal">
@@ -116,23 +88,11 @@ const Header = () => {
           aria-labelledby="loginSignupModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
+          <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <LoginSignupModal />
           </div>
         </div>
       </div>
-      {/* End Signup Modal */}
-
-      {/* DesktopSidebarMenu */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="SidebarPanel"
-        aria-labelledby="SidebarPanelLabel"
-      >
-        <SidebarPanel />
-      </div>
-      {/* Sidebar Panel End */}
     </>
   );
 };

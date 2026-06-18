@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import PopularListings from "./PopularListings";
-import listings from "../../../data/listings";
+import listings from "@/utilis/listingHelpers";
 
-const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
+const indexedListings = listings;
 
 export default function PopulerProperty() {
   const [pageData, setPageData] = useState([]);

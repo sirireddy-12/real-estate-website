@@ -1,6 +1,6 @@
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 // Add stable index to every record once, outside component
-const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
+const indexedListings = listings;
 import React, { useState, useEffect } from "react";
 import TopFilterBar from "./TopFilterBar";
 import TopFilterBar2 from "./TopFilterBar2";

@@ -2,7 +2,7 @@
 import { Gallery, Item } from "react-photoswipe-gallery";
 
 import "photoswipe/dist/photoswipe.css";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 import Map from "./Map";
 import ContactWithAgent from "./ContactWithAgent";
 import ScheduleForm from "../single-v2/ScheduleForm";

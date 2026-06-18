@@ -1,7 +1,8 @@
 
 
 
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
+const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
 import React, { useState,useEffect } from 'react'
 import Pagination from '../../Pagination'
 import FeaturedListings from './FeatuerdListings'
@@ -145,7 +146,7 @@ export default function PropertyFilteringBanner() {
 
 
     useEffect(() => {
-      let result = listings.filter((elm) =>
+      let result = indexedListings.filter((elm) =>
         listingStatus === "All" ? true : elm.Category === listingStatus
       );
       if (propertyTypes.length > 0)
@@ -216,10 +217,10 @@ export default function PropertyFilteringBanner() {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2>Melbourne Properties</h2>
+                <h2>Australian Properties</h2>
                 <div className="breadcumb-list">
                   <a href="#">Home</a>
-                  <a href="#">For Rent</a>
+                  <a href="#">Listings</a>
                 </div>
               </div>
             </div>

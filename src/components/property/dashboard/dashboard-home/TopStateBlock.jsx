@@ -1,5 +1,5 @@
 import React from "react";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 const statisticsData = [
   {

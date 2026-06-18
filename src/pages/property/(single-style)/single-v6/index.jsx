@@ -28,7 +28,7 @@ import WalkScore from "@/components/property/property-single-style/common/WalkSc
 
 import MetaData from "@/components/common/MetaData";
 import { useParams } from "react-router-dom";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 const metaInformation = {
   title: "Property Single V6 || Homez - Real Estate ReactJS Template",

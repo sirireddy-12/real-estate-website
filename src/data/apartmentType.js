@@ -1,4 +1,4 @@
-import listings from "./listings";
+import listings from "@/utilis/listingHelpers";
 
 const typeMeta = [
   { key: "House", icon: "flaticon-home", title: "Houses" },

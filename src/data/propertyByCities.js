@@ -1,4 +1,4 @@
-import listings from "./listings";
+import listings from "@/utilis/listingHelpers";
 
 const CITY_NAMES = ["Melbourne", "Perth", "Hobart", "Darwin", "Brisbane", "Adelaide"];
 

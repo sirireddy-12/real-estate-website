@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

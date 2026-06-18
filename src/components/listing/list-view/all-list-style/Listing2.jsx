@@ -1,4 +1,4 @@
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 import { Link } from "react-router-dom";
 import React from "react";

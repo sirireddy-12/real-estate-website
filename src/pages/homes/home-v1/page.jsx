@@ -36,32 +36,13 @@ const Home_V1 = () => {
      
 
     
-      <section className="home-banner-style1 p0">
-        <div className="home-style1">
-          <div className="container-fluid p-0">
-            <div className="row">
-              <div className="col-12 p-0">
-                <Hero />
-              </div>
-            </div>
-          </div>
-        
-
-          <a href="#explore-property">
-            <div className="mouse_scroll animate-up-4">
-              <img
-              
-                src="/images/about/home-scroll.png"
-                alt="scroll image"
-              />
-            </div>
-          </a>
-        </div>
+      <section className="homely-banner-section">
+        <Hero />
       </section>
       {/* End Home Banner Style V1 */}
 
       {/* Explore Apartment */}
-      <section id="explore-property" className="pb90 pb30-md">
+      <section id="explore-property" className="pt60 pb60 pb30-md">
         <div className="container">
           <div className="row  justify-content-between align-items-center">
             <div className="col-auto">
@@ -120,7 +101,7 @@ const Home_V1 = () => {
       {/* End Explore Apartment */}
 
       {/* Explore Apartment */}
-      <section className="pt0 pb90 pb10-md">
+      <section className="pt0 pb60 pb10-md">
         <div className="container">
           <div className="row">
             <div
@@ -146,7 +127,7 @@ const Home_V1 = () => {
       {/* End Explore Apartment */}
 
       {/* Featured Listings */}
-      <section className="bgc-f7">
+      <section className="pt60 pb60 bgc-f7">
         <div className="container">
           <div className="row align-items-center" data-aos="fade-up">
             <div className="col-lg-9">
@@ -180,7 +161,7 @@ const Home_V1 = () => {
       {/* End Featured Listings */}
 
       {/* Explore property-city */}
-      <section className="pb40-md pb90">
+      <section className="pt60 pb60 pb40-md">
         <div className="container">
           <div
             className="row align-items-center"
@@ -222,7 +203,7 @@ const Home_V1 = () => {
       {/* End Explore property-city */}
 
       {/* <!-- About Us --> */}
-      <section className="pt0 pb40-md">
+      <section className="pt0 pb60 pb40-md">
         <div className="container">
           <About />
         </div>
@@ -234,7 +215,7 @@ const Home_V1 = () => {
       {/* End  Popular Property */}
 
       {/* Our Testimonials */}
-      <section className="pb100 pb50-md bgc-thm-light">
+      <section className="pt60 pb60 pb50-md bgc-thm-light">
         <div className="container">
           <div className="row  justify-content-between align-items-center">
             <div className="col-auto">
@@ -293,7 +274,7 @@ const Home_V1 = () => {
       {/* End Our Testimonials */}
 
       {/* Explore Blog */}
-      <section className="pb90 pb20-md">
+      <section className="pt60 pb60 pb20-md">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto" data-aos="fade-up">
@@ -316,7 +297,7 @@ const Home_V1 = () => {
       {/* Explore Blog */}
 
       {/* Our Partners */}
-      <section className="our-partners pt0">
+      <section className="our-partners pt30 pb60">
         <div className="container">
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up">

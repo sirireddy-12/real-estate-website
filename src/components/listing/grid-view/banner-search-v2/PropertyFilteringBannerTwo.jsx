@@ -1,7 +1,7 @@
 
 
 
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 import React, { useState,useEffect } from 'react'
 
 import FeaturedListings from './FeatuerdListings'

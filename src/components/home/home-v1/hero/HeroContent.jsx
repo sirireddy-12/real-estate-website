@@ -1,90 +1,75 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
+
+const tabs = [
+  { id: "buy",       label: "Buy" },
+  { id: "rent",      label: "Rent" },
+  { id: "sold",      label: "Sold" },
+  { id: "agents",    label: "Agents" },
+  { id: "reviews",   label: "Reviews" },
+  { id: "questions", label: "Questions" },
+];
+
+const tabRoute = {
+  buy:       "/grid-full-3-col",
+  rent:      "/grid-full-2-col",
+  sold:      "/grid-full-4-col",
+  agents:    "/agents",
+  reviews:   "/about",
+  questions: "/faq",
+};
 
 const HeroContent = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("buy");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [active, setActive] = useState("buy");
+  const [query, setQuery] = useState("");
 
-  const tabs = [
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
-    { id: "sold", label: "Sold" },
-  ];
-
-  const tabToCategory = { buy: "Buy", rent: "Rent", sold: "Sold" };
-
-  const handleSearch = () => {
-    navigate("/map-v1", {
-      state: { searchQuery, activeTab: tabToCategory[activeTab] || "Buy" },
-    });
-  };
+  const doSearch = () => navigate(tabRoute[active] || "/map-v1", { state: { searchQuery: query, activeTab: active.charAt(0).toUpperCase() + active.slice(1) } });
 
   return (
-    <div className="advance-search-tab animate-up-3">
-      <ul className="nav nav-tabs p-0 m-0">
-        {tabs.map((tab) => (
-          <li className="nav-item" key={tab.id}>
+    <div className="hs-wrap">
+      {/* Tabs — centered */}
+      <ul className="hs-tabs">
+        {tabs.map((t) => (
+          <li key={t.id}>
             <button
-              className={`nav-link ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+              type="button"
+              className={`hs-tab${active === t.id ? " hs-tab--active" : ""}`}
+              onClick={() => setActive(t.id)}
             >
-              {tab.label}
+              {t.label}
             </button>
           </li>
         ))}
       </ul>
 
-      <div className="tab-content">
-        <div className="active tab-pane">
-          <div className="advance-content-style1">
-              <div className="row align-items-center">
-                <div className="col-md-8 col-lg-9">
-                  <div className="advance-search-field position-relative text-start">
-                    <form
-                      className="form-search position-relative"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSearch();
-                      }}
-                    >
-                      <div className="box-search">
-                        <span className="icon flaticon-home-1" />
-                        <input
-                          className="form-control bgc-f7 bdrs12"
-                          type="text"
-                          name="search"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder={`Search by address, suburb or postcode`}
-                        />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-
-                <div className="col-md-4 col-lg-3">
-                  <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
-                    <button
-                      className="advance-search-btn"
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#advanceSeachModal"
-                    >
-                      <span className="flaticon-settings" /> Filters
-                    </button>
-                    <button
-                      className="advance-search-icon ud-btn btn-thm ms-3"
-                      onClick={handleSearch}
-                      type="button"
-                    >
-                      <span className="flaticon-search" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
+      {/* Search pill */}
+      <div className="hs-bar">
+        <form
+          className="hs-form"
+          onSubmit={(e) => { e.preventDefault(); doSearch(); }}
+        >
+          <input
+            className="hs-input"
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Suburb or postcode"
+          />
+          {query && (
+            <button
+              type="button"
+              className="hs-clear"
+              onClick={() => setQuery("")}
+              aria-label="Clear"
+            >
+              ×
+            </button>
+          )}
+          <button className="hs-submit" type="submit">
+            <i className="fas fa-search" /> Search
+          </button>
+        </form>
       </div>
     </div>
   );

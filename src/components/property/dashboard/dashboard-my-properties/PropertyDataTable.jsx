@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 const getStatusStyle = (status) => {
   switch (status) {

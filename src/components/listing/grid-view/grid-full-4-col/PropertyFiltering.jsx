@@ -1,9 +1,10 @@
 
 
 
-import listings from "@/data/listings";
-const indexedListings = listings.map((l, i) => ({ ...l, _idx: i }));
+import listings from "@/utilis/listingHelpers";
+const indexedListings = listings;
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import ListingSidebar from '../../sidebar'
 import AdvanceFilterModal from '@/components/common/advance-filter-two'
 import TopFilterBar from './TopFilterBar'
@@ -12,6 +13,10 @@ import PaginationTwo from "../../PaginationTwo";
 
 
 export default function PropertyFiltering() {
+    const locationState = useLocation();
+    const navCategory = locationState.state?.activeTab || "Sold";
+    const navSearch   = locationState.state?.searchQuery || "";
+
     const [filteredData, setFilteredData] = useState([]);
     const [currentSortingOption, setCurrentSortingOption] = useState('Newest')
     const [sortedFilteredData, setSortedFilteredData] = useState([]);
@@ -25,7 +30,7 @@ export default function PropertyFiltering() {
       setPageContentTrac([((pageNumber - 1) * 12) + 1, pageNumber * 12, sortedFilteredData.length])
     }, [pageNumber, sortedFilteredData])
 
-    const [listingStatus, setListingStatus] = useState('All')
+    const [listingStatus, setListingStatus] = useState(navCategory)
     const [propertyTypes, setPropertyTypes] = useState([])
     const [priceRange, setPriceRange] = useState([0, 100000])
     const [bedrooms, setBedrooms] = useState(0)
@@ -34,7 +39,7 @@ export default function PropertyFiltering() {
     const [squirefeet, setSquirefeet] = useState([])
     const [yearBuild, setyearBuild] = useState([])
     const [categories, setCategories] = useState([])
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchQuery, setSearchQuery] = useState(navSearch)
 
     const resetFilter = () => {
       setListingStatus('All')
@@ -156,7 +161,11 @@ export default function PropertyFiltering() {
           {/* End TopFilterBar */}
 
           <div className="row">
-            <FeaturedListings  colstyle ={colstyle}  data={pageItems}/>
+            {pageItems.length === 0 ? (
+              <div className="no-properties-msg">No properties found</div>
+            ) : (
+              <FeaturedListings colstyle={colstyle} data={pageItems} />
+            )}
           </div>
           {/* End .row */}
 

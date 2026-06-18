@@ -4,66 +4,49 @@ import HeroContent from "./HeroContent";
 const Hero = () => {
   return (
     <>
-      <div className="container py-5">
-        <div className="row align-items-center">
-          {/* Left: heading + text */}
-          <div className="col-lg-6 text-start mb-4 mb-lg-0">
-            <span
-              className="fz13 fw600 text-thm d-block mb-2"
-              style={{ letterSpacing: "0.06em", textTransform: "uppercase" }}
-            >
-              Australia&apos;s Real Estate Portal
-            </span>
-            <h1 className="hero-title animate-up-2">
-              Find your next home,
-              <br />
-              <span style={{ color: "#eb6753" }}>anywhere in Australia</span>
-            </h1>
-            <p className="hero-text fz15 animate-up-3 mt-3 mb-4">
-              Search apartments, houses and rental properties across Melbourne,
-              Sydney, Brisbane and beyond.
-            </p>
-            <div className="d-flex gap-3 animate-up-3">
-              <div className="d-flex align-items-center gap-2">
-                <span className="flaticon-home-1 text-thm fz20" />
-                <span className="fz14 text-muted">390+ Properties</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="flaticon-location text-thm fz20" />
-                <span className="fz14 text-muted">6 Cities</span>
-              </div>
-            </div>
-          </div>
+      <div className="homely-hero">
+        {/* Image — absolute top-right, bleeds to viewport edge */}
+        <div className="homely-hero-img-wrap">
+          <img
+            src="https://i2.au.reastatic.net/800x600/69baf2e3b4c35c895cde0ea371d461ead152b0f1f4114f5d8eba4ef3ce774266/image.jpg"
+            alt="Real estate"
+            className="homely-hero-img"
+          />
+        </div>
 
-          {/* Right: property image */}
-          <div className="col-lg-6">
-            <img
-              src="https://i2.au.reastatic.net/800x600/69baf2e3b4c35c895cde0ea371d461ead152b0f1f4114f5d8eba4ef3ce774266/image.jpg"
-              alt="Featured Property"
-              className="hero-property-img animate-up-3"
-            />
+        {/* Container holds text + search card */}
+        <div className="container">
+          {/* Left heading */}
+          <div className="homely-hero-body">
+            <h1 className="homely-hero-title">
+              <span className="homely-pink">Australian real estate search,</span>
+              <br />
+              suburb reviews and local Q&amp;A
+            </h1>
+            <p className="homely-hero-sub">
+              Find hundreds of thousands of properties for sale and rent.{" "}
+              New homes listed daily.
+            </p>
           </div>
         </div>
 
-        {/* Search section below the two columns */}
-        <div className="row mt-3">
-          <div className="col-12">
-            <HeroContent />
+        {/* Search card — full width below, no container constraint */}
+        <div className="homely-search-card-outer">
+          <div className="container">
+            <div className="homely-search-card">
+              <HeroContent />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Advance Feature Modal */}
-      <div className="advance-feature-modal">
-        <div
-          className="modal fade"
-          id="advanceSeachModal"
-          tabIndex={-1}
-          aria-labelledby="advanceSeachModalLabel"
-          aria-hidden="true"
-        >
-          <AdvanceFilterModal />
-        </div>
+      <div
+        className="modal fade"
+        id="advanceSeachModal"
+        tabIndex={-1}
+        aria-hidden="true"
+      >
+        <AdvanceFilterModal />
       </div>
     </>
   );

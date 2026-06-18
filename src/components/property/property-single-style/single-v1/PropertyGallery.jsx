@@ -2,7 +2,7 @@
 import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 const images = [
   {

@@ -1,44 +1,44 @@
 const testimonials = [
   {
     id: 1,
-    title: "Great Work",
+    title: "Found Our Dream Home",
     quote:
-      "Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.",
+      "We searched for months before finding this portal. The suburb filtering made it easy to narrow down exactly what we needed. Settled on a beautiful house in Melbourne within weeks.",
     stars: 5,
     image: "/images/testimonials/testimonial-1.png",
-    name: "Leslie Alexander",
-    company: "Nintendo",
+    name: "Sarah Mitchell",
+    company: "Home Buyer — Melbourne, VIC",
   },
   {
     id: 2,
-    title: "Great Work",
+    title: "Renting Made Simple",
     quote:
-      "Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.",
+      "The Rent tab filtered results instantly and the property cards showed everything I needed — beds, baths, parking and price. Found a great apartment in Perth in just a few days.",
     stars: 5,
     image: "/images/testimonials/testimonial-2.png",
-    name: "Floyd Miles",
-    company: "Bank of America",
+    name: "James Thornton",
+    company: "Tenant — Perth, WA",
   },
   {
     id: 3,
-    title: "Great Work",
+    title: "Seamless Experience",
     quote:
-      "Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.",
+      "As a first-time buyer the process felt overwhelming, but browsing by city and property type made everything click. Highly recommend to anyone starting their property journey.",
     stars: 5,
     image: "/images/testimonials/testimonial-3.png",
-    name: "Leslie Alexander",
-    company: "Nintendo",
+    name: "Priya Sharma",
+    company: "First Home Buyer — Brisbane, QLD",
   },
   {
     id: 4,
-    title: "Great Work",
+    title: "Sold Quickly",
     quote:
-      "Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.",
+      "Listed our Darwin home and had serious enquiries within the week. The platform made it easy for buyers to find us and the agent dashboard kept everything organised.",
     stars: 5,
     image: "/images/testimonials/testimonial-4.png",
-    name: "Floyd Miles",
-    company: "Bank of America",
+    name: "David Nguyen",
+    company: "Vendor — Darwin, NT",
   },
 ];
 
-export default testimonials
+export default testimonials;

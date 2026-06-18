@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api";
 import { useMemo, useState } from "react";
 
-import listings from "@/data/listings";
+import listings from "@/utilis/listingHelpers";
 
 import { Link } from "react-router-dom";
 
