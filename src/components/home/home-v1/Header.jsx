@@ -1,26 +1,34 @@
 import LoginSignupModal from "@/components/common/login-signup-modal";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navLinks = [
-  { label: "Buy", href: "/grid-full-3-col" },
-  { label: "Rent", href: "/grid-full-2-col" },
-  { label: "Sold", href: "/grid-full-4-col" },
+  { label: "Buy",          href: "/grid-full-3-col", tab: "Buy" },
+  { label: "Rent",         href: "/grid-full-3-col", tab: "Rent" },
+  { label: "Sold",         href: "/grid-full-3-col", tab: "Sold" },
   { label: "Agent Finder", href: "/agents" },
   { label: "Suburb Reviews", href: "/about" },
-  { label: "Questions", href: "/faq" },
-  { label: "Blog", href: "/blog-list-v1" },
+  { label: "Questions",    href: "/faq" },
+  { label: "Blog",         href: "/blog-list-v1" },
 ];
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onChange = () => setNavbar(window.scrollY >= 10);
     window.addEventListener("scroll", onChange);
     return () => window.removeEventListener("scroll", onChange);
   }, []);
+
+  const handleNavClick = (e, item) => {
+    if (item.tab) {
+      e.preventDefault();
+      navigate(item.href, { state: { activeTab: item.tab } });
+    }
+  };
 
   return (
     <>
@@ -36,9 +44,10 @@ const Header = () => {
             <nav className="homely-nav d-none d-lg-flex">
               {navLinks.map((item) => (
                 <Link
-                  key={item.href}
-                  to={item.href}
-                  className={`homely-nav-link${pathname === item.href ? " active" : ""}`}
+                  key={item.label}
+                  to={item.tab ? item.href : item.href}
+                  onClick={(e) => handleNavClick(e, item)}
+                  className="homely-nav-link"
                 >
                   {item.label}
                 </Link>

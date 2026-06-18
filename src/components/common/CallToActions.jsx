@@ -44,10 +44,10 @@ const CallToActions = () => {
                   Contact Us
                   <i className="fal fa-arrow-right-long" />
                 </Link>
-                <Link to="/contact" className="ud-btn btn-dark">
+                <a href="tel:+611300000000" className="ud-btn btn-dark">
                   <span className="flaticon-call vam pe-2" />
-                  920 851 9087
-                </Link>
+                  1300 000 000
+                </a>
               </div>
             </div>
             {/* End col-lg-5 */}

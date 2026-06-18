@@ -1,40 +1,39 @@
 import DefaultHeader from "@/components/common/DefaultHeader";
-
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
-
 import ProperteyFiltering from "@/components/listing/grid-view/grid-full-3-col/ProperteyFiltering";
-
 import React from "react";
-
 import MetaData from "@/components/common/MetaData";
+import { useLocation, Link } from "react-router-dom";
 
 const metaInformation = {
-  title: "Gird Full 3 Column || Homez - Real Estate ReactJS Template",
+  title: "Property Search | Australian Real Estate",
 };
 
 const GridFull3Col = () => {
+  const locationState = useLocation();
+  const searchQuery = locationState.state?.searchQuery || "";
+  const activeTab   = locationState.state?.activeTab   || "Buy";
+  const heading = searchQuery
+    ? `Properties ${activeTab === "Buy" ? "for Sale" : activeTab === "Rent" ? "for Rent" : "Sold"} in ${searchQuery}`
+    : `All Properties ${activeTab === "Buy" ? "for Sale" : activeTab === "Rent" ? "for Rent" : "Sold"}`;
+
   return (
     <>
-    <MetaData meta={metaInformation} />
-      {/* Main Header Nav */}
+      <MetaData meta={metaInformation} />
       <DefaultHeader />
-      {/* End Main Header Nav */}
-
-      {/* Mobile Nav  */}
       <MobileMenu />
-      {/* End Mobile Nav  */}
 
-      {/* Breadcumb Sections */}
       <section className="breadcumb-section bgc-f7">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcumb-style1">
-                <h2>Melbourne Properties</h2>
+                <h2 className="fz22">{heading}</h2>
                 <div className="breadcumb-list">
-                  <a href="#">Home</a>
-                  <a href="#">For Rent</a>
+                  <Link to="/">Home</Link>
+                  <a href="#">Properties</a>
+                  {searchQuery && <a href="#">{searchQuery}</a>}
                 </div>
                 <a
                   className="filter-btn-left mobile-filter-btn d-block d-lg-none"
@@ -50,17 +49,12 @@ const GridFull3Col = () => {
           </div>
         </div>
       </section>
-      {/* End Breadcumb Sections */}
 
-      {/* Property Filtering */}
-      <ProperteyFiltering/>
-      {/* Property Filtering */}
+      <ProperteyFiltering />
 
-      {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
         <Footer />
       </section>
-      {/* End Our Footer */}
     </>
   );
 };

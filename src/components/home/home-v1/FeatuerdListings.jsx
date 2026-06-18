@@ -4,272 +4,125 @@ import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-const FeaturedListings = () => {
-  const featured = listings.slice(0, 8);
+const VALID_TYPES = ["House","Apartment","Townhouse","Unit","Villa","Acreage","Flat","Studio","Duplex"];
 
-  return (
-    <>
-      <Swiper
-        spaceBetween={24}
-        modules={[Navigation, Pagination]}
-        navigation={{
-          nextEl: ".featured-next__active",
-          prevEl: ".featured-prev__active",
-        }}
-        pagination={{
-          el: ".featured-pagination__active",
-          clickable: true,
-        }}
-        breakpoints={{
-          300: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1200: { slidesPerView: 3 },
-        }}
-      >
-        {featured.map((listing) => {
-          const categoryColor =
-            listing.Category === "Buy"
-              ? "#eb6753"
-              : listing.Category === "Rent"
-              ? "#1f4b7d"
-              : "#2e7d32";
-          const location = [listing.Suburb, listing.State]
-            .filter(Boolean)
-            .join(", ");
+// Pick up to 12 Buy listings with unique photos from different cities/agencies
+const uniqueFeatured = (() => {
+  const seenPhoto = new Set();
+  const seenAgency = new Set();
+  const result = [];
+  // First pass: one per agency for diversity
+  for (const l of listings) {
+    if (l.Category !== "Buy" || !l.MainPhotoURL) continue;
+    if (seenPhoto.has(l.MainPhotoURL)) continue;
+    if (seenAgency.has(l.Agency)) continue;
+    seenPhoto.add(l.MainPhotoURL);
+    seenAgency.add(l.Agency);
+    result.push(l);
+    if (result.length >= 9) break;
+  }
+  // Second pass: fill remaining slots with unique photos
+  for (const l of listings) {
+    if (result.length >= 12) break;
+    if (l.Category !== "Buy" || !l.MainPhotoURL) continue;
+    if (seenPhoto.has(l.MainPhotoURL)) continue;
+    seenPhoto.add(l.MainPhotoURL);
+    result.push(l);
+  }
+  return result;
+})();
 
-          return (
-            <SwiperSlide key={listing._idx}>
-              <div
-                style={{
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  boxShadow: "0 2px 16px rgba(0,0,0,0.09)",
-                  background: "#fff",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                {/* Image */}
-                <div style={{ position: "relative", flexShrink: 0 }}>
-                  {listing.MainPhotoURL ? (
-                    <img
-                      src={listing.MainPhotoURL}
-                      alt={listing.Address || "Property"}
-                      style={{
-                        width: "100%",
-                        height: "220px",
-                        objectFit: "cover",
-                        display: "block",
-                      }}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "220px",
-                        background: "#f0f0f0",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <span className="flaticon-home-1 fz40 text-muted" />
-                    </div>
-                  )}
-                  {listing.Category && (
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: 12,
-                        left: 12,
-                        background: categoryColor,
-                        color: "#fff",
-                        borderRadius: "4px",
-                        padding: "3px 10px",
-                        fontSize: "11px",
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.04em",
-                      }}
-                    >
-                      {listing.Category}
+const FeaturedListings = () => (
+  <>
+    <Swiper
+      spaceBetween={24}
+      modules={[Navigation, Pagination]}
+      navigation={{ nextEl: ".featured-next__active", prevEl: ".featured-prev__active" }}
+      pagination={{ el: ".featured-pagination__active", clickable: true }}
+      breakpoints={{
+        300: { slidesPerView: 1 },
+        640: { slidesPerView: 2 },
+        1200: { slidesPerView: 3 },
+      }}
+    >
+      {uniqueFeatured.map((l) => {
+        const suburb = l.Suburb || "";
+        const state  = l.State || "";
+        const loc    = [suburb, state].filter(Boolean).join(", ");
+        const propType = VALID_TYPES.includes(l.PropertyType) ? l.PropertyType : "Property";
+        const agencyShort = l.Agency ? l.Agency.split(" - ")[0] : "";
+
+        return (
+          <SwiperSlide key={l._idx}>
+            <div className="homely-feat-card">
+              {/* Image */}
+              <Link to={`/single-v6/${l._idx}`} className="homely-feat-img-wrap">
+                <img
+                  src={l.MainPhotoURL}
+                  alt={l.Address}
+                  className="homely-feat-img"
+                  loading="lazy"
+                  onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"; }}
+                />
+                <span className="homely-feat-badge">For {l.Category}</span>
+                {l.PriceLabel && (
+                  <span className="homely-feat-price">{l.PriceLabel}</span>
+                )}
+              </Link>
+
+              {/* Body */}
+              <div className="homely-feat-body">
+                <span className="homely-feat-type">{propType}</span>
+                <h6 className="homely-feat-title">
+                  <Link to={`/single-v6/${l._idx}`}>{l.Address}</Link>
+                </h6>
+                {loc && (
+                  <p className="homely-feat-loc">
+                    <i className="flaticon-location" /> {loc}
+                  </p>
+                )}
+
+                <div className="homely-feat-meta">
+                  {l.Bedrooms ? (
+                    <span className="homely-feat-meta-item">
+                      <i className="flaticon-bed" /> {l.Bedrooms} bed
                     </span>
-                  )}
-                  {listing.PriceLabel && (
-                    <span
-                      style={{
-                        position: "absolute",
-                        bottom: 12,
-                        left: 12,
-                        background: "rgba(0,0,0,0.65)",
-                        color: "#fff",
-                        borderRadius: "4px",
-                        padding: "4px 10px",
-                        fontSize: "13px",
-                        fontWeight: 700,
-                      }}
-                    >
-                      {listing.PriceLabel}
+                  ) : null}
+                  {l.Bathrooms ? (
+                    <span className="homely-feat-meta-item">
+                      <i className="flaticon-shower" /> {l.Bathrooms} bath
                     </span>
-                  )}
+                  ) : null}
+                  {l.Parking ? (
+                    <span className="homely-feat-meta-item">
+                      <i className="flaticon-car" /> {l.Parking} car
+                    </span>
+                  ) : null}
                 </div>
 
-                {/* Content */}
-                <div
-                  style={{
-                    padding: "16px 18px",
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    {listing.PropertyType && (
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          color: "#888",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                        }}
-                      >
-                        {listing.PropertyType}
-                      </span>
-                    )}
-                    <h6
-                      style={{
-                        margin: "5px 0 4px",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      <Link
-                        to={`/single-v6/${listing._idx}`}
-                        style={{ color: "#222" }}
-                      >
-                        {listing.Address || "Property"}
-                      </Link>
-                    </h6>
-                    {location && (
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          color: "#666",
-                          margin: "0 0 10px",
-                        }}
-                      >
-                        <span
-                          className="flaticon-location"
-                          style={{ marginRight: 4, fontSize: 11 }}
-                        />
-                        {location}
-                      </p>
-                    )}
-
-                    {/* Beds / Baths / Parking */}
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: 16,
-                        fontSize: "13px",
-                        color: "#444",
-                      }}
-                    >
-                      {listing.Bedrooms ? (
-                        <span>
-                          <span
-                            className="flaticon-bed"
-                            style={{ marginRight: 3 }}
-                          />
-                          {listing.Bedrooms} bed
-                        </span>
-                      ) : null}
-                      {listing.Bathrooms ? (
-                        <span>
-                          <span
-                            className="flaticon-shower"
-                            style={{ marginRight: 3 }}
-                          />
-                          {listing.Bathrooms} bath
-                        </span>
-                      ) : null}
-                      {listing.Parking ? (
-                        <span>
-                          <span
-                            className="flaticon-car"
-                            style={{ marginRight: 3 }}
-                          />
-                          {listing.Parking} park
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      borderTop: "1px solid #f0f0f0",
-                      paddingTop: 10,
-                      marginTop: 12,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "11px",
-                        color: "#999",
-                        maxWidth: "70%",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {listing.Agency || ""}
+                <div className="homely-feat-footer">
+                  {agencyShort ? (
+                    <span className="homely-feat-agency">
+                      <i className="flaticon-building" /> {agencyShort}
                     </span>
-                    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                      <Link
-                        to={`/single-v6/${listing._idx}`}
-                        style={{ color: "#eb6753" }}
-                      >
-                        <span className="flaticon-fullscreen" />
-                      </Link>
-                      <a href="#" style={{ color: "#aaa" }}>
-                        <span className="flaticon-like" />
-                      </a>
-                    </div>
-                  </div>
+                  ) : <span />}
+                  <Link to={`/single-v6/${l._idx}`} className="homely-feat-link">
+                    View <i className="fal fa-arrow-right-long" />
+                  </Link>
                 </div>
               </div>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+            </div>
+          </SwiperSlide>
+        );
+      })}
+    </Swiper>
 
-      {/* Navigation */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 12,
-          marginTop: 24,
-        }}
-      >
-        <button className="featured-prev__active swiper_button">
-          <i className="far fa-arrow-left-long" />
-        </button>
-        <div className="pagination swiper--pagination featured-pagination__active" />
-        <button className="featured-next__active swiper_button">
-          <i className="far fa-arrow-right-long" />
-        </button>
-      </div>
-    </>
-  );
-};
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginTop: 24 }}>
+      <button className="featured-prev__active swiper_button"><i className="far fa-arrow-left-long" /></button>
+      <div className="pagination swiper--pagination featured-pagination__active" />
+      <button className="featured-next__active swiper_button"><i className="far fa-arrow-right-long" /></button>
+    </div>
+  </>
+);
 
 export default FeaturedListings;

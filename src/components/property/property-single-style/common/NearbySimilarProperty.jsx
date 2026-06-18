@@ -1,111 +1,66 @@
 import listings from "@/utilis/listingHelpers";
-
 import { Link } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
 const NearbySimilarProperty = ({ currentId, category }) => {
-  // Show up to 6 listings from the same category, excluding the current one
-  const indexedAll = listings.map((l, i) => ({ ...l, _idx: i }));
-  const similar = indexedAll
+  const similar = listings
     .filter((l) => l._idx !== Number(currentId) && (!category || l.Category === category))
     .slice(0, 6);
 
   return (
     <>
       <Swiper
-        spaceBetween={30}
+        spaceBetween={24}
         modules={[Navigation, Pagination]}
-        navigation={{
-          nextEl: ".featured-next__active",
-          prevEl: ".featured-prev__active",
-        }}
-        pagination={{
-          el: ".featured-pagination__active",
-          clickable: true,
-        }}
-        slidesPerView={1}
+        navigation={{ nextEl: ".featured-next__active", prevEl: ".featured-prev__active" }}
+        pagination={{ el: ".featured-pagination__active", clickable: true }}
         breakpoints={{
-          300: {
-            slidesPerView: 1,
-          },
-          768: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 2,
-          },
-          1200: {
-            slidesPerView: 3,
-          },
+          300:  { slidesPerView: 1 },
+          768:  { slidesPerView: 2 },
+          1200: { slidesPerView: 3 },
         }}
       >
-        {similar.map((listing, i) => (
-          <SwiperSlide key={i}>
-            <div className="item">
-              <div className="listing-style1">
-                <div className="list-thumb">
+        {similar.map((listing) => {
+          const loc = [listing.Suburb, listing.State].filter(Boolean).join(", ");
+          const agencyShort = listing.Agency ? listing.Agency.split(" - ")[0] : "";
+          return (
+            <SwiperSlide key={listing._idx}>
+              <div className="homely-feat-card">
+                <Link to={`/single-v6/${listing._idx}`} className="homely-feat-img-wrap">
                   <img
-                    className="w-100 h-100 cover"
-                    src={listing.MainPhotoURL}
+                    src={listing.MainPhotoURL || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"}
                     alt={listing.Address}
+                    className="homely-feat-img"
+                    loading="lazy"
+                    onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"; }}
                   />
-                  <div className="sale-sticker-wrap">
-                    {listing.Category && (
-                      <div className="list-tag rounded-0 fz12">
-                        {listing.Category}
-                      </div>
-                    )}
-                  </div>
-                  <div className="list-price">
-                    {listing.PriceLabel}
-                  </div>
-                </div>
-                <div className="list-content">
-                  <h6 className="list-title">
-                    <Link to={`/single-v6/${listing._idx}`}>
-                      {listing.Address}
-                    </Link>
+                  {listing.Category && <span className="homely-feat-badge">{listing.Category}</span>}
+                  {listing.PriceLabel && <span className="homely-feat-price">{listing.PriceLabel}</span>}
+                </Link>
+                <div className="homely-feat-body">
+                  {listing.PropertyType && <span className="homely-feat-type">{listing.PropertyType}</span>}
+                  <h6 className="homely-feat-title">
+                    <Link to={`/single-v6/${listing._idx}`}>{listing.Address}</Link>
                   </h6>
-                  <p className="list-text">{listing.Suburb} {listing.State}</p>
-                  <div className="list-meta d-flex align-items-center">
-                    {listing.Bedrooms && (
-                      <a href="#">
-                        <span className="flaticon-bed" /> {listing.Bedrooms} bed
-                      </a>
-                    )}
-                    {listing.Bathrooms && (
-                      <a href="#">
-                        <span className="flaticon-shower" /> {listing.Bathrooms} bath
-                      </a>
-                    )}
-                    {listing.Parking && (
-                      <a href="#">
-                        <span className="flaticon-car" /> {listing.Parking}
-                      </a>
-                    )}
+                  {loc && <p className="homely-feat-loc"><i className="flaticon-location" /> {loc}</p>}
+                  <div className="homely-feat-meta">
+                    {listing.Bedrooms ? <span className="homely-feat-meta-item"><i className="flaticon-bed" /> {listing.Bedrooms} bed</span> : null}
+                    {listing.Bathrooms ? <span className="homely-feat-meta-item"><i className="flaticon-shower" /> {listing.Bathrooms} bath</span> : null}
+                    {listing.Parking ? <span className="homely-feat-meta-item"><i className="flaticon-car" /> {listing.Parking} car</span> : null}
                   </div>
-                  <hr className="mt-2 mb-2" />
-                  <div className="list-meta2 d-flex justify-content-between align-items-center">
-                    <span className="for-what">{listing.Category}</span>
-                    <div className="icons d-flex align-items-center">
-                      <a href="#">
-                        <span className="flaticon-fullscreen" />
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-new-tab" />
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-like" />
-                      </a>
-                    </div>
+                  <div className="homely-feat-footer">
+                    {agencyShort ? <span className="homely-feat-agency"><i className="flaticon-building" /> {agencyShort}</span> : <span />}
+                    <Link to={`/single-v6/${listing._idx}`} className="homely-feat-link">
+                      View <i className="fal fa-arrow-right-long" />
+                    </Link>
                   </div>
                 </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </>
   );

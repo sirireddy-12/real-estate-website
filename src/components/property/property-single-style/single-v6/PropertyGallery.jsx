@@ -7,13 +7,23 @@ import "photoswipe/dist/photoswipe.css";
 import listings from "@/utilis/listingHelpers";
 import Map from "./Map";
 
-
+// Curated fallback gallery images (real estate interiors/exteriors)
+const FALLBACK_GALLERY = [
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
+  "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80",
+  "https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=800&q=80",
+];
 
 const PropertyGallery = ({ id }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const idx = parseInt(id, 10);
   const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
-  const images = [data?.MainPhotoURL].filter(Boolean);
+  // Build a gallery: main photo + fallback images to show a realistic gallery
+  const mainPhoto = data?.MainPhotoURL;
+  const images = mainPhoto
+    ? [mainPhoto, ...FALLBACK_GALLERY]
+    : FALLBACK_GALLERY;
   return (
     <>
       <div className="row">
@@ -163,8 +173,9 @@ const PropertyGallery = ({ id }) => {
               >
                 <iframe
                   className="h510 w-100"
-                  src="https://www.google.com/maps/embed?pb=!4v1553797194458!6m8!1m7!1sR4K_5Z2wRHTk9el8KLTh9Q!2m2!1d36.82551718071267!2d-76.34864590837246!3f305.15097!4f0!5f0.7820865974627469"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405117647!2d144.9630576!3d-37.8136176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad646b5d2ba4df7%3A0x4045675218ccd90!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sau!4v1700000000000"
                   allowFullScreen
+                  loading="lazy"
                 />
               </div>
               {/* End map locatoin fnder */}

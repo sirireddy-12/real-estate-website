@@ -1,8 +1,7 @@
 
-import Select from "react-select";
 import SingleAgentInfo from "./SingleAgentInfo";
 
-const InfoWithForm = () => {
+const InfoWithForm = ({ id }) => {
   const inqueryType = [
     { value: "Engineer", label: "Engineer" },
     { value: "Doctor", label: "Doctor" },
@@ -28,89 +27,35 @@ const InfoWithForm = () => {
 
   return (
     <>
-      <SingleAgentInfo />
+      <SingleAgentInfo id={id} />
 
       <div className="row">
         <div className="col-md-12">
           <form className="form-style1 row">
             <div className="col-md-6">
               <div className="mb20">
-                <label className="heading-color ff-heading fw600 mb10">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Ali Tufan"
-                />
+                <label className="heading-color ff-heading fw600 mb10">Name</label>
+                <input type="text" className="form-control" placeholder="Your name" />
               </div>
             </div>
-            {/* End .col */}
-
             <div className="col-md-6">
               <div className="mb20">
-                <label className="heading-color ff-heading fw600 mb10">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter your phone"
-                />
+                <label className="heading-color ff-heading fw600 mb10">Phone</label>
+                <input type="text" className="form-control" placeholder="Your phone number" />
               </div>
             </div>
-            {/* End .col */}
-
-            <div className="col-md-6">
+            <div className="col-md-12">
               <div className="mb20">
-                <label className="heading-color ff-heading fw600 mb10">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="creativelayers088"
-                />
+                <label className="heading-color ff-heading fw600 mb10">Email</label>
+                <input type="email" className="form-control" placeholder="Your email address" />
               </div>
             </div>
-            {/* End .col */}
-
-            <div className="col-md-6">
-              <div className="widget-wrapper sideborder-dropdown">
-                <label className="heading-color ff-heading fw600 mb10">
-                  I&apos;m a
-                </label>
-                <div className="form-style2 input-group">
-                  <Select
-                    defaultValue={[inqueryType[0]]}
-                    name="colors"
-                    options={inqueryType}
-                    styles={customStyles}
-                    className="custom-react_select"
-                    classNamePrefix="select"
-                    required
-                    isClearable={false}
-                  />
-                </div>
-              </div>
-            </div>
-            {/* End .col */}
-
             <div className="col-md-12">
               <div className="mb10">
-                <label className="heading-color ff-heading fw600 mb10">
-                  Message
-                </label>
-                <textarea
-                  cols={30}
-                  rows={4}
-                  placeholder="Hello, I am interested in [Renovated apartment at last floor]"
-                  defaultValue={""}
-                />
+                <label className="heading-color ff-heading fw600 mb10">Message</label>
+                <textarea cols={30} rows={4} placeholder="I am interested in this property..." defaultValue={""} />
               </div>
             </div>
-            {/* End .col */}
-
             <div className="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb10">
               <label className="custom_checkbox fz14 ff-heading">
                 By submitting this form I agree to Terms of Use
@@ -118,11 +63,9 @@ const InfoWithForm = () => {
                 <span className="checkmark" />
               </label>
             </div>
-            {/* End .col */}
-
             <div className="btn-area mt20">
               <button className="ud-btn btn-white2">
-                Request Information <i className="fal fa-arrow-right-long" />
+                Send Enquiry <i className="fal fa-arrow-right-long" />
               </button>
             </div>
           </form>

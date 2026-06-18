@@ -3,44 +3,45 @@ import React, { useEffect, useState } from "react";
 import PopularListings from "./PopularListings";
 import listings from "@/utilis/listingHelpers";
 
-const indexedListings = listings;
-
 export default function PopulerProperty() {
   const [pageData, setPageData] = useState([]);
   const [currentType, setCurrentType] = useState("Buy");
 
   useEffect(() => {
-    setPageData(indexedListings.filter((elm) => elm.Category === currentType));
+    setPageData(listings.filter((elm) => elm.Category === currentType));
   }, [currentType]);
 
+  const tabs = [
+    { key: "Buy",  label: "For Sale" },
+    { key: "Rent", label: "For Rent" },
+    { key: "Sold", label: "Sold" },
+  ];
+
+  const seeAllLabel =
+    currentType === "Buy"  ? "Properties for Sale" :
+    currentType === "Rent" ? "Rental Properties"   : "Sold Properties";
+
+  const hasData = pageData.length > 0;
+
   return (
-    <section className="bgc-dark">
+    <section className="pt60 pb60 bgc-f7">
       <div className="container">
         <div className="row" data-aos="fade-up">
           <div className="col-lg-9">
             <div className="main-title2">
-              <h2 className="title text-white">Discover Popular Properties</h2>
-              <p className="paragraph text-white">
-                Browse properties across Australia
-              </p>
+              <h2 className="title">Discover Popular Properties</h2>
+              <p className="paragraph">Browse properties across Australia</p>
             </div>
           </div>
-
           <div className="col-lg-3">
-            <div className="dark-light-navtab text-start text-lg-end mt-0 mt-lg-4 mb-4">
+            <div className="text-start text-lg-end mt-0 mt-lg-4 mb-4">
               <ul className="nav nav-pills justify-content-start justify-content-lg-end">
-                {["Buy", "Rent", "Sold"].map((type) => (
-                  <li
-                    className="nav-item"
-                    key={type}
-                    onClick={() => setCurrentType(type)}
-                  >
+                {tabs.map((tab) => (
+                  <li className="nav-item" key={tab.key} onClick={() => setCurrentType(tab.key)}>
                     <button
-                      className={`nav-link ${type !== "Sold" ? "" : "me-0"} ${
-                        currentType === type ? "active" : ""
-                      }`}
+                      className={`nav-link${tab.key === "Sold" ? " me-0" : ""}${currentType === tab.key ? " active" : ""}`}
                     >
-                      {type === "Buy" ? "For Sale" : type === "Rent" ? "For Rent" : "Sold"}
+                      {tab.label}
                     </button>
                   </li>
                 ))}
@@ -51,18 +52,32 @@ export default function PopulerProperty() {
 
         <div className="row" data-aos="fade-up" data-aos-delay="300">
           <div className="col-lg-12">
-            {pageData.length === 0 ? (
-              <p className="no-properties-msg text-white text-center py-4">
-                No {currentType} properties found. Check back soon.
-              </p>
+            {!hasData ? (
+              <div className="no-properties-msg">
+                <span className="flaticon-home-1" style={{ fontSize: 48, color: "#ddd", display: "block", marginBottom: 12 }} />
+                <p className="fz18 mb-2 fw500">No {currentType === "Rent" ? "rental" : "sold"} properties available</p>
+                <p className="fz14 text" style={{ color: "#aaa" }}>
+                  This portal currently lists properties for sale.
+                  Check back soon for {currentType === "Rent" ? "rental" : "sold"} listings.
+                </p>
+                <button className="ud-btn btn-thm mt20" onClick={() => setCurrentType("Buy")}>
+                  Browse Buy Listings <i className="fal fa-arrow-right-long" />
+                </button>
+              </div>
             ) : (
-              <PopularListings data={pageData} />
+              <>
+                <PopularListings data={pageData.slice(0, 8)} />
+                <div className="text-center mt30">
+                  <Link
+                    to="/grid-full-3-col"
+                    state={{ activeTab: currentType }}
+                    className="ud-btn btn-thm"
+                  >
+                    See All {seeAllLabel} <i className="fal fa-arrow-right-long" />
+                  </Link>
+                </div>
+              </>
             )}
-            <div className="d-grid d-md-block text-center mt30 mt0-md">
-              <Link to="/grid-full-4-col" className="ud-btn btn-thm">
-                See All Properties<i className="fal fa-arrow-right-long"></i>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
