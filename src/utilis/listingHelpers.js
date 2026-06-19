@@ -3,7 +3,6 @@ import rawListings from "@/data/listings";
 // Derive real state from ListingURL — dataset has "VIC" hardcoded for all records
 function deriveState(listing) {
   if (!listing.ListingURL) return listing.State || "";
-  // Match state code segment: property-<type>-<state>-<suburb+>
   const m = listing.ListingURL.match(/property-[^/]+-([a-z]{2,3})-/i);
   if (!m) return listing.State || "";
   const code = m[1].toUpperCase();
@@ -11,7 +10,7 @@ function deriveState(listing) {
   return map[code] || listing.State || "";
 }
 
-// City aliases for search — maps user-typed city to address tokens (all lowercase)
+// City aliases for search
 const CITY_ALIASES = {
   darwin: ["darwin city", "darwin", "larrakeyah", "tiwi", "nightcliff", "casuarina", "muirhead", "moulden", "gunn", "farrar", "blackmore", "durack", "rosebery", "bellamack", "lyons", "woodroffe", "noonamah", "howard springs", "stuart park", "katherine", "gillen", "wycliffe well"],
   brisbane: ["brisbane", "mcdowall", "ashgrove", "geebung", "inala", "bracken ridge", "mackenzie", "loganlea", "richlands", "reedy creek", "burpengary", "robina", "park ridge", "yarrabilba", "fig tree pocket", "blackstone", "south townsville", "idalia", "kawana island", "mooloolah valley", "sanctuary cove"],
@@ -22,28 +21,35 @@ const CITY_ALIASES = {
   sydney: ["sydney", "parramatta", "blacktown", "marrickville", "botany", "matraville", "greystanes", "panania", "werrington", "tallawong", "kellyville ridge", "cordeaux heights", "warners bay", "girraween", "jordan springs", "east gosford", "gosford", "kootingal", "culburra beach", "bellambi", "swansea", "bathurst"],
 };
 
-// Derive suburb from Address when Suburb field is empty
+// Derive suburb from Address — use second-to-last comma segment (actual suburb)
+// "603/135 A'Beckett Street, Melbourne" → "Melbourne"
+// "28 Bullich Place, Margaret River"   → "Margaret River"
+// "16 Bivouac Street, Jordan Springs"  → "Jordan Springs"
 function deriveSuburb(listing) {
   if (listing.Suburb) return listing.Suburb;
   const addr = listing.Address || "";
-  const parts = addr.split(",");
-  if (parts.length > 1) {
-    const last = parts[parts.length - 1].trim();
-    // Remove unit/level prefix numbers from suburb
-    return last.replace(/^\d+\s+/, "");
+  const parts = addr.split(",").map((s) => s.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    // Last segment is always the suburb (addresses only have street, suburb)
+    const raw = parts[parts.length - 1];
+    // Strip leading unit/lot numbers e.g. "4007/633 " prefix if somehow present
+    return raw.replace(/^[\d/]+\s+/, "").trim();
   }
   return "";
 }
 
 // Known valid property types
-const VALID_PROP_TYPES = new Set(["House","Apartment","Townhouse","Unit","Villa","Acreage","Flat","Studio","Duplex","Duplex/semi-detached","Residential land","Lifestyle","Block of units","Mixed farming","Other","Acreage"]);
+const VALID_PROP_TYPES = new Set([
+  "House","Apartment","Townhouse","Unit","Villa","Acreage","Flat","Studio",
+  "Duplex","Duplex/semi-detached","Residential land","Lifestyle",
+  "Block of units","Mixed farming","Other",
+]);
 
 // Normalise PropertyType — some entries have price text in PropertyType field
 function derivePropertyType(listing) {
   const pt = (listing.PropertyType || "").trim();
   if (!pt) return "Property";
   if (VALID_PROP_TYPES.has(pt)) return pt;
-  // Price-like text landed in PropertyType
   if (pt.startsWith("Indicative") || pt.startsWith("$") || /^[0-9]/.test(pt)) return "Apartment";
   return pt;
 }
@@ -56,12 +62,30 @@ function derivePriceLabel(listing) {
   return "";
 }
 
-// Deduplicate by ListingURL to remove duplicate agency records
-const seen = new Set();
+// Clean the scraped Open Home Date field — removes duplicated "Inspection…Inspection…" text
+// and truncates long promo/junk text that the scraper captured
+function deriveOpenHome(listing) {
+  const raw = listing["Open Home Date"] || listing.OpenHomeDate || "";
+  if (!raw) return "";
+  // Remove duplicated "InspectionXXXInspection" pattern
+  let cleaned = raw.replace(/^(Inspection[^I]{0,60})(Inspection\s*)/i, "$1").trim();
+  // Strip leading "Inspection " prefix
+  cleaned = cleaned.replace(/^Inspection\s+/i, "").trim();
+  // If still over 80 chars it's promo garbage — discard
+  if (cleaned.length > 80) return "";
+  return cleaned;
+}
+
+// Deduplicate by Address AND ListingURL
+const seenAddr = new Set();
+const seenUrl  = new Set();
 const dedupedListings = rawListings.filter((l) => {
-  const key = l.ListingURL || l.Address;
-  if (seen.has(key)) return false;
-  seen.add(key);
+  const addrKey = (l.Address || "").toLowerCase().trim();
+  const urlKey  = l.ListingURL || "";
+  if (addrKey && seenAddr.has(addrKey)) return false;
+  if (urlKey  && seenUrl.has(urlKey))   return false;
+  if (addrKey) seenAddr.add(addrKey);
+  if (urlKey)  seenUrl.add(urlKey);
   return true;
 });
 
@@ -69,10 +93,11 @@ const dedupedListings = rawListings.filter((l) => {
 const listings = dedupedListings.map((l, i) => ({
   ...l,
   _idx: i,
-  State: deriveState(l),
-  Suburb: deriveSuburb(l),
+  State:        deriveState(l),
+  Suburb:       deriveSuburb(l),
   PropertyType: derivePropertyType(l),
-  PriceLabel: derivePriceLabel(l),
+  PriceLabel:   derivePriceLabel(l),
+  OpenHomeCleaned: deriveOpenHome(l),
 }));
 
 export default listings;
@@ -80,10 +105,10 @@ export default listings;
 function makeHaystack(el) {
   return [
     el.Address || "",
-    el.Suburb || "",
-    el.State || "",
+    el.Suburb  || "",
+    el.State   || "",
     el.Postcode || "",
-    el.Agency || "",
+    el.Agency  || "",
     el.PropertyType || "",
   ].join(" ").toLowerCase();
 }
@@ -91,9 +116,9 @@ function makeHaystack(el) {
 export function filterListings({
   listingStatus = "All",
   propertyTypes = [],
-  bedrooms = 0,
-  bathroms = 0,
-  location = "All Cities",
+  bedrooms  = 0,
+  bathroms  = 0,
+  location  = "All Cities",
   searchQuery = "",
 } = {}) {
   let result = listings.filter((elm) =>
@@ -107,7 +132,6 @@ export function filterListings({
     result = result.filter((el) => Number(el.Bathrooms) >= bathroms);
   if (location !== "All Cities") {
     const loc = location.toLowerCase();
-    // Expand location through city aliases
     const aliasTokens = CITY_ALIASES[loc] || [loc];
     result = result.filter((el) => {
       const hs = makeHaystack(el);

@@ -1,11 +1,8 @@
-
-
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
-
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const DefaultHeader = () => {
   const [navbar, setNavbar] = useState(false);
@@ -63,16 +60,15 @@ const DefaultHeader = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                  <a
-                    href="#"
-                    className="login-info d-flex align-items-cente"
+                  <button
+                    type="button"
+                    className="login-info d-flex align-items-center"
                     data-bs-toggle="modal"
                     data-bs-target="#loginSignupModal"
-                    role="button"
                   >
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
-                  </a>
+                  </button>
                   <Link
                     className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
                     to="/dashboard-add-property"
@@ -80,9 +76,9 @@ const DefaultHeader = () => {
                     Add Property
                     <i className="fal fa-arrow-right-long" />
                   </Link>
-                  <a
+                  <button
+                    type="button"
                     className="sidemenu-btn filter-btn-right"
-                    href="#"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#SidebarPanel"
                     aria-controls="SidebarPanelLabel"
@@ -99,7 +95,7 @@ const DefaultHeader = () => {
                       src="/images/dark-nav-icon.svg"
                       alt="humberger menu"
                     />
-                  </a>
+                  </button>
                 </div>
               </div>
               {/* End .col-auto */}

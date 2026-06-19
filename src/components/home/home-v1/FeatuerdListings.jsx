@@ -4,27 +4,16 @@ import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-const VALID_TYPES = ["House","Apartment","Townhouse","Unit","Villa","Acreage","Flat","Studio","Duplex"];
+const VALID_TYPES = ["House","Apartment","Townhouse","Unit","Villa","Acreage","Flat","Studio","Duplex","Duplex/semi-detached","Residential land","Lifestyle","Block of units"];
 
-// Pick up to 12 Buy listings with unique photos from different cities/agencies
+// Pick up to 9 Buy listings — one per unique MainPhotoURL to guarantee variety
 const uniqueFeatured = (() => {
   const seenPhoto = new Set();
-  const seenAgency = new Set();
   const result = [];
-  // First pass: one per agency for diversity
   for (const l of listings) {
-    if (l.Category !== "Buy" || !l.MainPhotoURL) continue;
-    if (seenPhoto.has(l.MainPhotoURL)) continue;
-    if (seenAgency.has(l.Agency)) continue;
-    seenPhoto.add(l.MainPhotoURL);
-    seenAgency.add(l.Agency);
-    result.push(l);
     if (result.length >= 9) break;
-  }
-  // Second pass: fill remaining slots with unique photos
-  for (const l of listings) {
-    if (result.length >= 12) break;
-    if (l.Category !== "Buy" || !l.MainPhotoURL) continue;
+    if (l.Category !== "Buy") continue;
+    if (!l.MainPhotoURL) continue;
     if (seenPhoto.has(l.MainPhotoURL)) continue;
     seenPhoto.add(l.MainPhotoURL);
     result.push(l);

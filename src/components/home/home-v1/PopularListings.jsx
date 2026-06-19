@@ -7,6 +7,7 @@ const PopularListings = ({ data = [] }) => {
     <Swiper
       spaceBetween={20}
       slidesPerView={1}
+      style={{ paddingBottom: 4 }}
       breakpoints={{
         300:  { slidesPerView: 1 },
         768:  { slidesPerView: 2 },

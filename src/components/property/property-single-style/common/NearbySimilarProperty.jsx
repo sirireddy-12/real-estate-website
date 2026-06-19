@@ -38,6 +38,9 @@ const NearbySimilarProperty = ({ currentId, category }) => {
                   />
                   {listing.Category && <span className="homely-feat-badge">{listing.Category}</span>}
                   {listing.PriceLabel && <span className="homely-feat-price">{listing.PriceLabel}</span>}
+                  <button className="homely-wishlist-btn" aria-label="Save" onClick={(e) => e.preventDefault()}>
+                    <i className="flaticon-like" />
+                  </button>
                 </Link>
                 <div className="homely-feat-body">
                   {listing.PropertyType && <span className="homely-feat-type">{listing.PropertyType}</span>}

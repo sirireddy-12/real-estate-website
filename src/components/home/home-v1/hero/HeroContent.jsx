@@ -64,7 +64,7 @@ const HeroContent = () => {
   const doSearch = (q = query) => {
     if (!tabHasData) return;
     setShowSugg(false);
-    navigate("/grid-full-3-col", {
+    navigate("/map-v1", {
       state: { searchQuery: q.trim(), activeTab: active },
     });
   };

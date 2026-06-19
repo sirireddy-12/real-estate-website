@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import React from "react";
 
 const SignIn = () => {
   return (
@@ -18,7 +17,7 @@ const SignIn = () => {
       <div className="mb15">
         <label className="form-label fw600 dark-color">Password</label>
         <input
-          type="text"
+          type="password"
           className="form-control"
           placeholder="Enter Password"
           required
@@ -32,9 +31,9 @@ const SignIn = () => {
           <input type="checkbox" defaultChecked="checked" />
           <span className="checkmark" />
         </label>
-        <a className="fz14 ff-heading" href="#">
+        <button type="button" className="fz14 ff-heading btn-link-plain">
           Lost your password?
-        </a>
+        </button>
       </div>
       {/* End  Lost your password? */}
 

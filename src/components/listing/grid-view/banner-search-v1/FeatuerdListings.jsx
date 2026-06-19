@@ -9,16 +9,14 @@ const FeaturedListings = ({ data, colstyle }) => {
             <div className="list-thumb">
               {listing.MainPhotoURL ? (
                 <img
-                  style={{ height: "228px", objectFit: "cover" }}
-                  className="w-100 cover"
+                  className="cover"
                   src={listing.MainPhotoURL}
                   alt={listing.Address || "Property"}
+                  loading="lazy"
+                  onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"; }}
                 />
               ) : (
-                <div
-                  className="w-100 bgc-f7 d-flex align-items-center justify-content-center"
-                  style={{ height: "228px" }}
-                >
+                <div className="w-100 h-100 bgc-f7 d-flex align-items-center justify-content-center">
                   <span className="flaticon-home-1 fz40 text-muted" />
                 </div>
               )}

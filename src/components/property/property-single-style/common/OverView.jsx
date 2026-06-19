@@ -5,6 +5,10 @@ const OverView = ({ id }) => {
   const idx = parseInt(id, 10);
   const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
 
+  const isValid = (v) =>
+    v !== undefined && v !== null && v !== "" &&
+    String(v) !== "undefined" && String(v) !== "null" && String(v) !== "N/A";
+
   const overviewData = [
     { icon: "flaticon-bed",      label: "Bedrooms",  value: data.Bedrooms },
     { icon: "flaticon-shower",   label: "Bathrooms", value: data.Bathrooms },
@@ -13,7 +17,7 @@ const OverView = ({ id }) => {
     { icon: "flaticon-home-1",   label: "Category",  value: data.Category },
     { icon: "flaticon-location", label: "Suburb",    value: data.Suburb },
     { icon: "flaticon-map",      label: "State",     value: data.State },
-  ].filter((item) => item.value !== undefined && item.value !== null && item.value !== "" && item.value !== "N/A");
+  ].filter((item) => isValid(item.value));
 
   return (
     <>

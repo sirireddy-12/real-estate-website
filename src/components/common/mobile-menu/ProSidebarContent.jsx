@@ -1,6 +1,6 @@
 import mobileMenuItems from "../../../data/mobileMenuItems";
 import { isParentActive } from "../../../utilis/isMenuActive";
-import {useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
@@ -34,7 +34,7 @@ const ProSidebarContent = () => {
                       key={nestedIndex}
                       component={
                         <Link
-                          className={nestedItem.path == pathname ? "active" : ""}
+                          className={nestedItem.path === pathname ? "active" : ""}
                           to={nestedItem.path}
                         />
                       }
@@ -48,7 +48,7 @@ const ProSidebarContent = () => {
                   key={subIndex}
                   component={
                     <Link
-                      className={subItem.path == pathname ? "active" : ""}
+                    className={subItem.path === pathname ? "active" : ""}
                       to={subItem.path}
                     />
                   }

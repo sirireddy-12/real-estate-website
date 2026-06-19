@@ -7,8 +7,10 @@ import PriceRange from "../../sidebar/PriceRange";
 import Bedroom from "../../sidebar/Bedroom";
 import Bathroom from "../../sidebar/Bathroom";
 
-const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColstyle}) => {
-  
+const TopFilterBar = ({filterFunctions, setCurrentSortingOption, colstyle, setColstyle}) => {
+  const statusLabel =
+    filterFunctions?.listingStatus === "Rent" ? "For Rent" :
+    filterFunctions?.listingStatus === "Sold" ? "Sold" : "For Sale";
   return (
     <>
       <div className="col-xl-9 d-none d-lg-block">
@@ -21,7 +23,7 @@ const TopFilterBar = ({filterFunctions,setCurrentSortingOption,colstyle,setColst
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
               >
-                For Sale <i className="fa fa-angle-down ms-2" />
+                {statusLabel} <i className="fa fa-angle-down ms-2" />
               </button>
               <div className="dropdown-menu">
                 <div className="widget-wrapper bdrb1 pb25 mb0 pl20">

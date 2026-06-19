@@ -1,4 +1,3 @@
-import React from "react";
 import listings from "@/utilis/listingHelpers";
 
 const SingleAgentInfo = ({ id }) => {
@@ -20,10 +19,10 @@ const SingleAgentInfo = ({ id }) => {
           <p className="text fz14 mb5" style={{ color: "#888" }}>{agencyName.split(" - ")[1]}</p>
         )}
         <div className="agent-meta mb10 d-md-flex align-items-center">
-          <a className="text fz15 pe-2" href="#">
+          <span className="text fz15 pe-2">
             <i className="flaticon-call pe-1" />
             Contact Agency
-          </a>
+          </span>
         </div>
         {data.ListingURL && (
           <a href={data.ListingURL} target="_blank" rel="noreferrer" className="text fz13" style={{ color: "#ff1f5a" }}>

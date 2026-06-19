@@ -1,5 +1,3 @@
-import React from "react";
-
 const Form = () => {
   return (
     <form className="form-style1">
@@ -17,7 +15,6 @@ const Form = () => {
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-lg-12">
           <div className="mb20">
@@ -32,7 +29,6 @@ const Form = () => {
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="mb20">
@@ -40,17 +36,16 @@ const Form = () => {
             <input
               type="email"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Your Email"
               required
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="mb10">
             <label className="heading-color ff-heading fw600 mb10">
-              Textarea
+              Message
             </label>
             <textarea
               cols={30}
@@ -61,7 +56,6 @@ const Form = () => {
             />
           </div>
         </div>
-        {/* End .col-lg-12 */}
 
         <div className="col-md-12">
           <div className="d-grid">

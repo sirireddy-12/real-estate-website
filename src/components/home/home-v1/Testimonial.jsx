@@ -1,7 +1,6 @@
 
 import testimonialData from "@/data/testimonials";
-
-import SwiperCore, { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
@@ -45,9 +44,9 @@ const Testimonial = () => {
                   <p className="text">{testimonial.quote}</p>
                   <div className="testimonial-review">
                     {Array.from({ length: testimonial.stars }, (_, index) => (
-                      <a className="me-1" href="#" key={index}>
+                      <span className="me-1" key={index}>
                         <i className="fas fa-star" />
-                      </a>
+                      </span>
                     ))}
                   </div>
                 </div>

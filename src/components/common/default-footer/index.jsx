@@ -16,10 +16,9 @@ const Footer = () => {
             <div className="footer-widget mb-4 mb-lg-5">
               <Link className="footer-logo" to="/">
                 <img
-                 
                   className="mb40"
                   src="/images/header-logo2.svg"
-                  alt=""
+                  alt="Homez logo"
                 />
               </Link>
               <ContactMeta />

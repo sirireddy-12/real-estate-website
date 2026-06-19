@@ -1,5 +1,4 @@
-import React from "react";
-
+import { useState } from "react";
 const ContactWithAgent = ({ data }) => {
   const agentName = data?.Agent || data?.Agency || "Agency";
   const phone = data?.["Agent Phone"];
@@ -44,9 +43,15 @@ const ContactWithAgent = ({ data }) => {
         </div>
       )}
       <div className="d-grid">
-        <a href={email ? `mailto:${email}` : "#"} className="ud-btn btn-thm">
-          Contact Agent <i className="fal fa-arrow-right-long" />
-        </a>
+        {email ? (
+          <a href={`mailto:${email}`} className="ud-btn btn-thm">
+            Contact Agent <i className="fal fa-arrow-right-long" />
+          </a>
+        ) : (
+          <button type="button" className="ud-btn btn-thm">
+            Contact Agent <i className="fal fa-arrow-right-long" />
+          </button>
+        )}
       </div>
     </>
   );

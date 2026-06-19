@@ -1,22 +1,16 @@
-
-
-
 import { Link } from "react-router-dom";
 
-const FeaturedListings = ({data,colstyle}) => {
+const FeaturedListings = ({ data, colstyle }) => {
   return (
     <>
       {data.map((listing) => (
-        <div   className={` ${colstyle ? 'col-sm-12':'col-sm-6 col-lg-4'}  `}  key={listing.id}>
-          <div className={colstyle ? "listing-style7 listCustom listing-type" : "listing-style7"}   >
+        <div className={`${colstyle ? "col-sm-12" : "col-sm-6 col-lg-4"}`} key={listing.id}>
+          <div className={colstyle ? "listing-style7 listCustom listing-type" : "listing-style7"}>
             <div className="list-thumb">
               <img
-               
-                className="w-100 cover"
-                
+                className="w-100 h-100 cover"
                 src={listing.image}
                 alt="listings"
-                style={{ height: "250px" }}
               />
               <div className="sale-sticker-wrap">
                 {listing.forRent && (
@@ -42,7 +36,6 @@ const FeaturedListings = ({data,colstyle}) => {
               <h6 className="list-title">
                 <Link to={`/single-v4/${listing.id}`}>{listing.title}</Link>
               </h6>
-
               <div className="d-flex justify-content-between align-items-center">
                 <div className="list-price">
                   {listing.price} / <span>mo</span>

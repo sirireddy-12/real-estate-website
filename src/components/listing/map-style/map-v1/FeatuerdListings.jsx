@@ -1,65 +1,95 @@
 import { Link } from "react-router-dom";
 
 const FeaturedListings = ({ data, colstyle }) => {
+  if (!data || data.length === 0) {
+    return (
+      <div className="col-12">
+        <div className="no-properties-msg">
+          <i className="flaticon-home-1 fz40 d-block mb10" />
+          No properties found. Try adjusting your filters.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {data.map((listing, i) => {
-        const categoryColor = listing.Category === "Buy" ? "#eb6753" : listing.Category === "Rent" ? "#1f4b7d" : "#2e7d32";
-        const location = [listing.Suburb, listing.State].filter(Boolean).join(", ");
+        const suburb = listing.Suburb || "";
+        const state  = listing.State  || "";
+        const loc    = [suburb, state].filter(Boolean).join(", ");
+        const agencyShort = listing.Agency ? listing.Agency.split(" - ")[0] : "";
+        const detailPath  = `/single-v6/${listing._idx ?? i}`;
+        const badgeBg     =
+          listing.Category === "Rent" ? "#1f4b7d" :
+          listing.Category === "Sold" ? "#2e7d32" : "#ff1f5a";
+
         return (
-          <div className={colstyle ? "col-sm-12" : "col-sm-6"} key={listing._idx ?? i}>
+          <div className="col-12" key={listing._idx ?? i}>
             <div
-              className={colstyle ? "listing-style1 listCustom listing-type" : "listing-style1"}
-              style={{ borderRadius: "10px", overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,0.08)", background: "#fff", marginBottom: 20 }}
+              className={`homely-feat-card mb16 homely-feat-card--list${
+                colstyle ? " homely-feat-card--active" : ""
+              }`}
             >
-              <div style={{ position: "relative" }}>
-                {listing.MainPhotoURL ? (
-                  <img
-                    className="w-100"
-                    src={listing.MainPhotoURL}
-                    style={{ height: "220px", objectFit: "cover", display: "block" }}
-                    alt={listing.Address || "Property"}
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-100 d-flex align-items-center justify-content-center" style={{ height: "220px", background: "#f0f0f0" }}>
-                    <span className="flaticon-home-1 fz40 text-muted" />
-                  </div>
-                )}
+              <Link to={detailPath} className="homely-feat-img-wrap">
+                <img
+                  src={
+                    listing.MainPhotoURL ||
+                    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"
+                  }
+                  alt={listing.Address || "Property"}
+                  className="homely-feat-img"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70";
+                  }}
+                />
                 {listing.Category && (
-                  <span style={{ position: "absolute", top: 10, left: 10, background: categoryColor, color: "#fff", borderRadius: "4px", padding: "3px 9px", fontSize: "11px", fontWeight: 600, textTransform: "uppercase" }}>
+                  <span
+                    className="homely-feat-badge"
+                    style={{ background: badgeBg }}
+                  >
                     {listing.Category}
                   </span>
                 )}
                 {listing.PriceLabel && (
-                  <span style={{ position: "absolute", bottom: 10, left: 10, background: "rgba(0,0,0,0.62)", color: "#fff", borderRadius: "4px", padding: "4px 9px", fontSize: "13px", fontWeight: 700 }}>
-                    {listing.PriceLabel}
-                  </span>
+                  <span className="homely-feat-price">{listing.PriceLabel}</span>
                 )}
-              </div>
-              <div style={{ padding: "12px 14px" }}>
+                <button
+                  className="homely-wishlist-btn"
+                  aria-label="Save"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <i className="flaticon-like" />
+                </button>
+              </Link>
+
+              <div className="homely-feat-body">
                 {listing.PropertyType && (
-                  <span style={{ fontSize: "11px", color: "#888", textTransform: "uppercase" }}>{listing.PropertyType}</span>
+                  <span className="homely-feat-type">{listing.PropertyType}</span>
                 )}
-                <h6 style={{ margin: "4px 0 2px", fontSize: "14px", fontWeight: 600 }}>
-                  <Link to={`/single-v6/${listing._idx ?? i}`} style={{ color: "#222" }}>
-                    {listing.Address || "Property"}
-                  </Link>
+                <h6 className="homely-feat-title">
+                  <Link to={detailPath}>{listing.Address || "Property"}</Link>
                 </h6>
-                {location && (
-                  <p style={{ fontSize: "12px", color: "#666", margin: "0 0 8px" }}>{location}</p>
+                {loc && (
+                  <p className="homely-feat-loc">
+                    <i className="flaticon-location" /> {loc}
+                  </p>
                 )}
-                <div className="d-flex gap-3" style={{ fontSize: "13px", color: "#444", marginBottom: 8 }}>
-                  {listing.Bedrooms ? <span><span className="flaticon-bed" style={{ marginRight: 3 }} />{listing.Bedrooms} bed</span> : null}
-                  {listing.Bathrooms ? <span><span className="flaticon-shower" style={{ marginRight: 3 }} />{listing.Bathrooms} bath</span> : null}
-                  {listing.Parking ? <span><span className="flaticon-car" style={{ marginRight: 3 }} />{listing.Parking} park</span> : null}
+                <div className="homely-feat-meta">
+                  {listing.Bedrooms  ? <span className="homely-feat-meta-item"><i className="flaticon-bed" />    {listing.Bedrooms}  bed</span>  : null}
+                  {listing.Bathrooms ? <span className="homely-feat-meta-item"><i className="flaticon-shower" /> {listing.Bathrooms} bath</span> : null}
+                  {listing.Parking   ? <span className="homely-feat-meta-item"><i className="flaticon-car" />    {listing.Parking}   park</span> : null}
                 </div>
-                <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "11px", color: "#999", maxWidth: "70%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {listing.Agency || ""}
+                <div className="homely-feat-footer">
+                  <span className="homely-feat-agency">
+                    {agencyShort ? (
+                      <><i className="flaticon-building" /> {agencyShort}</>
+                    ) : ""}
                   </span>
-                  <Link to={`/single-v6/${listing._idx ?? i}`} style={{ color: "#eb6753", fontSize: "13px" }}>
-                    View <span className="flaticon-fullscreen" />
+                  <Link to={detailPath} className="homely-feat-link">
+                    View <i className="fal fa-arrow-right-long" />
                   </Link>
                 </div>
               </div>

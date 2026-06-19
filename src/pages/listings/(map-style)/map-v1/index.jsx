@@ -9,7 +9,7 @@ import React from "react";
 import MetaData from "@/components/common/MetaData";
 
 const metaInformation = {
-  title: "Map V1 || Homez - Real Estate ReactJS Template",
+  title: "Search Properties | Homely Australia",
 };
 
 const MapV1 = () => {

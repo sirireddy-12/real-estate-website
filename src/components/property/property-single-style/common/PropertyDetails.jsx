@@ -5,6 +5,8 @@ const PropertyDetails = ({ id }) => {
   const idx = parseInt(id, 10);
   const data = (!isNaN(idx) && listings[idx]) ? listings[idx] : listings[0];
 
+  const openHome = data.OpenHomeCleaned || "";
+
   const allDetails = [
     { label: "Price",     value: data.PriceLabel },
     { label: "Bedrooms",  value: data.Bedrooms },
@@ -15,7 +17,12 @@ const PropertyDetails = ({ id }) => {
     { label: "Suburb",    value: data.Suburb },
     { label: "State",     value: data.State },
     { label: "Agency",    value: data.Agency },
-  ].filter((d) => d.value !== undefined && d.value !== null && d.value !== "" && d.value !== "N/A" && d.value !== "undefined");
+    openHome ? { label: "Open Home", value: openHome } : null,
+  ].filter((d) => {
+    if (!d) return false;
+    const v = d.value;
+    return v !== undefined && v !== null && v !== "" && String(v) !== "undefined" && String(v) !== "null" && String(v) !== "N/A";
+  });
 
   const half = Math.ceil(allDetails.length / 2);
   const col1 = allDetails.slice(0, half);

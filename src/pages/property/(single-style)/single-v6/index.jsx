@@ -31,7 +31,7 @@ import { useParams } from "react-router-dom";
 import listings from "@/utilis/listingHelpers";
 
 const metaInformation = {
-  title: "Property Single V6 || Homez - Real Estate ReactJS Template",
+  title: "Property Details | Homely Australia",
 };
 
 const SingleV6 = () => {

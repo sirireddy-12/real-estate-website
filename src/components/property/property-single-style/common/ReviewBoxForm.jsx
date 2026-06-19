@@ -39,7 +39,7 @@ const ReviewBoxForm = () => {
             <input
               type="email"
               className="form-control"
-              placeholder="ibthemes21@gmail.com"
+              placeholder="your@email.com"
               required
             />
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,13 +27,15 @@ export default function ScrollToTop() {
   return (
     <>
       {isVisible && (
-        <div
+        <button
+          type="button"
           className="scrollToHome"
           style={{ cursor: "pointer" }}
           onClick={scrollToTop}
+          aria-label="Scroll to top"
         >
           <i className="fas fa-angle-up"></i>
-        </div>
+        </button>
       )}
     </>
   );

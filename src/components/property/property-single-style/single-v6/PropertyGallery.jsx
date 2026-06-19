@@ -114,10 +114,9 @@ const PropertyGallery = ({ id }) => {
                           {images.map((item, i) => (
                             <SwiperSlide key={i}>
                               <img
-
                                 src={item}
                                 alt="gallery"
-                                className="w-100 h-auto bdrs12"
+                                style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12, display: "block" }}
                               />
                             </SwiperSlide>
                           ))}
@@ -138,10 +137,9 @@ const PropertyGallery = ({ id }) => {
                               {images.map((item, i) => (
                                 <SwiperSlide key={i}>
                                   <img
-                                   
                                     src={item}
                                     alt="image"
-                                    className="w-100 bdrs12 cover pointer"
+                                    style={{ width: "100%", height: 72, objectFit: "cover", borderRadius: 8, display: "block", cursor: "pointer" }}
                                   />
                                 </SwiperSlide>
                               ))}

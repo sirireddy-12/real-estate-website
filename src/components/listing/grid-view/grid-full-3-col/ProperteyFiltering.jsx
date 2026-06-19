@@ -66,18 +66,18 @@ function MapController({ coords }) {
   return null;
 }
 
-const PropertyCard = ({ listing, onClick, isActive }) => {
+const PropertyCard = ({ listing, onClick, isActive, colStyle }) => {
   const suburb = listing.Suburb || "";
   const state  = listing.State  || "";
   const loc    = [suburb, state].filter(Boolean).join(", ");
   const agencyShort = listing.Agency ? listing.Agency.split(" - ")[0] : "";
   return (
     <div
-      className={`homely-feat-card mb16${isActive ? " homely-feat-card--active" : ""}`}
+      className={`homely-feat-card mb16${isActive ? " homely-feat-card--active" : ""}${colStyle ? " homely-feat-card--list" : ""}`}
       onClick={() => onClick(listing)}
       style={{ cursor: "pointer" }}
     >
-      <Link to={`/single-v6/${listing._idx}`} className="homely-feat-img-wrap" style={{ height: 180 }} onClick={(e) => e.stopPropagation()}>
+      <Link to={`/single-v6/${listing._idx}`} className="homely-feat-img-wrap" onClick={(e) => e.stopPropagation()}>
         <img
           src={listing.MainPhotoURL || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"}
           alt={listing.Address}
@@ -87,6 +87,13 @@ const PropertyCard = ({ listing, onClick, isActive }) => {
         />
         {listing.Category && <span className="homely-feat-badge">{listing.Category}</span>}
         {listing.PriceLabel && <span className="homely-feat-price">{listing.PriceLabel}</span>}
+        <button
+          className="homely-wishlist-btn"
+          aria-label="Save"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        >
+          <i className="flaticon-like" />
+        </button>
       </Link>
       <div className="homely-feat-body">
         {listing.PropertyType && <span className="homely-feat-type">{listing.PropertyType}</span>}
@@ -291,9 +298,9 @@ export default function ProperteyFiltering() {
             {/* Right: Leaflet map */}
             <div
               className="col-lg-7 col-xl-8 d-none d-lg-block"
-              style={{ height: "80vh", position: "sticky", top: 80 }}
+              style={{ height: "calc(100vh - 140px)", position: "sticky", top: 80 }}
             >
-              <div style={{ height: "100%", borderRadius: 12, overflow: "hidden" }}>
+              <div style={{ height: "100%", borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 16px rgba(0,0,0,.10)" }}>
                 <MapContainer
                   center={[defaultCenter.lat, defaultCenter.lng]}
                   zoom={12}
@@ -301,8 +308,8 @@ export default function ProperteyFiltering() {
                   scrollWheelZoom={true}
                 >
                   <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://carto.com">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                   />
                   {mapCoords && <MapController coords={mapCoords} />}
                   {pageItems.map((listing, i) => {
@@ -324,15 +331,15 @@ export default function ProperteyFiltering() {
                             {listing.MainPhotoURL && (
                               <img src={listing.MainPhotoURL} alt={listing.Address} style={{ width: "100%", height: 80, objectFit: "cover", borderRadius: 4, marginBottom: 6 }} />
                             )}
-                            <p style={{ fontWeight: 600, fontSize: 12, margin: "0 0 3px" }}>{listing.Address}</p>
+                            <p style={{ fontWeight: 700, fontSize: 12, margin: "0 0 3px", color: "#181a20" }}>{listing.Address}</p>
                             {listing.PriceLabel && (
-                              <p style={{ fontSize: 12, margin: "0 0 4px", color: "#ff1f5a", fontWeight: 600 }}>{listing.PriceLabel}</p>
+                              <p style={{ fontSize: 12, margin: "0 0 4px", color: "#ff1f5a", fontWeight: 700 }}>{listing.PriceLabel}</p>
                             )}
-                            <div style={{ fontSize: 11, color: "#666", marginBottom: 4 }}>
+                            <div style={{ fontSize: 11, color: "#666", marginBottom: 6 }}>
                               {listing.Bedrooms ? `${listing.Bedrooms} bed · ` : ""}
                               {listing.Bathrooms ? `${listing.Bathrooms} bath` : ""}
                             </div>
-                            <Link to={`/single-v6/${listing._idx}`} style={{ fontSize: 12, color: "#1f4b7d", fontWeight: 600 }}>
+                            <Link to={`/single-v6/${listing._idx}`} style={{ fontSize: 12, color: "#ff1f5a", fontWeight: 700, textDecoration: "none" }}>
                               View Property →
                             </Link>
                           </div>

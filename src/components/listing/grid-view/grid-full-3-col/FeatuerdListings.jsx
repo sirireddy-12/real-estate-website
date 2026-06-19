@@ -17,7 +17,7 @@ const FeaturedListings = ({ data, colstyle }) => {
           >
             <div className={`homely-feat-card mb20${colstyle ? " homely-feat-card--list" : ""}`}>
               {/* Image */}
-              <Link to={detailPath} className="homely-feat-img-wrap" style={colstyle ? { height: 180 } : {}}>
+              <Link to={detailPath} className="homely-feat-img-wrap">
                 <img
                   src={listing.MainPhotoURL || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"}
                   alt={listing.Address}

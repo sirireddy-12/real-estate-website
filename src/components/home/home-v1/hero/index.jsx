@@ -11,6 +11,9 @@ const Hero = () => {
             src="https://i2.au.reastatic.net/800x600/69baf2e3b4c35c895cde0ea371d461ead152b0f1f4114f5d8eba4ef3ce774266/image.jpg"
             alt="Real estate"
             className="homely-hero-img"
+            width={800}
+            height={600}
+            loading="lazy"
           />
         </div>
 
@@ -40,11 +43,13 @@ const Hero = () => {
         </div>
       </div>
 
+      // amazonq-ignore-next-line
       <div
         className="modal fade"
-        id="advanceSeachModal"
+        id="advanceSearchModal"
         tabIndex={-1}
         aria-hidden="true"
+        aria-labelledby="advanceSearchModalLabel"
       >
         <AdvanceFilterModal />
       </div>

@@ -17,7 +17,7 @@ const SignUp = () => {
       <div className="mb20">
         <label className="form-label fw600 dark-color">Password</label>
         <input
-          type="text"
+          type="password"
           className="form-control"
           placeholder="Enter Password"
           required

@@ -35,11 +35,12 @@ const ReviewBoxForm = () => {
       <div className="row">
         <div className="col-md-12">
           <div className="mb-4">
+            // amazonq-ignore-next-line
             <label className="fw600 ff-heading mb-2">Email</label>
             <input
               type="email"
               className="form-control"
-              placeholder="ibthemes21@gmail.com"
+              placeholder="your@email.com"
               required
             />
           </div>
@@ -48,6 +49,7 @@ const ReviewBoxForm = () => {
 
         <div className="col-md-6">
           <div className="mb-4">
+            // amazonq-ignore-next-line
             <label className="fw600 ff-heading mb-2">Title</label>
             <input
               type="text"

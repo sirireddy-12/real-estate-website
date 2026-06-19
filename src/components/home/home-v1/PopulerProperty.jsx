@@ -8,7 +8,15 @@ export default function PopulerProperty() {
   const [currentType, setCurrentType] = useState("Buy");
 
   useEffect(() => {
-    setPageData(listings.filter((elm) => elm.Category === currentType));
+    const seenPhoto = new Set();
+    const deduped = listings
+      .filter((elm) => elm.Category === currentType)
+      .filter((elm) => {
+        if (!elm.MainPhotoURL || seenPhoto.has(elm.MainPhotoURL)) return false;
+        seenPhoto.add(elm.MainPhotoURL);
+        return true;
+      });
+    setPageData(deduped);
   }, [currentType]);
 
   const tabs = [

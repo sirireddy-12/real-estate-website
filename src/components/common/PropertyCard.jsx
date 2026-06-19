@@ -26,10 +26,10 @@ const PropertyCard = ({ listing, colStyle = false }) => {
   const badgeColor = Category === "Buy" ? "#ff1f5a" : Category === "Rent" ? "#1f4b7d" : "#2e7d32";
 
   return (
-    <div className={colStyle ? "col-sm-12" : "col-sm-6 col-lg-6"}>
+    <div className={colStyle ? "col-sm-12" : "col-sm-6 col-lg-4"}>
       <div className={`homely-feat-card mb20${colStyle ? " homely-feat-card--list" : ""}`}>
         {/* Image */}
-        <Link to={`/single-v6/${_idx}`} className="homely-feat-img-wrap" style={colStyle ? { width: 220, flexShrink: 0, height: "auto" } : {}}>
+        <Link to={`/single-v6/${_idx}`} className="homely-feat-img-wrap">
           {MainPhotoURL ? (
             <img
               className="homely-feat-img"

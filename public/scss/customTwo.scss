@@ -14,7 +14,14 @@ body {
 }
 .cursor { cursor: pointer; }
 
-/* ── Featured slider equal-height cards ── */
+/* ── All Swiper sliders — equal-height cards ── */
+.swiper-wrapper { align-items: stretch !important; }
+/* height: auto lets each slide size to its content; flex column lets card fill the slide */
+.swiper-slide   { height: auto !important; display: flex !important; flex-direction: column; align-self: stretch; }
+/* Card inside swiper must also stretch to fill the slide height */
+.swiper-slide > .homely-feat-card,
+.swiper-slide > .listing-style1 { flex: 1; width: 100%; min-height: 0; }
+/* Legacy feature-listing-slider */
 .feature-listing-slider .swiper-wrapper { align-items: stretch !important; }
 .feature-listing-slider .swiper-slide   { height: auto !important; display: flex; flex-direction: column; }
 .feature-listing-slider .swiper-slide > div { flex: 1; display: flex; flex-direction: column; }
@@ -327,24 +334,38 @@ body {
   transition: box-shadow .3s, transform .3s;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: auto prevents stretching; swiper-slide flex:1 handles equal-height */
+  height: auto;
+  min-height: 0;
+  width: 100%;
 }
 .homely-feat-card:hover {
   box-shadow: 0 10px 36px rgba(0,0,0,.14);
   transform: translateY(-4px);
 }
+/* Image wrapper — aspect-ratio via padding-top (16:9) */
 .homely-feat-img-wrap {
   position: relative;
   display: block;
-  height: 228px;
+  width: 100%;
+  padding-top: 56.25% !important;
+  height: 0 !important;
   overflow: hidden;
   flex-shrink: 0;
+  border-radius: 0;
 }
 .homely-feat-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform .4s;
+  display: block;
+  /* Prevent browser default image stretching */
+  max-width: 100%;
 }
 .homely-feat-card:hover .homely-feat-img { transform: scale(1.05); }
 
@@ -397,6 +418,9 @@ body {
   font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .homely-feat-title a { color: #181a20; text-decoration: none; }
 .homely-feat-title a:hover { color: #ff1f5a; }
@@ -408,6 +432,9 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .homely-feat-meta {
   display: flex;
@@ -461,45 +488,183 @@ body {
   box-shadow: 0 6px 24px rgba(255,31,90,.18) !important;
 }
 
-/* List mode card */
+/* List mode card — horizontal layout */
 .homely-feat-card--list {
   flex-direction: row !important;
+  height: auto !important;
+  min-height: 160px;
+  /* Remove fixed max-height — it clips card body on some content lengths */
 }
 .homely-feat-card--list .homely-feat-img-wrap {
-  width: 240px;
-  min-width: 180px;
+  width: 200px !important;
+  min-width: 160px;
+  max-width: 200px;
   flex-shrink: 0;
-  height: auto !important;
+  padding-top: 0 !important;
+  height: 100% !important;
+  min-height: 160px;
   border-radius: 16px 0 0 16px !important;
 }
-.homely-feat-card--list .homely-feat-body { flex: 1; }
+.homely-feat-card--list .homely-feat-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+.homely-feat-card--list .homely-feat-body { flex: 1; min-width: 0; overflow: hidden; }
 @media (max-width: 767px) {
-  .homely-feat-card--list { flex-direction: column !important; }
-  .homely-feat-card--list .homely-feat-img-wrap { width: 100% !important; height: 200px !important; border-radius: 16px 16px 0 0 !important; }
+  .homely-feat-card--list {
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  .homely-feat-card--list .homely-feat-img-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    padding-top: 56.25% !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
 }
 
 /* ══════════════════════════════════════════
-   LEGACY listing-style1 — used in some older pages
+   LEGACY listing-style1 — used in search results & grid listing pages
 ══════════════════════════════════════════ */
 .listing-style1 {
   border-radius: 16px !important;
   box-shadow: 0 2px 12px rgba(0,0,0,.07) !important;
   transition: box-shadow .3s, transform .3s !important;
+  display: flex !important;
+  flex-direction: column !important;
+  /* height: auto avoids stretching; col height: 100% handles equal-height in grid */
+  height: auto !important;
+  overflow: hidden !important;
+  width: 100% !important;
 }
 .listing-style1:hover {
   box-shadow: 0 8px 32px rgba(0,0,0,.13) !important;
   transform: translateY(-3px);
 }
+
+/* Image container — 16:9 via padding-top trick; NO fixed px height so images never stretch */
 .listing-style1 .list-thumb {
-  height: 228px;
-  overflow: hidden;
+  position: relative !important;
+  width: 100% !important;
+  padding-top: 56.25% !important; /* 16:9 aspect ratio */
+  height: 0 !important;           /* collapses natural height; padding-top drives it */
+  overflow: hidden !important;
   border-radius: 16px 16px 0 0 !important;
+  flex-shrink: 0 !important;
 }
-.listing-style1 .list-thumb img { width:100%; height:100%; object-fit:cover; }
-.listing-style1 .list-content   { padding: 16px 20px 20px !important; }
-.listing-style1 .list-title a   { font-size:15px; font-weight:700; color:#181a20; }
-.listing-style1 .list-title a:hover { color:#ff1f5a !important; text-decoration:none !important; }
+.listing-style1 .list-thumb img,
+.listing-style1 .list-thumb img[style] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  /* Ensure img never takes its natural dimensions */
+  max-width: 100% !important;
+}
+
+.listing-style1 .list-content {
+  padding: 16px 20px 20px !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0;
+}
+.listing-style1 .list-title a   { font-size: 15px; font-weight: 700; color: #181a20; }
+.listing-style1 .list-title a:hover { color: #ff1f5a !important; text-decoration: none !important; }
+
+/* Truncate long address text so it never breaks card height */
+.listing-style1 .list-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.listing-style1 .list-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .lc-active { border: 2px solid #ff1f5a !important; }
+
+/* Grid columns — cards fill full column height for equal-height rows */
+[class*="col-"] > .homely-feat-card,
+[class*="col-"] > .listing-style1 {
+  height: 100%;
+}
+/* Equal-height grid rows */
+.listings-row,
+.row.g-4 [class*="col-"],
+.row.gy-4 [class*="col-"],
+.row [class*="col-sm-6"],
+.row [class*="col-lg-4"],
+.row [class*="col-lg-3"] {
+  display: flex;
+  flex-direction: column;
+}
+/* Listing grid rows use consistent gutters */
+.listings-row { --bs-gutter-y: 1.5rem; }
+
+/* ── listing-type: horizontal list mode ── */
+/* Image uses a fixed height (not aspect-ratio trick) because the card is a fixed-height row */
+.listing-style1.listing-type,
+.listing-style1.listCustom.listing-type {
+  flex-direction: row !important;
+  height: auto !important;
+  min-height: 160px;
+  /* removed max-height — was clipping cards */
+  overflow: hidden !important;
+}
+.listing-style1.listing-type .list-thumb,
+.listing-style1.listCustom.listing-type .list-thumb {
+  padding-top: 0 !important;
+  height: 100% !important;
+  min-height: 160px;
+  width: 240px !important;
+  flex-shrink: 0 !important;
+  border-radius: 16px 0 0 16px !important;
+  position: relative !important;
+}
+.listing-style1.listing-type .list-thumb img,
+.listing-style1.listCustom.listing-type .list-thumb img,
+.listing-style1.listing-type .list-thumb img[style],
+.listing-style1.listCustom.listing-type .list-thumb img[style] {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.listing-style1.listing-type .list-content,
+.listing-style1.listCustom.listing-type .list-content {
+  flex: 1 !important;
+  min-width: 0;
+  overflow: hidden;
+}
+@media (max-width: 767.98px) {
+  .listing-style1.listing-type,
+  .listing-style1.listCustom.listing-type {
+    flex-direction: column !important;
+    max-height: none !important;
+    height: 100% !important;
+  }
+  .listing-style1.listing-type .list-thumb,
+  .listing-style1.listCustom.listing-type .list-thumb {
+    width: 100% !important;
+    padding-top: 56.25% !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
+}
 
 /* ══════════════════════════════════════════
    CITY CARDS
@@ -530,17 +695,84 @@ body {
 .leaflet-container { z-index: 1; }
 .leaflet-top, .leaflet-bottom { z-index: 2; }
 
-/* Make the left column cards scroll smoothly */
+/* Leaflet popup — cleaner font */
+.leaflet-popup-content { font-family: inherit; margin: 10px 12px; }
+.leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: 0 4px 20px rgba(0,0,0,.15) !important; }
+.leaflet-popup-tip-container { margin-top: -1px; }
+
+/* Left column — scrollable card list */
 @media (min-width: 992px) {
-  .listing-scroll-col {
+  .listing-scroll-col,
+  .half_map_area_content {
     overflow-y: auto;
-    max-height: 82vh;
+    max-height: calc(100vh - 80px);
     scrollbar-width: thin;
     scrollbar-color: #ddd #f5f5f5;
+    padding-right: 8px;
   }
-  .listing-scroll-col::-webkit-scrollbar { width: 5px; }
-  .listing-scroll-col::-webkit-scrollbar-track { background: #f5f5f5; }
-  .listing-scroll-col::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+  .listing-scroll-col::-webkit-scrollbar,
+  .half_map_area_content::-webkit-scrollbar { width: 5px; }
+  .listing-scroll-col::-webkit-scrollbar-track,
+  .half_map_area_content::-webkit-scrollbar-track { background: #f5f5f5; }
+  .listing-scroll-col::-webkit-scrollbar-thumb,
+  .half_map_area_content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+}
+
+/* Map-v1 section top padding so content isn't under the header */
+.p-0.bgc-f7 > .container-fluid {
+  padding-top: 80px;
+}
+
+/* map-v1 listing panel — cards in single-column list mode */
+.half_map_area_content .homely-feat-card {
+  flex-direction: row !important;
+  min-height: 130px;
+  max-height: none !important; /* never clip card content */
+}
+.half_map_area_content .homely-feat-img-wrap {
+  width: 160px !important;
+  min-width: 140px !important;
+  max-width: 160px !important;
+  flex-shrink: 0 !important;
+  padding-top: 0 !important;
+  /* use align-self stretch so image fills card height regardless of content length */
+  height: auto !important;
+  min-height: 130px;
+  border-radius: 16px 0 0 16px !important;
+}
+.half_map_area_content .homely-feat-img {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important; height: 100% !important;
+  object-fit: cover !important;
+}
+.half_map_area_content .homely-feat-body {
+  padding: 10px 14px 12px !important;
+  justify-content: flex-start;
+}
+.half_map_area_content .homely-feat-title {
+  font-size: 13px !important;
+  white-space: normal !important;  /* allow address to wrap rather than clip */
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.35 !important;
+}
+.half_map_area_content .homely-feat-meta {
+  margin-bottom: 6px !important;
+}
+@media (max-width: 575px) {
+  .half_map_area_content .homely-feat-card {
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  .half_map_area_content .homely-feat-img-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding-top: 56.25% !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -616,7 +848,13 @@ body {
 .mb16 { margin-bottom: 16px !important; }
 .mb20 { margin-bottom: 20px !important; }
 
-/* No-data empty state in hero search */
+/* Map container for search results page */
+.half_map_area,
+.map-canvas,
+.half_style {
+  height: 100%;
+  min-height: 600px;
+}
 .hs-no-data {
   text-align: center;
   padding: 28px 20px;
@@ -670,4 +908,31 @@ body {
 }
 .ps-widget {
   border-radius: 12px;
+}
+
+/* ══════════════════════════════════════════
+   GRID LISTING PAGES — top spacing under sticky nav
+══════════════════════════════════════════ */
+/* grid-full-3-col and other listing pages: push content below fixed header */
+.bgc-f7 > .container-fluid.px-3,
+.bgc-f7 > .container-fluid.px-lg-4 {
+  padding-top: 84px !important;
+}
+
+/* ══════════════════════════════════════════
+   HOMELY FEAT CARD — price label overflow fix
+══════════════════════════════════════════ */
+/* Prevent long price strings from overflowing the image overlay area */
+.homely-feat-price {
+  max-width: calc(100% - 28px) !important;
+}
+
+/* ══════════════════════════════════════════
+   CARD GRID — prevent equal-height selector from
+   conflicting with flex col display for swiper
+══════════════════════════════════════════ */
+/* Only force height:100% inside explicit grid rows, not swiper slides */
+.row.listings-row [class*="col-"] > .homely-feat-card,
+.row.listings-row [class*="col-"] > .listing-style1 {
+  height: 100%;
 }

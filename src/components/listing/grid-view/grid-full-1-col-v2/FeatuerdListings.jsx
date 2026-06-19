@@ -1,9 +1,6 @@
-
-
-
 import { Link } from "react-router-dom";
 
-const FeaturedListings = ({data,colstyle}) => {
+const FeaturedListings = ({ data, colstyle }) => {
   return (
     <>
       {data.map((listing) => (
@@ -11,11 +8,10 @@ const FeaturedListings = ({data,colstyle}) => {
           <div className="listing-style1">
             <div className="list-thumb">
               <img
-               
-                style={{height:'472px'}}
-                className="w-100 h-100 cover"
+                className="cover"
                 src={listing.image}
                 alt="listings"
+                loading="lazy"
               />
               <div className="sale-sticker-wrap">
                 {!listing.forRent && (
@@ -25,7 +21,6 @@ const FeaturedListings = ({data,colstyle}) => {
                   </div>
                 )}
               </div>
-
               <div className="list-price">
                 {listing.price} / <span>mo</span>
               </div>
@@ -33,7 +28,6 @@ const FeaturedListings = ({data,colstyle}) => {
             <div className="list-content">
               <div className="list-agent">
                 <img
-                 
                   className="rounded-circle w-full h-full cover"
                   src="/images/team/agent-single-1.png"
                   alt="agent"

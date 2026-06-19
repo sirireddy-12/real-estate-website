@@ -1,315 +1,78 @@
-
-import {
-  GoogleMap,
-  Marker,
-  MarkerClusterer,
-  useLoadScript,
-  InfoWindow,
-} from "@react-google-maps/api";
-import { useMemo, useState } from "react";
-
-import listings from "@/utilis/listingHelpers";
-
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Link } from "react-router-dom";
+import listings from "@/utilis/listingHelpers";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { useMemo } from "react";
 
-const option = {
-  zoomControl: true,
-  disableDefaultUI: true,
-  styles: [
-    {
-      featureType: "all",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          weight: "2.00",
-        },
-      ],
-    },
-    {
-      featureType: "all",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          color: "#9c9c9c",
-        },
-      ],
-    },
-    {
-      featureType: "all",
-      elementType: "labels.text",
-      stylers: [
-        {
-          visibility: "on",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#f2f2f2",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "landscape.man_made",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "all",
-      stylers: [
-        {
-          saturation: -100,
-        },
-        {
-          lightness: 45,
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#eeeeee",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#7b7b7b",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "simplified",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#46bcec",
-        },
-        {
-          visibility: "on",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#c8d7d4",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#070707",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-  ],
-  scrollwheel: true,
-};
-const containerStyle = {
-  width: "100%",
-  height: "100%",
-};
+// Fix leaflet default icon paths (Vite asset issue)
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl:       "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl:     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
+
+// City coordinates for Australian capital cities derived from listing content
+const CITY_COORDS = [
+  { name: "Melbourne",  lat: -37.8136,  lng: 144.9631 },
+  { name: "Perth",      lat: -31.9505,  lng: 115.8605 },
+  { name: "Brisbane",   lat: -27.4698,  lng: 153.0251 },
+  { name: "Hobart",     lat: -42.8821,  lng: 147.3272 },
+  { name: "Darwin",     lat: -12.4634,  lng: 130.8456 },
+  { name: "Adelaide",   lat: -34.9285,  lng: 138.6007 },
+  { name: "Sydney",     lat: -33.8688,  lng: 151.2093 },
+];
+
 export default function ListingMap1() {
-  const [getLocation, setLocation] = useState(null);
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM",
-  });
-  const center = useMemo(
-  () => ({ lat: -37.819368, lng: 144.957679 }),
-  []
-);
-
-  // add long & lat
-  const locationHandler = (location) => {
-    setLocation(location);
-  };
-
-  // close handler
-  const closeCardHandler = () => {
-    setLocation(null);
-  };
+  // Count listings per city for popup info
+  const cityStats = useMemo(() => {
+    return CITY_COORDS.map((city) => {
+      const cityListings = listings.filter((l) =>
+        (l.Address || "").toLowerCase().includes(city.name.toLowerCase()) ||
+        (l.Suburb  || "").toLowerCase().includes(city.name.toLowerCase())
+      );
+      const sample = cityListings[0];
+      return { ...city, count: cityListings.length, sample };
+    }).filter((c) => c.count > 0);
+  }, []);
 
   return (
-    <>
-      {!isLoaded ? (
-        <p>Loading...</p>
-      ) : (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={4}
-          options={option}
-        >
-          <MarkerClusterer>
-            {(clusterer) =>
-              listings.slice(0, 6).map((marker) => (
-                <Marker
-                  key={marker.ID}
-                  position={{
-                      lat: Number(marker.Latitude),
-                      lng: Number(marker.Longitude),
-                  }}
-                  clusterer={clusterer}
-                  onClick={() => locationHandler(marker)}
-                ></Marker>
-              ))
-            }
-          </MarkerClusterer>
-          {getLocation !== null && (
-            <InfoWindow
-              position={{
-                lat: Number(getLocation.Latitude),
-                lng: Number(getLocation.Longitude),
-              }}
-              onCloseClick={closeCardHandler}
-            >
-              <div>
-                <div className="listing-style1">
-                  <div className="list-thumb">
-                    <img
-                      
-                      className="w-100 h-100 cover"
-                      src={getLocation.MainPhotoURL}
-                      alt="listings"
-                    />
-                    <div className="sale-sticker-wrap">
-                      {getLocation.Category === "Rent" && (
-                        <div className="list-tag fz12">
-                          <span className="flaticon-electricity me-2" />
-                          FEATURED
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="list-price">
-                      {getLocation.PriceLabel}
-                    </div>
+    <MapContainer
+      center={[-27.0, 133.0]}
+      zoom={4}
+      style={{ width: "100%", height: "100%", minHeight: "600px" }}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {cityStats.map((city) => (
+        <Marker key={city.name} position={[city.lat, city.lng]}>
+          <Popup>
+            <div style={{ minWidth: 180 }}>
+              <strong style={{ fontSize: 14 }}>{city.name}</strong>
+              <p style={{ margin: "4px 0 8px", fontSize: 12, color: "#666" }}>
+                {city.count} {city.count === 1 ? "property" : "properties"} available
+              </p>
+              {city.sample && (
+                <>
+                  <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4, color: "#222" }}>
+                    {city.sample.PriceLabel || "Contact Agent"}
                   </div>
-                  <div className="list-content">
-                    <h6 className="list-title">
-                      <Link to={`/single-v1/${getLocation.ID}`}>
-                        {getLocation.Title}
-                      </Link>
-                    </h6>
-                    <p className="list-text">{getLocation.FullAddress}</p>
-                    <div className="list-meta d-flex align-items-center">
-                      <a href="#">
-                        <span className="flaticon-bed" /> {getLocation.Bedrooms} bed
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-shower" /> {getLocation.Bathrooms}{" "}
-                        bath
-                      </a>
-                      <a href="#">
-                        <span className="flaticon-expand" /> {getLocation.Suburb}{" "}
-                        Suburb
-                      </a>
-                    </div>
-                    <hr className="mt-2 mb-2" />
-                    <div className="list-meta2 d-flex justify-content-between align-items-center">
-                      <span className="for-what">{getLocation.Category}</span>
-                      <div className="icons d-flex align-items-center">
-                        <a href="#">
-                          <span className="flaticon-fullscreen" />
-                        </a>
-                        <a href="#">
-                          <span className="flaticon-new-tab" />
-                        </a>
-                        <a href="#">
-                          <span className="flaticon-like" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      )}
-    </>
+                  <Link
+                    to={`/single-v6/${city.sample._idx}`}
+                    style={{ color: "#ff1f5a", fontSize: 12, fontWeight: 600 }}
+                  >
+                    View listing →
+                  </Link>
+                </>
+              )}
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+    </MapContainer>
   );
 }

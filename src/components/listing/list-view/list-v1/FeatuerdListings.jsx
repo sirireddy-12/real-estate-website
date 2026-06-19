@@ -20,10 +20,11 @@ const FeaturedListings = ({ data, colstyle }) => {
           >
             <div className="list-thumb">
               <img
-                className="w-100 cover"
-                style={{ height: "253px" }}
+                className="cover"
                 src={listing.MainPhotoURL}
                 alt={listing.Address}
+                loading="lazy"
+                onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=70"; }}
               />
               <div className="sale-sticker-wrap">
                 {listing.Category && (

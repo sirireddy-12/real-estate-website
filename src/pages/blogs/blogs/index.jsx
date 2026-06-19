@@ -1,176 +1,203 @@
-import Details from "@/components/blog/blog-single/Details";
-import Features from "@/components/blog/blog-single/Features";
-import Pagination from "@/components/blog/blog-single/Pagination";
-import ReviewBoxForm from "@/components/blog/blog-single/ReviewBoxForm";
-import Social from "@/components/blog/blog-single/Social";
-import Tags from "@/components/blog/blog-single/Tags";
-import TopComments from "@/components/blog/blog-single/TopComments";
-import AllReviews from "@/components/blog/blog-single/reviews";
+import { allblogs } from "@/data/blogs";
 import Blog from "@/components/common/Blog";
 import DefaultHeader from "@/components/common/DefaultHeader";
-
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
-
-
 import MetaData from "@/components/common/MetaData";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const metaInformation = {
-  title: "Blog Single  || Homez - Real Estate ReactJS Template",
+  title: "Blog | Homely Australia Real Estate",
 };
 
 const BlogSingle = () => {
-    let params = useParams();
-   
+  const { id } = useParams();
+  const data = allblogs.find((b) => String(b.id) === String(id)) || allblogs[0];
+
   return (
     <>
-    <MetaData meta={metaInformation} />
-      {/* Main Header Nav */}
+      <MetaData meta={metaInformation} />
       <DefaultHeader />
-      {/* End Main Header Nav */}
-
-      {/* Mobile Nav  */}
       <MobileMenu />
-      {/* End Mobile Nav  */}
 
-      {/* Blog Section Area */}
-      <section className="our-blog pt50">
-
-        <Details  id={params.id} />
-       
-
-
+      <section className="our-blog pt50 pb60">
         <div className="container">
-          <div className="roww" data-aos="fade-up" data-aos-delay="500">
-            <div className="col-xl-8 offset-xl-2">
-              <div className="ui-content mt40 mb60">
-                <h4 className="mb10">1. Reduce the clutter</h4>
-                <p className="mb25 ff-heading">
-                  It doesn’t matter how organized you are — a surplus of toys
-                  will always ensure your house is a mess waiting to happen.
-                  Fortunately, getting kids on board with the idea of ditching
-                  their stuff is a lot easier than it sounds.
-                </p>
-                <p className="ff-heading">
-                  The trick is to make it an opportunity for them to define
-                  themselves and their interests. Encourage kids to make a pile
-                  of ”baby toys” to donate, and have them set aside any toys
-                  that no longer interest them, such as action figures from a
-                  forgotten TV show. Separating these toys will help them
-                  appreciate how much they’ve grown and rediscover the toys they
-                  love.
-                </p>
-              </div>
-
-              <div className="blockquote-style1 mb60">
-                <blockquote className="blockquote">
-                  <p className="fst-italic fz15 fw500 ff-heading">
-                    Aliquam hendrerit sollicitudin purus, quis rutrum mi
-                    accumsan nec. Quisque bibendum orci ac nibh facilisis, at
-                    malesuada orci congue.
-                  </p>
-                  <h6 className="quote-title">Luis Pickford</h6>
-                </blockquote>
-              </div>
-              {/* End  blockquote*/}
-
-              <div className="col-12 ui-content">
-                <h4 className="title">2. Choose toys wisely</h4>
-              </div>
-
-              <div className="row">
-                <Features />
-              </div>
-              {/* End .row */}
-
-              <div className="col-lg-12 mt40">
+          {/* Hero image */}
+          <div className="row mb40" data-aos="fade-up">
+            <div className="col-lg-10 offset-lg-1">
+              <div
+                style={{
+                  borderRadius: 16,
+                  overflow: "hidden",
+                  height: 420,
+                  width: "100%",
+                }}
+              >
                 <img
-                  src="/images/blog/blog-single-2.jpg"
-                  alt="blog"
-                  className="bdrs12 post-img-2 w-100 h-100 cover"
+                  src={data.image}
+                  alt={data.title || data.content}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80";
+                  }}
                 />
               </div>
-              {/* End .col-12 */}
+            </div>
+          </div>
 
-              <div className="ui-content mt40 mb30">
-                <h4 className="mb10">3.Leave some toys out of reach</h4>
-                <div className="custom_bsp_grid">
-                  <ul className="list-style-type-bullet p-0 ml20">
-                    <li>
-                      We do not require any previous experience or pre-defined
-                      skills to take this course. A great orientation would be
-                      enough to master UI/UX design.
-                    </li>
-                    <li>A computer with a good internet connection.</li>
-                    <li>Adobe Photoshop (OPTIONAL)</li>
-                  </ul>
-                </div>
+          {/* Content */}
+          <div className="row" data-aos="fade-up" data-aos-delay="100">
+            <div className="col-lg-10 offset-lg-1">
+              {/* Meta */}
+              <div className="d-flex align-items-center gap-3 mb20 flex-wrap">
+                {data.tag && (
+                  <span
+                    style={{
+                      background: "#fff0f4",
+                      color: "#ff1f5a",
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      padding: "4px 12px",
+                      textTransform: "uppercase",
+                      letterSpacing: ".5px",
+                    }}
+                  >
+                    {data.tag || data.category}
+                  </span>
+                )}
+                {data.date && (
+                  <span style={{ color: "#888", fontSize: 13 }}>
+                    {data.date.month} {data.date.day}
+                    {data.date.year ? `, ${data.date.year}` : ", 2025"}
+                  </span>
+                )}
               </div>
-              {/* End .i-content */}
 
-              <div className="bdrt1 bdrb1 d-block d-sm-flex justify-content-between pt50 pt30-sm pb50 pb30-sm">
-                <div className="blog_post_share d-flex align-items-center mb10-sm">
-                  <span className="mr30">Share this post</span>
-                  <Social />
-                </div>
-                <div className="bsp_tags d-flex">
-                  <Tags />
-                </div>
+              <h1
+                style={{
+                  fontSize: 32,
+                  fontWeight: 800,
+                  color: "#181a20",
+                  lineHeight: 1.3,
+                  marginBottom: 24,
+                }}
+              >
+                {data.title || data.content}
+              </h1>
+
+              {data.text && (
+                <p
+                  style={{
+                    fontSize: 16,
+                    color: "#555",
+                    lineHeight: 1.8,
+                    marginBottom: 24,
+                  }}
+                >
+                  {data.text}
+                </p>
+              )}
+
+              <p style={{ fontSize: 16, color: "#555", lineHeight: 1.8, marginBottom: 24 }}>
+                Australia's property market continues to evolve, offering unique
+                opportunities for buyers, renters and investors. Whether you're
+                navigating your first purchase, assessing rental yields, or
+                exploring suburb data, having the right information makes all
+                the difference.
+              </p>
+
+              <p style={{ fontSize: 16, color: "#555", lineHeight: 1.8, marginBottom: 24 }}>
+                Understanding local market conditions, median prices and recent
+                sales data in your target suburb is the foundation of any sound
+                property decision. Use the search tools on this platform to
+                explore listings, compare properties and connect with local
+                agents who know your area best.
+              </p>
+
+              <blockquote
+                style={{
+                  borderLeft: "4px solid #ff1f5a",
+                  paddingLeft: 24,
+                  margin: "32px 0",
+                  color: "#444",
+                  fontStyle: "italic",
+                  fontSize: 17,
+                }}
+              >
+                "The right property at the right price in the right suburb —
+                that's the trifecta every Australian buyer is searching for."
+              </blockquote>
+
+              <p style={{ fontSize: 16, color: "#555", lineHeight: 1.8, marginBottom: 32 }}>
+                Always conduct thorough due diligence including building and
+                pest inspections, council zoning checks and contract review
+                before committing to any purchase. Work with a licensed
+                conveyancer and ensure your finance pre-approval is current
+                before making an offer.
+              </p>
+
+              <div
+                style={{
+                  borderTop: "1px solid #eee",
+                  paddingTop: 24,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: 12,
+                }}
+              >
+                <Link
+                  to="/blog-list-v1"
+                  style={{
+                    color: "#ff1f5a",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                    fontSize: 14,
+                  }}
+                >
+                  ← Back to Blog
+                </Link>
+                <span style={{ fontSize: 13, color: "#aaa" }}>
+                  Share:{" "}
+                  <a href="#" style={{ color: "#1877f2", marginLeft: 8 }}>
+                    Facebook
+                  </a>
+                  <a href="#" style={{ color: "#1da1f2", marginLeft: 8 }}>
+                    Twitter
+                  </a>
+                  <a href="#" style={{ color: "#0077b5", marginLeft: 8 }}>
+                    LinkedIn
+                  </a>
+                </span>
               </div>
-              {/* End share social and tags */}
-
-              <TopComments />
-              {/* End TopComments */}
-
-              <Pagination />
-              {/* End Blog Single pagination */}
-
-              <AllReviews />
-              {/* End  AllReviews */}
-
-              <div className="bsp_reveiw_wrt">
-                <h6 className="fz17">Leave A Review</h6>
-                <ReviewBoxForm />
-              </div>
-              {/* End ReviewBoxForm */}
             </div>
           </div>
         </div>
       </section>
-      {/* End Blog Details */}
 
-      {/* Related Blog Post */}
-      <section className="pb90 pb20-md pt-0">
+      {/* Related posts */}
+      <section className="pb90 pt0" style={{ background: "#f7f7f7" }}>
         <div className="container">
-          <div className="row">
-            <div
-              className="col-lg-6 m-auto"
-              data-aos="fade-up"
-              data-aos-delay="0"
-            >
-              <div className="main-title text-start text-md-center">
-                <h2 className="title">Related Posts</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
-              </div>
+          <div className="row mb30">
+            <div className="col-lg-6 m-auto text-center">
+              <h2 className="title" style={{ fontSize: 26, fontWeight: 700 }}>
+                Related Posts
+              </h2>
+              <p className="paragraph">More property insights and guides</p>
             </div>
           </div>
-          {/* End .row */}
-
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
+          <div className="row" data-aos="fade-up">
             <Blog />
           </div>
         </div>
       </section>
-      {/* end Related Blog Post */}
 
-      {/* Start Our Footer */}
       <section className="footer-style1 pt60 pb-0">
         <Footer />
       </section>
-      {/* End Our Footer */}
     </>
   );
 };
